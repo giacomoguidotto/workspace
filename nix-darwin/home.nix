@@ -34,6 +34,14 @@
     #   source = ../aerospace;
     #   recursive = true;
     # };
+    # ".config/git" = {
+    #   source = ../git;
+    #   recursive = true;
+    # };
+    # ".config/lazydocker" = {
+    #   source = ../lazydocker;
+    #   recursive = true;
+    # };
     # ".config/lazygit" = {
     #   source = ../lazygit;
     #   recursive = true;

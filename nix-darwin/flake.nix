@@ -54,7 +54,10 @@
             dock.minimize-to-application = true;
             dock.show-recents = false;
             dock.tilesize = 36;
-            dock.wvous-tl-corner = 12; # notification center
+            dock.wvous-tl-corner = 1; # no action
+            dock.wvous-tr-corner = 12; # notification center
+            dock.wvous-bl-corner = 1; # no action
+            dock.wvous-br-corner = 1; # no action
             finder.AppleShowAllExtensions = true;
             finder.AppleShowAllFiles = true;
             finder.CreateDesktop = false;
@@ -86,12 +89,12 @@
             # cli tools
             stow
             tree
+            git
             fzf
             eza
             neofetch
             lazygit
             lazydocker
-            raycast
             kubectl
             kubectx
 
@@ -101,6 +104,7 @@
             vim
 
             # apps
+            raycast
             docker
             tailscale
             spotify
@@ -125,7 +129,7 @@
           services.tailscale.enable = true;
 
           # homebrew
-          homebrew.enable = true;
+          homebrew.enable = false;
         };
     in
     {

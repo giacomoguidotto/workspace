@@ -6,8 +6,10 @@ alias .....="cd ../../../.."
 alias ......="cd ../../../../.."
 alias cl="clear"
 alias x="exit"
+alias d='mkdir -p "$1" && cd "$1"'
 alias lz="lazygit"
 alias lzd="open -a docker && lazydocker"
+alias v="nvim"
 
 # eza
 alias l="eza -l --icons --git -a"

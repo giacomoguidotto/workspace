@@ -31,7 +31,16 @@
           ];
 
           shellHook = ''
-            zsh
+            # broken until nix flake doesn't support chaging default shell
+            # source <(deno completions zsh)
+            # source <(bun completions)
+            # source <(pnpm completion zsh)
+            echo "web dev shell, using:
+            node $(node --version)
+            yarn $(yarn --version)
+            pnpm $(pnpm --version)
+            bun $(bun --version)
+            $(deno --version)"
           '';
         };
       }

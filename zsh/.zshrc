@@ -27,8 +27,18 @@ fcd() { cd "$(find . -type d -not -path '*/.*' | fzf)" && l; }
 f() { echo "$(find . -type f -not -path '*/.*' | fzf)" | pbcopy }
 ff() { aerospace list-windows --all | fzf --bind 'enter:execute(bash -c "aerospace focus --window-id {1}")+abort'}
 
-# go
-export GOPATH="$HOME/dev/go"
+# nix
+# workaround: override nix-shell and nix develop to run with $SHELL
+# https://discourse.nixos.org/t/using-nix-develop-opens-bash-instead-of-zsh/25075
+alias nix-shell='nix-shell --run $SHELL'
+nix() {
+  if [[ $1 == "develop" ]]; then
+    shift
+    command nix develop -c $SHELL "$@"
+  else
+    command nix "$@"
+  fi
+}
 
 # android
 export ANDROID_HOME="$HOME/Library/Android/sdk"

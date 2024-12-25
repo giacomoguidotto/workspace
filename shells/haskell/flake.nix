@@ -28,10 +28,6 @@
             # haskellPackages.hls
             # haskellPackages.hlint
           ];
-
-          shellHook = ''
-            zsh
-          '';
         };
       }
     );

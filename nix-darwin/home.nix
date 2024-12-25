@@ -81,6 +81,7 @@
     EDITOR = "zed --wait";
     XDG_CONFIG_HOME = "$HOME/.config";
     NIX_CONF_DIR = "$HOME/.config/nix";
+    GOPATH = "$HOME/dev/go";
   };
 
   # programs managed by home-manager

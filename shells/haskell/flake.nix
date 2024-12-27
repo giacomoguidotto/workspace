@@ -23,11 +23,16 @@
       {
         devShell = mkShell {
           buildInputs = [
-            # haskell.compiler.ghc94
-            # haskellPackages.cabal-install
-            # haskellPackages.hls
-            # haskellPackages.hlint
+            cabal-install
+            ghc
+            haskell-language-server
           ];
+
+          shellHook = ''
+            echo "haskell dev shell, using:
+            $(ghc --version)
+            $(cabal --version)"
+          '';
         };
       }
     );

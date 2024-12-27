@@ -91,21 +91,21 @@
             # ghostty.packages.aarch64-darwin.default
 
             # cli tools
-            stow
-            tree
-            git
-            fzf
-            eza
-            neofetch
-            lazygit
-            lazydocker
-            kubectl
-            kubectx
+            # stow
+            # tree
+            # git
+            # fzf
+            # eza
+            # neofetch
+            # lazygit
+            # lazydocker
+            # kubectl
+            # kubectx
 
             # editors
-            neovim
+            # neovim
             zed-editor
-            vim
+            # vim
 
             # apps
             raycast

@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   home.username = "giacomo";
@@ -10,22 +10,38 @@
   home.stateVersion = "24.11";
 
   # packages installed in user profile.
-  # home.packages = with pkgs; [
-  # vim
+  home.packages = with pkgs; [
 
-  # # It is sometimes useful to fine-tune packages, for example, by applying
-  # # overrides. You can do that directly here, just don't forget the
-  # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-  # # fonts?
-  # (nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
+    # cli tools
+    stow
+    tree
+    git
+    fzf
+    eza
+    neofetch
+    lazygit
+    lazydocker
+    kubectl
+    kubectx
 
-  # # You can also create simple shell scripts directly inside your
-  # # configuration. For example, this adds a command 'my-hello' to your
-  # # environment:
-  # (writeShellScriptBin "my-hello" ''
-  #   echo "Hello, ${config.home.username}!"
-  # '')
-  # ];
+    # editors
+    neovim
+    # zed-editor
+    vim
+
+    # # It is sometimes useful to fine-tune packages, for example, by applying
+    # # overrides. You can do that directly here, just don't forget the
+    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
+    # # fonts?
+    # (nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
+
+    # # You can also create simple shell scripts directly inside your
+    # # configuration. For example, this adds a command 'my-hello' to your
+    # # environment:
+    # (writeShellScriptBin "my-hello" ''
+    #   echo "Hello, ${config.home.username}!"
+    # '')
+  ];
 
   # simlinks of files copied to the Nix store.
   # source path is relative to the flake root.
@@ -77,8 +93,10 @@
 
   # programs managed by home-manager
   programs = {
-    zsh.enable = true;
     home-manager.enable = true;
+
+    zsh.enable = true;
+
     direnv = {
       enable = true;
       enableZshIntegration = true;
@@ -93,5 +111,6 @@
     XDG_CONFIG_HOME = "$HOME/.config";
     NIX_CONF_DIR = "$HOME/.config/nix";
     GOPATH = "$HOME/dev/go";
+    DIRENV_LOG_FORMAT = "";
   };
 }

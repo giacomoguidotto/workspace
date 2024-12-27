@@ -86,8 +86,6 @@
             aerospace
 
             # terminals
-            warp-terminal
-            # alacritty
             # ghostty.packages.aarch64-darwin.default
 
             # cli tools
@@ -104,7 +102,7 @@
 
             # editors
             # neovim
-            zed-editor
+            # zed-editor
             # vim
 
             # apps

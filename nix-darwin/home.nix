@@ -12,6 +12,9 @@
   # packages installed in user profile.
   home.packages = with pkgs; [
 
+    # terminals
+    # ghostty
+
     # cli tools
     stow
     tree
@@ -26,7 +29,7 @@
 
     # editors
     neovim
-    # zed-editor
+    zed-editor
     vim
 
     # # It is sometimes useful to fine-tune packages, for example, by applying

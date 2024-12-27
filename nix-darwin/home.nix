@@ -75,6 +75,17 @@
     ".zshrc".source = ../zsh/.zshrc;
   };
 
+  # programs managed by home-manager
+  programs = {
+    zsh.enable = true;
+    home-manager.enable = true;
+    direnv = {
+      enable = true;
+      enableZshIntegration = true;
+      nix-direnv.enable = true;
+    };
+  };
+
   # session variables
   # available only if using a home-manager shell
   home.sessionVariables = {
@@ -83,8 +94,4 @@
     NIX_CONF_DIR = "$HOME/.config/nix";
     GOPATH = "$HOME/dev/go";
   };
-
-  # programs managed by home-manager
-  programs.zsh.enable = true;
-  programs.home-manager.enable = true;
 }

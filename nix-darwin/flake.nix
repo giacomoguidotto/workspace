@@ -12,6 +12,9 @@
     # import home-manager flake
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    # ghostty flake
+    ghostty.url = "github:ghostty-org/ghostty";
   };
 
   outputs =
@@ -20,6 +23,7 @@
       nix-darwin,
       nixpkgs,
       home-manager,
+      ghostty,
     }:
     let
       # https://daiderd.com/nix-darwin/manual/index.html
@@ -84,7 +88,7 @@
             # terminals
             warp-terminal
             # alacritty
-            # ghostty
+            # ghostty.packages.aarch64-darwin.default
 
             # cli tools
             stow

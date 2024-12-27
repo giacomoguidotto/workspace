@@ -1,8 +1,8 @@
 # dotfiles
 
-My dotfiles. Powered by Nix and home-manager.
+My dotfiles. Powered by Nix.
 
-## Getting started (from scratch!)
+## Getting started
 
 Install Nix ([docs](https://nix.dev/install-nix)):
 
@@ -16,7 +16,10 @@ Bootstrap nix-darwin: ([docs](https://github.com/LnL7/nix-darwin/?tab=readme-ov-
 nix run nix-darwin -- switch --flake ./nix-darwin#main
 ```
 
-Run `stow` (you might need to remove already existing folders inside `~/.config`):
+Nix home-manager dotfiles have some issue due to protection policies.
+Some app need to access their configs in write mode.
+
+As a workaround, use `stow` (you might need to remove already existing folders inside `~/.config`):
 
 ```sh
 stow .

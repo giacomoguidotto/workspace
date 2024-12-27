@@ -11,6 +11,7 @@ alias d='open -a docker'
 alias dlz="open -a docker && lazydocker"
 alias v="nvim"
 alias dev="nix develop"
+alias swc="darwin-rebuild switch --flake ~/dev/dotfiles/nix-darwin#main"
 
 # eza
 alias l="eza -l --icons --git -a"
@@ -40,18 +41,3 @@ export PATH="$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/pla
 export NVM_DIR="$HOME/.config/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-
-# pnpm
-if command -v pnpm &>/dev/null; then
-  source <(pnpm completion zsh)
-fi
-
-# bun
-if command -v bun &>/dev/null; then
-  source <(bun completions)
-fi
-
-# deno
-if command -v deno &>/dev/null; then
-  source <(deno completions zsh)
-fi

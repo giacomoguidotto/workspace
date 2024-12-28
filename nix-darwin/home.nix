@@ -21,6 +21,7 @@
     git
     fzf
     eza
+    atuin
     neofetch
     lazygit
     lazydocker
@@ -84,6 +85,7 @@
     };
 
     ".zshrc".source = ../zsh/.zshrc;
+    ".zprofile".source = ../zsh/.zprofile;
   };
 
   # programs managed by home-manager
@@ -105,7 +107,9 @@
     EDITOR = "zed --wait";
     XDG_CONFIG_HOME = "$HOME/.config";
     NIX_CONF_DIR = "$HOME/.config/nix";
-    GOPATH = "$HOME/dev/go";
+    # GOPATH = "$HOME/dev/go";
     DIRENV_LOG_FORMAT = "";
+    DOTFILES_DIR = "$HOME/dev/dotfiles";
+    SHELLS_DIR = "$DOTFILES_DIR/shells";
   };
 }

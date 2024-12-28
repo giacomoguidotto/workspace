@@ -30,14 +30,8 @@ ff() { aerospace list-windows --all | fzf --bind 'enter:execute(bash -c "aerospa
 # fzf
 source <(fzf --zsh)
 
+# atuin
+eval "$(atuin init zsh)"
+
 # direnv
 eval "$(direnv hook zsh)"
-
-# android
-export ANDROID_HOME="$HOME/Library/Android/sdk"
-export PATH="$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools"
-
-# nvm - TO REMOVE
-export NVM_DIR="$HOME/.config/nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"

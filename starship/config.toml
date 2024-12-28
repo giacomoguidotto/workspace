@@ -11,7 +11,7 @@ palette = 'catppuccin_mocha'
 format = '[$symbol$branch(:$remote_branch)]($style) '
 
 [nix_shell]
-format = '[$symbol $name]($style) '
+format = '| [$symbol $name]($style) '
 symbol = "❄️"
 
 [palettes.catppuccin_mocha]

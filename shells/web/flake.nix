@@ -7,43 +7,46 @@
   };
 
   outputs =
-    {
-      nixpkgs,
-      flake-utils,
-      ...
-    }:
+    { nixpkgs, flake-utils, ... }:
     flake-utils.lib.eachDefaultSystem (
       system:
       let
         pkgs = import nixpkgs {
           inherit system;
         };
+
+        mkNodeShell =
+          nodePkg:
+          pkgs.mkShell {
+            name = "web-dev";
+
+            buildInputs = with pkgs; [
+              nodePkg
+              yarn
+              pnpm
+              bun
+              deno
+            ];
+
+            shellHook = ''
+              # Example comment
+              # source <(deno completions zsh)
+              # source <(bun completions)
+              # source <(pnpm completion zsh)
+              echo "web dev shell, using:
+              node $(node --version)
+              yarn $(yarn --version)
+              pnpm $(pnpm --version)
+              bun $(bun --version)
+              $(deno --version)"
+            '';
+          };
       in
-      with pkgs;
       {
-        devShell = mkShell {
-          name = "web-dev";
-
-          buildInputs = [
-            nodejs-slim_18
-            yarn
-            pnpm
-            bun
-            deno
-          ];
-
-          shellHook = ''
-            # broken until nix flake doesn't support chaging default shell
-            # source <(deno completions zsh)
-            # source <(bun completions)
-            # source <(pnpm completion zsh)
-            echo "web dev shell, using:
-            node $(node --version)
-            yarn $(yarn --version)
-            pnpm $(pnpm --version)
-            bun $(bun --version)
-            $(deno --version)"
-          '';
+        devShells = {
+          default = mkNodeShell pkgs.nodejs-slim_20;
+          # run with nix develop .#node18
+          node18 = mkNodeShell pkgs.nodejs-slim_18;
         };
       }
     );

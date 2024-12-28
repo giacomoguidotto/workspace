@@ -22,6 +22,8 @@
       with pkgs;
       {
         devShell = mkShell {
+          name = "haskell-dev";
+
           buildInputs = [
             cabal-install
             ghc

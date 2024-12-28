@@ -1,25 +1,18 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
-# prompt format: minimal
-format = """$directory$character"""
+format = '$directory$character'
+right_format = '$all'
 
-# end line format
-right_format = """$all"""
-
-# Inserts a blank line between shell prompts
 add_newline = false
-
-# Timeout for commands executed by starship (in milliseconds).
 command_timeout = 1000
-
-palette = "catppuccin_mocha"
-
-[character]
-# success_symbol = '[➜](bold green)'
-# vicmd_symbol = "[N] >>>"
+palette = 'catppuccin_mocha'
 
 [git_branch]
-format = '[$symbol$branch(:$remote_branch)]($style)'
+format = '[$symbol$branch(:$remote_branch)]($style) '
+
+[nix_shell]
+format = '[$symbol $name]($style) '
+symbol = "❄️"
 
 [palettes.catppuccin_mocha]
 rosewater = "#f5e0dc"

@@ -22,6 +22,8 @@
       with pkgs;
       {
         devShell = mkShell {
+          name = "web-dev";
+
           buildInputs = [
             nodejs-slim_18
             yarn

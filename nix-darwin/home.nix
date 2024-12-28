@@ -17,8 +17,10 @@
 
     # cli tools
     stow
+    bat
     tree
     git
+    ripgrep
     fzf
     eza
     atuin

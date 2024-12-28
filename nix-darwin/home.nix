@@ -22,6 +22,7 @@
     fzf
     eza
     atuin
+    starship
     neofetch
     lazygit
     lazydocker
@@ -109,6 +110,7 @@
     NIX_CONF_DIR = "$HOME/.config/nix";
     # GOPATH = "$HOME/dev/go";
     DIRENV_LOG_FORMAT = "";
+    STARSHIP_CONFIG = "$HOME/.config/starship/config.toml";
     DOTFILES_DIR = "$HOME/dev/dotfiles";
     SHELLS_DIR = "$DOTFILES_DIR/shells";
   };

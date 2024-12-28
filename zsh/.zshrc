@@ -12,13 +12,12 @@ alias dlz="open -a docker && lazydocker"
 alias v="nvim"
 alias dev="nix develop"
 alias swc="darwin-rebuild switch --flake ~/dev/dotfiles/nix-darwin#main"
-
-# eza
 alias l="eza -l --icons --git -a"
 alias lt="eza --tree --level=2 --long --icons --git"
-
-# tree
 alias la=tree
+
+# key bindings
+bindkey jj vi-cmd-mode
 
 # navigation
 mkcd() { mkdir -p "$1" && cd "$1" }
@@ -32,6 +31,9 @@ source <(fzf --zsh)
 
 # atuin
 eval "$(atuin init zsh)"
+
+# starship
+eval "$(starship init zsh)"
 
 # direnv
 eval "$(direnv hook zsh)"

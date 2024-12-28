@@ -26,6 +26,8 @@
             cabal-install
             ghc
             haskell-language-server
+
+            zlib
           ];
 
           shellHook = ''

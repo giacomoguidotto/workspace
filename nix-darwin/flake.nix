@@ -52,26 +52,95 @@
 
           # system configuration
           system.defaults = {
-            dock.autohide = true;
-            dock.magnification = false;
-            dock.orientation = "bottom";
-            dock.minimize-to-application = true;
-            dock.show-recents = false;
-            dock.tilesize = 36;
-            dock.wvous-tl-corner = 1; # no action
-            dock.wvous-tr-corner = 12; # notification center
-            dock.wvous-bl-corner = 1; # no action
-            dock.wvous-br-corner = 1; # no action
-            finder.AppleShowAllExtensions = true;
-            finder.AppleShowAllFiles = true;
-            finder.CreateDesktop = false;
-            finder.FXPreferredViewStyle = "Nlsv";
-            finder.QuitMenuItem = true;
-            finder.NewWindowTarget = "Home";
-            hitoolbox.AppleFnUsageType = "Change Input Source";
+            dock = {
+              autohide = true;
+              magnification = false;
+              orientation = "bottom";
+              minimize-to-application = true;
+              show-recents = false;
+              tilesize = 36;
+              wvous-tl-corner = 1; # no action
+              wvous-tr-corner = 12; # notification center
+              wvous-bl-corner = 1; # no action
+              wvous-br-corner = 1; # no action
+            };
+
+            finder = {
+              AppleShowAllExtensions = true;
+              AppleShowAllFiles = true;
+              CreateDesktop = false;
+              FXPreferredViewStyle = "Nlsv";
+              QuitMenuItem = true;
+              NewWindowTarget = "Home";
+            };
+
             loginwindow.DisableConsoleAccess = false;
-            NSGlobalDomain.ApplePressAndHoldEnabled = true;
-            NSGlobalDomain.NSWindowShouldDragOnGesture = true;
+
+            NSGlobalDomain = {
+              InitialKeyRepeat = 20;
+              KeyRepeat = 2;
+              ApplePressAndHoldEnabled = true;
+              NSWindowShouldDragOnGesture = true;
+            };
+
+            CustomUserPreferences = {
+              "com.apple.HIToolbox" = {
+
+                AppleEnabledInputSources = [
+                  {
+                    InputSourceKind = "Keyboard Layout";
+                    "KeyboardLayout ID" = 223;
+                    "KeyboardLayout Name" = "Italian - Pro";
+                  }
+                  {
+                    InputSourceKind = "Keyboard Layout";
+                    "KeyboardLayout ID" = 250;
+                    "KeyboardLayout Name" = "British-PC";
+                  }
+                ];
+
+                AppleSelectedInputSources = [
+                  {
+                    InputSourceKind = "Keyboard Layout";
+                    "KeyboardLayout ID" = 250;
+                    "KeyboardLayout Name" = "British-PC";
+                  }
+                ];
+
+                AppleFnUsageType = 1; # change input source
+                AppleCurrentKeyboardLayoutInputSourceID = "com.apple.keylayout.British-PC";
+                AppleDictationAutoEnable = 1;
+              };
+              "com.apple.AppleMultitouchTrackpad" = {
+                ActuateDetents = 1;
+                Clicking = 1;
+                DragLock = 0;
+                Dragging = 0;
+                FirstClickThreshold = 1;
+                ForceSuppressed = 0;
+                HIDScrollZoomModifierMask = 0;
+                SecondClickThreshold = 1;
+                TrackpadCornerSecondaryClick = 0;
+                TrackpadFiveFingerPinchGesture = 2;
+                TrackpadFourFingerHorizSwipeGesture = 2;
+                TrackpadFourFingerPinchGesture = 2;
+                TrackpadFourFingerVertSwipeGesture = 2;
+                TrackpadHandResting = 1;
+                TrackpadHorizScroll = 1;
+                TrackpadMomentumScroll = 1;
+                TrackpadPinch = 1;
+                TrackpadRightClick = 1;
+                TrackpadRotate = 1;
+                TrackpadScroll = 1;
+                TrackpadThreeFingerDrag = 0;
+                TrackpadThreeFingerHorizSwipeGesture = 2; # switch between full-screen apps
+                TrackpadThreeFingerTapGesture = 0;
+                TrackpadThreeFingerVertSwipeGesture = 2; # mission control
+                TrackpadTwoFingerDoubleTapGesture = 1;
+                TrackpadTwoFingerFromRightEdgeSwipeGesture = 3;
+                USBMouseStopsTrackpad = 0;
+              };
+            };
           };
 
           # packages installed in system profile

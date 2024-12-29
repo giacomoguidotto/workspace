@@ -10,7 +10,6 @@ alias lz="lazygit"
 alias d='open -a docker'
 alias dlz="open -a docker && lazydocker"
 alias v="nvim"
-alias dev="nix develop"
 alias swc="darwin-rebuild switch --flake ~/dev/dotfiles/nix-darwin#main"
 alias l="eza -l --icons --git -a"
 alias lt="eza --tree --level=2 --long --icons --git"

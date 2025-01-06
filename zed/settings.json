@@ -7,6 +7,9 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "inline_completions": {
+    "disabled_globs": [".env", "pg.txt"]
+  },
   "assistant": {
     "default_model": {
       "provider": "zed.dev",

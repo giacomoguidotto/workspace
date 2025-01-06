@@ -12,9 +12,6 @@
     # import home-manager flake
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-
-    # ghostty flake
-    ghostty.url = "github:ghostty-org/ghostty";
   };
 
   outputs =
@@ -23,7 +20,6 @@
       nix-darwin,
       nixpkgs,
       home-manager,
-      ghostty,
     }:
     let
       # https://daiderd.com/nix-darwin/manual/index.html
@@ -175,6 +171,9 @@
               "arc-browser"
               "signal-desktop"
             ];
+
+          # temporary allowed
+          nixpkgs.config.allowBroken = true;
 
           # other programs
           services.tailscale.enable = true;

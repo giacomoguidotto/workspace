@@ -129,6 +129,7 @@ in
   # available only if using a home-manager shell
   home.sessionVariables = {
     EDITOR = "zed --wait";
+    REACT_EDITOR = "zed --wait";
     XDG_CONFIG_HOME = "$HOME/.config";
     NIX_CONF_DIR = "$HOME/.config/nix";
     # GOPATH = "$HOME/dev/go";

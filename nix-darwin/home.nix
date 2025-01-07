@@ -29,36 +29,38 @@ in
 
   # packages installed in user profile.
   home.packages = with pkgs; [
+    # internals
     tex
 
     # terminals
     # ghostty
 
     # cli tools
-    stow
-    bat
-    tree
-    git
-    ripgrep
-    fzf
-    eza
     atuin
-    starship
-    neofetch
-    lazygit
-    lazydocker
+    bat
+    btop
+    eza
+    fzf
+    git
     kubectl
     kubectx
+    lazydocker
+    lazygit
+    neofetch
+    ripgrep
+    starship
+    stow
+    tree
 
     # editors
     neovim
-    zed-editor
     vim
+    zed-editor
 
     # nerd fonts
+    nerd-fonts.blex-mono
     nerd-fonts.jetbrains-mono
     nerd-fonts.zed-mono
-    nerd-fonts.blex-mono
   ];
 
   # simlinks of files copied to the Nix store.

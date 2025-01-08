@@ -50,9 +50,13 @@
           system.defaults = {
             dock = {
               autohide = true;
+              largesize = 16;
               magnification = false;
-              orientation = "bottom";
+              mineffect = "genie";
               minimize-to-application = true;
+              orientation = "bottom";
+              persistent-apps = [ ];
+              persistent-others = [ ];
               show-recents = false;
               tilesize = 36;
               wvous-tl-corner = 1; # no action

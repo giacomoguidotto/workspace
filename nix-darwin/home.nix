@@ -1,6 +1,7 @@
 { pkgs, ... }:
 
 let
+  # https://daiderd.com/nix-darwin/manual/index.html
   tex = (
     pkgs.texlive.combine {
       inherit (pkgs.texlive)
@@ -32,6 +33,9 @@ in
     # internals
     tex
 
+    # desktop environment
+    aerospace
+
     # terminals
     # ghostty
 
@@ -57,11 +61,33 @@ in
     vim
     zed-editor
 
+    # apps
+    arc-browser
+    discord
+    docker
+    raycast
+    spotify
+    signal-desktop
+    # vlc # not available on aarch64-apple-darwin
+
     # nerd fonts
     nerd-fonts.blex-mono
     nerd-fonts.jetbrains-mono
     nerd-fonts.zed-mono
   ];
+
+  # programs managed by home-manager
+  programs = {
+    home-manager.enable = true;
+
+    zsh.enable = true;
+
+    direnv = {
+      enable = true;
+      enableZshIntegration = true;
+      nix-direnv.enable = true;
+    };
+  };
 
   # simlinks of files copied to the Nix store.
   # source path is relative to the flake root.
@@ -112,19 +138,6 @@ in
     ".zprofile".source = ../zsh/.zprofile;
   };
 
-  # programs managed by home-manager
-  programs = {
-    home-manager.enable = true;
-
-    zsh.enable = true;
-
-    direnv = {
-      enable = true;
-      enableZshIntegration = true;
-      nix-direnv.enable = true;
-    };
-  };
-
   # session variables
   # available only if using a home-manager shell
   home.sessionVariables = {
@@ -132,7 +145,6 @@ in
     REACT_EDITOR = "zed --wait";
     XDG_CONFIG_HOME = "$HOME/.config";
     NIX_CONF_DIR = "$HOME/.config/nix";
-    # GOPATH = "$HOME/dev/go";
     DIRENV_LOG_FORMAT = "";
     STARSHIP_CONFIG = "$HOME/.config/starship/config.toml";
     DOTFILES_DIR = "$HOME/dev/dotfiles";

@@ -59,7 +59,7 @@
               persistent-others = [ ];
               show-recents = false;
               tilesize = 36;
-              wvous-tl-corner = 1; # no action
+              wvous-tl-corner = 5; # start screensaver
               wvous-tr-corner = 12; # notification center
               wvous-bl-corner = 1; # no action
               wvous-br-corner = 1; # no action
@@ -85,7 +85,6 @@
 
             CustomUserPreferences = {
               "com.apple.HIToolbox" = {
-
                 AppleEnabledInputSources = [
                   {
                     InputSourceKind = "Keyboard Layout";
@@ -98,7 +97,6 @@
                     "KeyboardLayout Name" = "British-PC";
                   }
                 ];
-
                 AppleSelectedInputSources = [
                   {
                     InputSourceKind = "Keyboard Layout";
@@ -106,11 +104,11 @@
                     "KeyboardLayout Name" = "British-PC";
                   }
                 ];
-
                 AppleFnUsageType = 1; # change input source
                 AppleCurrentKeyboardLayoutInputSourceID = "com.apple.keylayout.British-PC";
                 AppleDictationAutoEnable = 1;
               };
+
               "com.apple.AppleMultitouchTrackpad" = {
                 ActuateDetents = 1;
                 Clicking = 1;
@@ -150,19 +148,6 @@
             nixd
             nil
             nixfmt-rfc-style
-
-            # desktop environment
-            aerospace
-
-            # apps
-            raycast
-            docker
-            tailscale
-            spotify
-            arc-browser
-            discord
-            signal-desktop
-            # vlc # not available on aarch64-apple-darwin
           ];
 
           nixpkgs.config.allowUnfreePredicate =
@@ -176,9 +161,6 @@
               "signal-desktop"
             ];
 
-          # temporary allowed
-          nixpkgs.config.allowBroken = true;
-
           # other programs
           services.tailscale.enable = true;
 
@@ -190,8 +172,8 @@
       # build darwin flake:
       # $ darwin-rebuild build --flake ./nix-darwin#main
       darwinConfigurations.main = nix-darwin.lib.darwinSystem {
-        specialArgs = { inherit inputs; };
         system = "aarch64-darwin";
+        specialArgs = { inherit inputs; };
         modules = [
           configuration
           home-manager.darwinModules.home-manager

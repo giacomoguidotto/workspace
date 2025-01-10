@@ -1,7 +1,6 @@
 { pkgs, ... }:
 
 let
-  # https://daiderd.com/nix-darwin/manual/index.html
   tex = (
     pkgs.texlive.combine {
       inherit (pkgs.texlive)
@@ -19,6 +18,7 @@ let
     }
   );
 in
+# https://daiderd.com/nix-darwin/manual/index.html
 {
   home.username = "giacomo";
   home.homeDirectory = "/Users/giacomo";

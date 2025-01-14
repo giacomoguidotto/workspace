@@ -44,6 +44,7 @@ in
     bat
     btop
     eza
+    fd
     fzf
     git
     kubectl

@@ -17,15 +17,18 @@ alias tp="btop"
 alias v="nvim"
 alias x="exit"
 
-# key bindings
-bindkey jj vi-cmd-mode
-
 # navigation
+_fselect() { fd --type "$1" "${2:-.}" 2>/dev/null | fzf --height 40% --reverse --preview 'tree -C {} | head -200'; }
+
 cx() { cd "$@" && l; }
 mkcd() { mkdir -p "$1" && cd "$1" }
-f() { echo "$(find . -type f -not -path '*/.*' | fzf)" | pbcopy }
-fcd() { cd "$(find . -type d -not -path '*/.*' | fzf)" && l; }
-ff() { aerospace list-windows --all | fzf --bind 'enter:execute(bash -c "aerospace focus --window-id {1}")+abort'}
+f() { selected=$(_fselect "f,d" "$1"); [[ -n "$selected" ]] && printf '%s' "$selected" | pbcopy && echo "copied to clipboard: $selected"}
+fcd() { selected=$(_fselect "d" "$1"); [[ -n "$selected" ]] && cd "$selected"}
+fcx() { fcd "$@" && l; }
+# ff() { aerospace list-windows --all | fzf --bind 'enter:execute(bash -c "aerospace focus --window-id {1}")+abort'}
+
+# key bindings
+bindkey jj vi-cmd-mode
 
 # fzf
 source <(fzf --zsh)

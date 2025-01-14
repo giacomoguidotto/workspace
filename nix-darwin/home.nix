@@ -135,6 +135,7 @@ in
       recursive = true;
     };
 
+    ".condarc".source = ../conda/.condarc;
     ".zshrc".source = ../zsh/.zshrc;
     ".zprofile".source = ../zsh/.zprofile;
   };

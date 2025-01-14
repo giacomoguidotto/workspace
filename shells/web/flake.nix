@@ -29,7 +29,7 @@
             ];
 
             shellHook = ''
-              # Example comment
+              # broken until nix flake doesn't support chaging default shell
               # source <(deno completions zsh)
               # source <(bun completions)
               # source <(pnpm completion zsh)

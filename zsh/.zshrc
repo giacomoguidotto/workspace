@@ -18,12 +18,12 @@ alias v="nvim"
 alias x="exit"
 
 # navigation
-_fselect() { fd --type "$1" "${2:-.}" 2>/dev/null | fzf --height 40% --reverse --preview 'tree -C {} | head -200'; }
+_fselect() { fd "$@" 2>/dev/null | fzf --height 40% --reverse --preview 'tree -C {} | head -100'; }
 
 cx() { cd "$@" && l; }
 mkcd() { mkdir -p "$1" && cd "$1" }
-f() { selected=$(_fselect "f,d" "$1"); [[ -n "$selected" ]] && printf '%s' "$selected" | pbcopy && echo "copied to clipboard: $selected"}
-fcd() { selected=$(_fselect "d" "$1"); [[ -n "$selected" ]] && cd "$selected"}
+f() { selected=$(_fselect -tf -td "${1:-.}"); [[ -n "$selected" ]] && printf '%s' "$selected" | pbcopy && echo "copied to clipboard: $selected"}
+fcd() { selected=$(_fselect -td "${1:-.}"); [[ -n "$selected" ]] && cd "$selected"}
 fcx() { fcd "$@" && l; }
 # ff() { aerospace list-windows --all | fzf --bind 'enter:execute(bash -c "aerospace focus --window-id {1}")+abort'}
 

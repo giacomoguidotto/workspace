@@ -9,7 +9,7 @@ palette = 'catppuccin_mocha'
 
 [conda]
 format = '[$symbol\[$environment\]]($style) '
-symbol = "🐍"
+symbol = "🅒 "
 
 [git_branch]
 format = '[$symbol$branch(:$remote_branch)]($style) '

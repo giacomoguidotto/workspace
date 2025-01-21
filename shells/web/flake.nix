@@ -43,7 +43,6 @@
             node_pkg = pkgs.nodejs-slim;
             core_pkg = pkgs.corepack;
           };
-          # run with nix develop .#vXX
           v20 = mkNodeShell {
             node_pkg = pkgs.nodejs-slim_20;
             core_pkg = pkgs.corepack_20;

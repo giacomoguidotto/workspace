@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 let
   tex = (
@@ -32,6 +32,7 @@ in
   home.packages = with pkgs; [
     # internals
     tex
+    mas
 
     # desktop environment
     aerospace
@@ -156,5 +157,13 @@ in
     STARSHIP_CONFIG = "$HOME/.config/starship/config.toml";
     DOTFILES_DIR = "$HOME/dev/dotfiles";
     SHELLS_DIR = "$DOTFILES_DIR/shells";
+  };
+
+  # scripts ran after home-manager activation
+  home.activation = {
+    installXCode = lib.hm.dag.entryAfter [ "home.packages" ] ''
+      # ${pkgs.mas}/bin/mas purchase 497799835 2> /dev/null
+      ${pkgs.mas}/bin/mas install 497799835 2> /dev/null
+    '';
   };
 }

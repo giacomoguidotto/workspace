@@ -62,10 +62,14 @@ in
     vim
     zed-editor
 
+    # docker
+    colima
+    docker-client
+    docker-compose
+
     # apps
     arc-browser
     discord
-    docker
     raycast
     spotify
     # signal-desktop

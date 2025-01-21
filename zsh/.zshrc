@@ -6,8 +6,8 @@ alias .....="cd ../../../.."
 alias ......="cd ../../../../.."
 alias cat="bat"
 alias cl="clear"
-alias d='open -a docker'
-alias dlz="open -a docker && lazydocker"
+alias d='colima start'
+alias dlz="d && lazydocker"
 alias l="eza -l --icons --git -a"
 alias lt="eza --tree --level=2 --long --icons --git"
 alias la="tree"

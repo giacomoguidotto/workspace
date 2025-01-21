@@ -31,12 +31,6 @@
 
             zlib
           ];
-
-          shellHook = ''
-            echo "haskell dev shell, using:
-            $(ghc --version)
-            $(cabal --version)"
-          '';
         };
       }
     );

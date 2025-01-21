@@ -16,37 +16,46 @@
         };
 
         mkNodeShell =
-          nodePkg:
+          { node_pkg, core_pkg }:
           pkgs.mkShell {
             name = "web-dev";
 
             buildInputs = with pkgs; [
-              nodePkg
+              node_pkg
+              core_pkg
               yarn
               pnpm
               bun
               deno
             ];
 
-            shellHook = ''
-              # broken until nix flake doesn't support chaging default shell
-              # source <(deno completions zsh)
-              # source <(bun completions)
-              # source <(pnpm completion zsh)
-              echo "web dev shell, using:
-              node $(node --version)
-              yarn $(yarn --version)
-              pnpm $(pnpm --version)
-              bun $(bun --version)
-              $(deno --version)"
-            '';
+            # broken until nix flake doesn't support chaging default shell
+            # shellHook = ''
+            #   source <(deno completions zsh)
+            #   source <(bun completions)
+            #   source <(pnpm completion zsh)
+            # '';
           };
       in
       {
         devShells = {
-          default = mkNodeShell pkgs.nodejs-slim_20;
-          # run with nix develop .#node18
-          node18 = mkNodeShell pkgs.nodejs-slim_18;
+          default = mkNodeShell {
+            node_pkg = pkgs.nodejs-slim;
+            core_pkg = pkgs.corepack;
+          };
+          # run with nix develop .#vXX
+          v20 = mkNodeShell {
+            node_pkg = pkgs.nodejs-slim_20;
+            core_pkg = pkgs.corepack_20;
+          };
+          v18 = mkNodeShell {
+            node_pkg = pkgs.nodejs-slim_18;
+            core_pkg = pkgs.corepack_18;
+          };
+          v16 = mkNodeShell {
+            node_pkg = pkgs.nodejs-slim_16;
+            core_pkg = pkgs.corepack_16;
+          };
         };
       }
     );

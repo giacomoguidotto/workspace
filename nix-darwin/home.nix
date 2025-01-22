@@ -34,6 +34,9 @@ in
     tex
     mas
 
+    # temporary
+    zulu17
+
     # desktop environment
     aerospace
 
@@ -57,6 +60,7 @@ in
     starship
     stow
     tree
+    watchman
 
     # editors
     neovim

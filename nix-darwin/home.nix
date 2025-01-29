@@ -148,5 +148,8 @@ in
       # ${pkgs.mas}/bin/mas purchase 497799835 2> /dev/null
       ${pkgs.mas}/bin/mas install 497799835 2> /dev/null
     '';
+    installWhatsApp = lib.hm.dag.entryAfter [ "home.packages" ] ''
+      ${pkgs.mas}/bin/mas install 310633997 2> /dev/null
+    '';
   };
 }

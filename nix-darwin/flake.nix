@@ -79,7 +79,7 @@
             NSGlobalDomain = {
               InitialKeyRepeat = 20;
               KeyRepeat = 2;
-              ApplePressAndHoldEnabled = true;
+              ApplePressAndHoldEnabled = false;
               NSWindowShouldDragOnGesture = true;
             };
 
@@ -142,7 +142,6 @@
           };
 
           # packages installed in system profile
-          # to search by name: $ nix-env -qaP | grep vim
           environment.systemPackages = with pkgs; [
             # nix internals
             nixd

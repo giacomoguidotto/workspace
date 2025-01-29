@@ -60,6 +60,7 @@ in
     stow
     tree
     watchman
+    ollama
     nodePackages.eas-cli # temporary
 
     # editors
@@ -162,6 +163,21 @@ in
     STARSHIP_CONFIG = "$HOME/.config/starship/config.toml";
     DOTFILES_DIR = "$HOME/dev/dotfiles";
     SHELLS_DIR = "$DOTFILES_DIR/shells";
+  };
+
+  # custom deamons
+  launchd.agents = {
+    ollama = {
+      enable = true;
+      config = {
+        ProgramArguments = [
+          "${pkgs.ollama}/bin/ollama"
+          "serve"
+        ];
+        RunAtLoad = true;
+        KeepAlive = true;
+      };
+    };
   };
 
   # scripts ran after home-manager activation

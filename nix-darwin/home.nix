@@ -35,6 +35,7 @@ in
     zulu17
     nodejs-slim
     corepack
+    python313
 
     # desktop environment
     aerospace
@@ -61,11 +62,9 @@ in
     tree
     watchman
     ollama
-    nodePackages.eas-cli # temporary
 
     # editors
     neovim
-    vim
     zed-editor
 
     # docker
@@ -104,47 +103,10 @@ in
   # simlinks of files copied to the Nix store.
   # source path is relative to the flake root.
   home.file = {
-    # ".config/aerospace" = {
-    #   source = ../aerospace;
-    #   recursive = true;
-    # };
-    # ".config/git" = {
-    #   source = ../git;
-    #   recursive = true;
-    # };
-    # ".config/lazydocker" = {
-    #   source = ../lazydocker;
-    #   recursive = true;
-    # };
-    # ".config/lazygit" = {
-    #   source = ../lazygit;
-    #   recursive = true;
-    # };
-    # ".config/neofetch" = {
-    #   source = ../neofetch;
-    #   recursive = true;
-    # };
-    # ".config/nix" = {
-    #   source = ../nix;
-    #   recursive = true;
-    # };
-    # ".config/nix-darwin" = {
-    #   source = ../nix-darwin;
-    #   recursive = true;
-    # };
     # ".config/nvim" = {
     #   source = ../nvim;
     #   recursive = true;
     # };
-    # ".config/zed" = {
-    #   source = ../zed;
-    #   recursive = true;
-    # };
-
-    ".warp" = {
-      source = ../warp;
-      recursive = true;
-    };
 
     ".condarc".source = ../conda/.condarc;
     ".hushlogin".text = "";
@@ -155,14 +117,14 @@ in
   # session variables
   # available only if using a home-manager shell
   home.sessionVariables = {
-    EDITOR = "zed --wait";
-    REACT_EDITOR = "zed --wait";
     XDG_CONFIG_HOME = "$HOME/.config";
     NIX_CONF_DIR = "$HOME/.config/nix";
+
+    EDITOR = "zed --wait";
+    REACT_EDITOR = "zed --wait";
+
     DIRENV_LOG_FORMAT = "";
     STARSHIP_CONFIG = "$HOME/.config/starship/config.toml";
-    DOTFILES_DIR = "$HOME/dev/dotfiles";
-    SHELLS_DIR = "$DOTFILES_DIR/shells";
   };
 
   # custom deamons

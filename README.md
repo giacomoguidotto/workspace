@@ -24,3 +24,10 @@ As a workaround, use `stow` (you might need to remove already existing folders i
 ```sh
 stow .
 ```
+
+## Inspirations
+
+This dotfiles are heavily inspired by:
+
+- [omerxx/dotfiles](https://github.com/omerxx/dotfiles)
+- [the-nix-way/dev-templates](https://github.com/the-nix-way/dev-templates)

@@ -30,12 +30,11 @@ in
 
   # packages installed in user profile.
   home.packages = with pkgs; [
-    # internals
+    # sdks
     tex
-    mas
-
-    # temporary
     zulu17
+    nodejs-slim
+    corepack
 
     # desktop environment
     aerospace
@@ -61,6 +60,7 @@ in
     stow
     tree
     watchman
+    nodePackages.eas-cli # temporary
 
     # editors
     neovim
@@ -75,6 +75,7 @@ in
     # apps
     arc-browser
     discord
+    mas
     raycast
     spotify
     # signal-desktop

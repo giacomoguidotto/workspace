@@ -15,7 +15,7 @@ alias lz="lazygit"
 alias lzd="lazydocker"
 alias swc="darwin-rebuild switch --flake ~/dev/dotfiles/nix-darwin#main"
 alias tp="btop"
-alias up="nix flake update --flake ~/dev/dotfiles/nix-darwin#main"
+alias up="nix flake update --flake ~/dev/dotfiles/nix-darwin"
 alias v="nvim"
 alias x="exit"
 

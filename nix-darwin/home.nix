@@ -78,7 +78,7 @@ in
     mas
     raycast
     spotify
-    # signal-desktop
+    signal-desktop
     # vlc # not available on aarch64-apple-darwin
 
     # nerd fonts

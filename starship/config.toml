@@ -7,12 +7,15 @@ add_newline = false
 command_timeout = 1000
 palette = 'catppuccin_mocha'
 
+[git_branch]
+format = '[$symbol$branch(:$remote_branch)]($style) '
+
 [conda]
 format = '[$symbol\[$environment\]]($style) '
 symbol = "🅒 "
 
-[git_branch]
-format = '[$symbol$branch(:$remote_branch)]($style) '
+[deno]
+disabled = true
 
 [nix_shell]
 format = '| [$symbol $name]($style) '

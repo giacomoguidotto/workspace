@@ -34,8 +34,6 @@ in
     tex
     zulu17
     nodejs-slim
-    corepack
-    python313
 
     # desktop environment
     aerospace
@@ -60,6 +58,7 @@ in
     starship
     stow
     tree
+    xh
     watchman
     ollama
 

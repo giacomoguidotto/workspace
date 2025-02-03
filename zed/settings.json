@@ -17,7 +17,7 @@
 
   "auto_update": true,
   "base_keymap": "JetBrains",
-  "theme": "Andromeda",
+  "theme": "Catppuccin Mocha",
   // "ui_font_family": "BlexMono Nerd Font Mono",
   "buffer_font_family": "BlexMono Nerd Font Mono",
 

@@ -19,9 +19,11 @@ let
   );
 in
 # https://daiderd.com/nix-darwin/manual/index.html
+# https://home-manager-options.extranix.com/release=master
 {
   home.username = "giacomo";
   home.homeDirectory = "/Users/giacomo";
+  xdg.enable = true;
 
   # home-manager version
   # used for backwards compatibility
@@ -32,8 +34,7 @@ in
   home.packages = with pkgs; [
     # sdks
     tex
-    zulu17
-    nodejs-slim
+    # nodejs-slim
 
     # desktop environment
     aerospace
@@ -61,6 +62,7 @@ in
     xh
     watchman
     ollama
+    yazi
 
     # editors
     neovim
@@ -91,10 +93,12 @@ in
     home-manager.enable = true;
 
     zsh.enable = true;
+    zsh.enableCompletion = true;
+    nushell.enable = true;
 
     direnv = {
       enable = true;
-      enableZshIntegration = true;
+      enableNushellIntegration = true;
       nix-direnv.enable = true;
     };
   };
@@ -116,11 +120,10 @@ in
   # session variables
   # available only if using a home-manager shell
   home.sessionVariables = {
-    XDG_CONFIG_HOME = "$HOME/.config";
     NIX_CONF_DIR = "$HOME/.config/nix";
 
-    EDITOR = "zed --wait";
-    REACT_EDITOR = "zed --wait";
+    EDITOR = "nvim";
+    REACT_EDITOR = "nvim";
 
     DIRENV_LOG_FORMAT = "";
     STARSHIP_CONFIG = "$HOME/.config/starship/config.toml";

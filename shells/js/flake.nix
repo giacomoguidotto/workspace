@@ -18,13 +18,11 @@
         mkNodeShell =
           { node_pkg, core_pkg }:
           pkgs.mkShell {
-            name = "web-dev";
+            name = "js";
 
             buildInputs = with pkgs; [
               node_pkg
               core_pkg
-              yarn
-              pnpm
               bun
               deno
             ];

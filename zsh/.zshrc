@@ -1,3 +1,5 @@
+[[ ${-} = ${-/i/} ]] && return
+
 # aliases
 alias ..="cd .."
 alias ...="cd ../.."

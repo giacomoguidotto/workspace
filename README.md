@@ -25,6 +25,12 @@ As a workaround, use `stow` (you might need to remove already existing folders i
 stow .
 ```
 
+## Quick links
+
+- [Nix Home Manager Manual](https://daiderd.com/nix-darwin/manual/index.html)
+- [Nix Home Manager Search](https://home-manager-options.extranix.com/release=master)
+- [Nix Darwin Manual](https://daiderd.com/nix-darwin/manual/index.html)
+
 ## Inspirations
 
 This dotfiles are heavily inspired by:

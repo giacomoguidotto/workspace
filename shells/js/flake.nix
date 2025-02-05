@@ -25,14 +25,9 @@
               core_pkg
               bun
               deno
-            ];
 
-            # broken until nix flake doesn't support chaging default shell
-            # shellHook = ''
-            #   source <(deno completions zsh)
-            #   source <(bun completions)
-            #   source <(pnpm completion zsh)
-            # '';
+              npm-check
+            ];
           };
       in
       {

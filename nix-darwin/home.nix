@@ -67,6 +67,7 @@ in
     # editors
     neovim
     zed-editor
+    jetbrains.pycharm-professional
 
     # docker
     colima

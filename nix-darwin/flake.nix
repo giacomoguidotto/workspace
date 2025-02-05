@@ -158,6 +158,7 @@
               "discord"
               "arc-browser"
               "signal-desktop"
+              "pycharm-professional"
             ];
 
           # other programs

@@ -26,7 +26,7 @@
               bun
               deno
 
-              npm-check
+              npm-check-updates
             ];
           };
       in

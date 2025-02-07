@@ -19,19 +19,17 @@
       self,
       nix-darwin,
       home-manager,
-      ...
+      nixpkgs,
     }:
     let
+      usr = "giacomo";
+
       # https://daiderd.com/nix-darwin/manual/index.html
       configuration =
         { pkgs, ... }:
         {
           # the platform the configuration will be used on
           nixpkgs.hostPlatform = "aarch64-darwin";
-
-          # home-manager external configuration
-          users.users.giacomo.home = "/Users/giacomo";
-          home-manager.backupFileExtension = "backup";
 
           # used for backwards compatibility
           # please read the changelog BEFORE changing:
@@ -141,13 +139,8 @@
             };
           };
 
-          # packages installed in system profile
-          environment.systemPackages = with pkgs; [
-            # nix internals
-            nixd
-            nil
-            nixfmt-rfc-style
-          ];
+          # home-manager external configuration
+          users.users.${usr}.home = "/Users/${usr}";
 
           nixpkgs.config.allowUnfreePredicate =
             pkg:
@@ -195,9 +188,10 @@
           configuration
           home-manager.darwinModules.home-manager
           {
+            home-manager.backupFileExtension = "backup";
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.giacomo = import ./home.nix;
+            home-manager.users.${usr} = import ./home.nix;
           }
         ];
       };

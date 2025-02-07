@@ -32,12 +32,20 @@ in
 
   # packages installed in user profile.
   home.packages = with pkgs; [
+    # nix internals
+    nixd
+    nil
+    nixfmt-rfc-style
+
     # sdks
     tex
     # nodejs-slim
 
     # desktop environment
     aerospace
+
+    # shells
+    nushell
 
     # terminals
     # ghostty
@@ -46,6 +54,7 @@ in
     atuin
     bat
     btop
+    carapace
     eza
     fd
     fzf
@@ -63,6 +72,7 @@ in
     watchman
     ollama
     yazi
+    zoxide
 
     # editors
     neovim
@@ -95,11 +105,9 @@ in
 
     zsh.enable = true;
     zsh.enableCompletion = true;
-    nushell.enable = true;
 
     direnv = {
       enable = true;
-      enableNushellIntegration = true;
       nix-direnv.enable = true;
     };
   };
@@ -148,7 +156,6 @@ in
   # scripts ran after home-manager activation
   home.activation = {
     installXCode = lib.hm.dag.entryAfter [ "home.packages" ] ''
-      # ${pkgs.mas}/bin/mas purchase 497799835 2> /dev/null
       ${pkgs.mas}/bin/mas install 497799835 2> /dev/null
     '';
     installWhatsApp = lib.hm.dag.entryAfter [ "home.packages" ] ''

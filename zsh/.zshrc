@@ -8,6 +8,7 @@ alias .....="cd ../../../.."
 alias ......="cd ../../../../.."
 alias cat="bat"
 alias cl="clear"
+alias cd="z"
 alias d='colima start'
 alias dlz="d && lzd"
 alias l="eza -l --icons --git -a"
@@ -34,14 +35,23 @@ fcx() { fcd "$@" && l; }
 # key bindings
 bindkey jj vi-cmd-mode
 
-# fzf
-source <(fzf --zsh)
+# tools
 
-# atuin
+# atuin - shell history
 eval "$(atuin init zsh)"
 
-# starship
+# carapace - completions
+zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
+source <(carapace _carapace)
+
+# direnv - directory-specific environments
+eval "$(direnv hook zsh)"
+
+# fzf - fuzzy finder
+source <(fzf --zsh)
+
+# starship - prompt
 eval "$(starship init zsh)"
 
-# direnv
-eval "$(direnv hook zsh)"
+# zoxide - directory jumping
+eval "$(zoxide init zsh)"

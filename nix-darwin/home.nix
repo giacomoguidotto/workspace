@@ -39,7 +39,7 @@ in
 
     # sdks
     tex
-    # nodejs-slim
+    nodejs-slim
 
     # desktop environment
     aerospace
@@ -55,6 +55,7 @@ in
     bat
     btop
     carapace
+    delta
     eza
     fd
     fzf
@@ -133,6 +134,8 @@ in
 
     EDITOR = "nvim";
     REACT_EDITOR = "nvim";
+
+    PAGER = "delta";
 
     DIRENV_LOG_FORMAT = "";
     STARSHIP_CONFIG = "$HOME/.config/starship/config.toml";

@@ -33,8 +33,8 @@
       {
         devShells = {
           default = mkNodeShell {
-            node_pkg = pkgs.nodejs-slim;
-            core_pkg = pkgs.corepack;
+            node_pkg = pkgs.nodejs_22;
+            core_pkg = pkgs.corepack_22;
           };
           v20 = mkNodeShell {
             node_pkg = pkgs.nodejs-slim_20;

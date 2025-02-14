@@ -39,11 +39,6 @@
           # set git commit hash for darwin-version
           system.configurationRevision = self.rev or self.dirtyRev or null;
 
-          # nix configuration
-          services.nix-daemon.enable = true;
-          nix.settings.experimental-features = "nix-command flakes";
-          nix.useDaemon = true;
-
           # system configuration
           system.defaults = {
             dock = {

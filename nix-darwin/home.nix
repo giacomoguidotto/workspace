@@ -60,6 +60,7 @@ in
     fd
     fzf
     git
+    jankyborders
     kubectl
     kubectx
     lazydocker
@@ -141,7 +142,7 @@ in
     STARSHIP_CONFIG = "$HOME/.config/starship/config.toml";
   };
 
-  # custom deamons
+  # custom daemons
   launchd.agents = {
     ollama = {
       enable = true;

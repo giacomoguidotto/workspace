@@ -43,6 +43,7 @@
           system.defaults = {
             dock = {
               autohide = true;
+              expose-group-apps = true;
               largesize = 16;
               magnification = false;
               mineffect = "genie";
@@ -66,6 +67,8 @@
               QuitMenuItem = true;
               NewWindowTarget = "Home";
             };
+
+            spaces.spans-displays = true;
 
             loginwindow.DisableConsoleAccess = false;
 

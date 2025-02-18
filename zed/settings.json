@@ -15,9 +15,10 @@
     "version": "2"
   },
 
-  "auto_update": true,
+  "auto_update": false,
   "base_keymap": "JetBrains",
-  "theme": "Catppuccin Mocha",
+  "theme": "Catppuccin Mocha (Blur)",
+  "icon_theme": "Catppuccin Mocha",
   // "ui_font_family": "BlexMono Nerd Font Mono",
   "buffer_font_family": "BlexMono Nerd Font Mono",
 
@@ -27,15 +28,22 @@
   },
 
   "tab_size": 2,
-  "ui_font_size": 15,
-  "buffer_font_size": 15,
+  "ui_font_size": 14,
+  "buffer_font_size": 14,
 
   "autosave": "on_focus_change",
   "format_on_save": "on",
+  // "formatter": {
+  //   "language_server": {
+  //     "name": "biome"
+  //   }
+  // },
+
   "code_actions_on_format": {
-    "source.organizeImports": true,
-    "source.addAllMissingImports": true,
-    "source.removeUnusedImports": true
+    "source.fixAll": true,
+    // "source.fixAll.biome": true,
+    "source.organizeImports": true
+    // "source.organizeImports.biome": true
   },
 
   "vim_mode": true,
@@ -47,7 +55,6 @@
       "soft_wrap": "preferred_line_length"
     }
   },
-
   "lsp": {
     "nil": {
       "initialization_options": {

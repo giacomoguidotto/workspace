@@ -75,6 +75,7 @@ in
     ollama
     yazi
     zoxide
+    python313Packages.nbdime
 
     # editors
     neovim

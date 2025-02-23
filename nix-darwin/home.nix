@@ -125,7 +125,8 @@ in
 
     ".condarc".source = ../conda/.condarc;
     ".hushlogin".text = "";
-    ".zshrc".source = ../zsh/.zshrc;
+    # workaround for booting up nushell
+    ".zshrc".source = ../zsh/.zshrc.proxy;
     ".zprofile".source = ../zsh/.zprofile;
   };
 

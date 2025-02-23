@@ -1,5 +1,9 @@
 $env.config.show_banner = false
 $env.config.buffer_editor = "nvim"
+$env.config.edit_mode = 'vi'
+
+$env.PROMPT_INDICATOR_VI_NORMAL = "❮ "
+$env.PROMPT_INDICATOR_VI_INSERT = "❯ "
 
 # aliases
 alias .. = cd ..
@@ -8,15 +12,14 @@ alias .... = cd ../../..
 alias ..... = cd ../../../..
 alias ...... = cd ../../../../..
 alias cat = bat
-alias cd = z
 alias cl = clear
-alias lzd = lazydocker
 alias d = colima start
 alias dlz = d | lzd
 alias l = eza -l --icons --git -a
 alias lt = eza --tree --level=2 --long --icons --git
 alias la = tree
 alias lz = lazygit
+alias lzd = lazydocker
 alias swc = darwin-rebuild switch --flake ~/dev/dotfiles/nix-darwin#main
 alias tp = btop
 alias up = nix flake update --flake ~/dev/dotfiles/nix-darwin

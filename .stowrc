@@ -6,3 +6,4 @@
 --ignore=shells
 --ignore=warp
 --ignore=zsh
+--ignore=README.md

@@ -43,7 +43,7 @@ on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 automatically-unhide-macos-hidden-apps = false
 
 [[on-window-detected]]
-if.app-name-regex-substring = 'finder|spotify|music|discord'
+if.app-name-regex-substring = 'finder|spotify|music|discord|teams|outlook'
 run = 'layout floating'
 
 # Possible values: (qwerty|dvorak)

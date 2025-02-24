@@ -7,9 +7,6 @@ add_newline = false
 command_timeout = 1000
 palette = 'catppuccin_mocha'
 
-[character]
-disabled = true # conflicts with nushell's prompt indicator
-
 [git_branch]
 format = '[$symbol$branch(:$remote_branch)]($style) '
 

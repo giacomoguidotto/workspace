@@ -137,9 +137,16 @@ in
     EDITOR = "nvim";
     REACT_EDITOR = "nvim";
 
+    # used to tell lazygit to use delta as pager (https://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Pagers.md#using-git-config)
     GIT_PAGER = "delta";
 
+    ZELLIJ_AUTO_ATTACH = "true";
+    ZELLIJ_AUTO_EXIT = "true";
+
+    # remove the direnv log when cd
     DIRENV_LOG_FORMAT = "";
+
+    # override the default starship config path
     STARSHIP_CONFIG = "$HOME/.config/starship/config.toml";
   };
 

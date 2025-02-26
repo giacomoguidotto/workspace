@@ -55,3 +55,6 @@ eval "$(starship init zsh)"
 
 # zoxide - directory jumping
 eval "$(zoxide init zsh)"
+
+# zellij - terminal multiplexer
+eval "$(zellij setup --generate-auto-start zsh)"

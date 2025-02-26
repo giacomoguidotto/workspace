@@ -1,10 +1,51 @@
 [
   {
-    "context": "Workspace",
     "bindings": {
-      "ctrl-shift-o": "projects::OpenRecent",
-      "ctrl-shift-l": "editor::ToggleRelativeLineNumbers",
-      "cmd-n": "workspace::NewTerminal"
+      "cmd-h": null,
+      "ctrl-shift-h": "pane::SplitLeft",
+      "ctrl-shift-l": "pane::SplitRight",
+      "ctrl-shift-k": "pane::SplitUp",
+      "ctrl-shift-j": "pane::SplitDown",
+      "cmd-j": "menu::SelectNext",
+      "cmd-k": "menu::SelectPrev",
+      "ctrl-shift-o": "projects::OpenRecent"
+    }
+  },
+  // Pane Navigation from Editor
+  {
+    "context": "Editor",
+    "bindings": {
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-j": "workspace::ActivatePaneDown",
+      "ctrl-k": "workspace::ActivatePaneUp",
+      "ctrl-l": "workspace::ActivatePaneRight"
+    }
+  },
+  // Pane Navigation from Terminal
+  {
+    "context": "Terminal",
+    "bindings": {
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-j": "workspace::ActivatePaneDown",
+      "ctrl-k": "workspace::ActivatePaneUp",
+      "ctrl-l": "workspace::ActivatePaneRight"
+    }
+  },
+  // Pane Navigation from Project Panel
+  {
+    "context": "ProjectPanel",
+    "bindings": {
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-j": "workspace::ActivatePaneDown",
+      "ctrl-k": "workspace::ActivatePaneUp",
+      "ctrl-l": "workspace::ActivatePaneRight"
+    }
+  },
+  {
+    "context": "Editor && (showing_code_actions || showing_completions)",
+    "bindings": {
+      "cmd-j": "editor::ContextMenuNext",
+      "cmd-k": "editor::ContextMenuPrev"
     }
   }
 ]

@@ -2,8 +2,7 @@ notARepository: skip
 
 git:
   paging:
-    colorArg: always
-    useConfig: true 
+    useConfig: true
 
 gui:
   sidePanelWidth: 0.25

@@ -75,7 +75,7 @@ in
     ollama
     yazi
     zoxide
-    python313Packages.nbdime
+    zellij
 
     # editors
     neovim
@@ -137,7 +137,7 @@ in
     EDITOR = "nvim";
     REACT_EDITOR = "nvim";
 
-    PAGER = "delta";
+    GIT_PAGER = "delta";
 
     DIRENV_LOG_FORMAT = "";
     STARSHIP_CONFIG = "$HOME/.config/starship/config.toml";
@@ -146,7 +146,7 @@ in
   # custom daemons
   launchd.agents = {
     ollama = {
-      enable = true;
+      enable = false;
       config = {
         ProgramArguments = [
           "${pkgs.ollama}/bin/ollama"

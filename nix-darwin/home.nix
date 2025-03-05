@@ -140,8 +140,9 @@ in
     # used to tell lazygit to use delta as pager (https://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Pagers.md#using-git-config)
     GIT_PAGER = "delta";
 
+    # make zellij auto attach to first session
     ZELLIJ_AUTO_ATTACH = "true";
-    ZELLIJ_AUTO_EXIT = "true";
+    ZELLIJ_AUTO_EXIT = "false";
 
     # remove the direnv log when cd
     DIRENV_LOG_FORMAT = "";

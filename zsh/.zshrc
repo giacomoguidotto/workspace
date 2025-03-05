@@ -1,5 +1,18 @@
 [[ ${-} = ${-/i/} ]] && return
 
+# zellij - terminal multiplexer
+if [[ -z "$ZELLIJ" ]]; then
+  if [[ "$ZELLIJ_AUTO_ATTACH" == "true" ]]; then
+        zellij attach -c --index 0
+    else
+        zellij
+    fi
+
+    if [[ "$ZELLIJ_AUTO_EXIT" == "true" ]]; then
+        exit
+    fi
+fi
+
 # aliases
 alias ..="cd .."
 alias ...="cd ../.."
@@ -55,6 +68,3 @@ eval "$(starship init zsh)"
 
 # zoxide - directory jumping
 eval "$(zoxide init zsh)"
-
-# zellij - terminal multiplexer
-eval "$(zellij setup --generate-auto-start zsh)"

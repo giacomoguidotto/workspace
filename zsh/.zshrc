@@ -1,17 +1,17 @@
 [[ ${-} = ${-/i/} ]] && return
 
 # zellij - terminal multiplexer
-if [[ -z "$ZELLIJ" ]]; then
-  if [[ "$ZELLIJ_AUTO_ATTACH" == "true" ]]; then
-        zellij attach -c --index 0
-    else
-        zellij
-    fi
+# if [[ -z "$ZELLIJ" ]]; then
+#   if [[ "$ZELLIJ_AUTO_ATTACH" == "true" ]]; then
+#         zellij attach -c --index 0
+#     else
+#         zellij
+#     fi
 
-    if [[ "$ZELLIJ_AUTO_EXIT" == "true" ]]; then
-        exit
-    fi
-fi
+#     if [[ "$ZELLIJ_AUTO_EXIT" == "true" ]]; then
+#         exit
+#     fi
+# fi
 
 # aliases
 alias ..="cd .."

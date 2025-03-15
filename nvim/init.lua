@@ -230,6 +230,8 @@ require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
+  'github/copilot.vim',
+
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
   -- keys can be used to configure plugin behavior/loading/etc.
@@ -948,7 +950,6 @@ require('lazy').setup({
   -- Or use telescope!
   -- In normal mode type `<space>sh` then write `lazy.nvim-plugin`
   -- you can continue same window with `<space>sr` which resumes last telescope search
-  'github/copilot.vim',
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the

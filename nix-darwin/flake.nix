@@ -150,6 +150,7 @@
               "arc-browser"
               "signal-desktop"
               "pycharm-professional"
+              "obsidian"
             ];
 
           # other programs

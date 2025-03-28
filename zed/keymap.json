@@ -2,12 +2,8 @@
   {
     "bindings": {
       "cmd-h": null,
-      "ctrl-shift-h": "pane::SplitLeft",
-      "ctrl-shift-l": "pane::SplitRight",
-      "ctrl-shift-k": "pane::SplitUp",
-      "ctrl-shift-j": "pane::SplitDown",
       "cmd-j": "menu::SelectNext",
-      "cmd-k": "menu::SelectPrev",
+      "cmd-k": "menu::SelectPrevious",
       "ctrl-shift-o": "projects::OpenRecent"
     }
   },
@@ -18,7 +14,16 @@
       "ctrl-h": "workspace::ActivatePaneLeft",
       "ctrl-j": "workspace::ActivatePaneDown",
       "ctrl-k": "workspace::ActivatePaneUp",
-      "ctrl-l": "workspace::ActivatePaneRight"
+      "ctrl-l": "workspace::ActivatePaneRight",
+      "ctrl-shift-h": "pane::ActivatePreviousItem",
+      "ctrl-shift-l": "pane::ActivateNextItem",
+      "ctrl-shift-j": "vim::ScrollDown",
+      "ctrl-shift-k": "vim::ScrollUp",
+      "ctrl--": "zed::DecreaseBufferFontSize",
+      "ctrl-=": "zed::IncreaseBufferFontSize",
+      "ctrl-d": "pane::SplitRight",
+      "ctrl-shift-d": "pane::SplitDown",
+      "cmd-shift-c": "workspace::CopyRelativePath"
     }
   },
   // Pane Navigation from Terminal
@@ -45,7 +50,7 @@
     "context": "Editor && (showing_code_actions || showing_completions)",
     "bindings": {
       "cmd-j": "editor::ContextMenuNext",
-      "cmd-k": "editor::ContextMenuPrev"
+      "cmd-k": "editor::ContextMenuPrevious"
     }
   }
 ]

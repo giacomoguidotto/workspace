@@ -51,6 +51,7 @@ in
     # ghostty
 
     # cli tools
+    azure-cli
     atuin
     bat
     btop
@@ -63,6 +64,7 @@ in
     jankyborders
     kubectl
     kubectx
+    k9s
     lazydocker
     lazygit
     neofetch
@@ -94,6 +96,7 @@ in
     raycast
     spotify
     signal-desktop
+    obsidian
     # vlc # not available on aarch64-apple-darwin
 
     # nerd fonts
@@ -149,6 +152,9 @@ in
 
     # override the default starship config path
     STARSHIP_CONFIG = "$HOME/.config/starship/config.toml";
+
+    # set the docker host to the colima socket
+    DOCKER_HOST = "unix://$HOME/.colima/docker.sock";
   };
 
   # custom daemons

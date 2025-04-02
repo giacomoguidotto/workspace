@@ -4,7 +4,9 @@
       "cmd-h": null,
       "cmd-j": "menu::SelectNext",
       "cmd-k": "menu::SelectPrevious",
-      "ctrl-shift-o": "projects::OpenRecent"
+      "ctrl-shift-o": "projects::OpenRecent",
+      "ctrl-shift-h": "pane::ActivatePreviousItem",
+      "ctrl-shift-l": "pane::ActivateNextItem"
     }
   },
   // Pane Navigation from Editor
@@ -15,8 +17,6 @@
       "ctrl-j": "workspace::ActivatePaneDown",
       "ctrl-k": "workspace::ActivatePaneUp",
       "ctrl-l": "workspace::ActivatePaneRight",
-      "ctrl-shift-h": "pane::ActivatePreviousItem",
-      "ctrl-shift-l": "pane::ActivateNextItem",
       "ctrl-shift-j": "vim::ScrollDown",
       "ctrl-shift-k": "vim::ScrollUp",
       "ctrl--": "zed::DecreaseBufferFontSize",

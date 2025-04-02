@@ -154,7 +154,7 @@ in
     STARSHIP_CONFIG = "$HOME/.config/starship/config.toml";
 
     # set the docker host to the colima socket
-    DOCKER_HOST = "unix://$HOME/.colima/docker.sock";
+    DOCKER_HOST = "unix://$HOME/.config/colima/docker.sock";
   };
 
   # custom daemons

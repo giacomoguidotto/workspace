@@ -1,13 +1,15 @@
 // If you'd like to override the default keybindings completely, be sure to change "keybinds" to "keybinds clear-defaults=true"
 keybinds {
     normal {
-        // uncomment this and adjust key if using copy_on_select=false
-        // bind "Alt c" { Copy; }
+        bind "Ctrl q" { Detach; }
+        bind "Super Shift c" { Copy; }
         bind "Super k" { Clear; }
         bind "Ctrl h" { MoveFocus "Left"; }
         bind "Ctrl j" { MoveFocus "Down"; }
         bind "Ctrl k" { MoveFocus "Up"; }
         bind "Ctrl l" { MoveFocus "Right"; }
+        bind "Ctrl d" { NewPane "Right"; }
+        bind "Ctrl Shift d" { NewPane "Down"; }
         bind "Ctrl Shift h" { GoToPreviousTab; }
         bind "Ctrl Shift l" { GoToNextTab; }
         bind "Ctrl Shift j" { ScrollDown; }
@@ -66,7 +68,7 @@ keybinds {
         bind "l" "Right" "Down" "j" { GoToNextTab; }
         bind "H" { MoveTab "Left"; }
         bind "L" { MoveTab "Right"; }
-        bind "n" { NewTab; SwitchToMode "Normal"; }
+        bind "n" { NewTab; }
         bind "x" { CloseTab; SwitchToMode "Normal"; }
         bind "s" { ToggleActiveSyncTab; SwitchToMode "Normal"; }
         bind "b" { BreakPane; SwitchToMode "Normal"; }

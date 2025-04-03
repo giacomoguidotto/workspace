@@ -129,7 +129,7 @@ in
     ".condarc".source = ../conda/.condarc;
     ".hushlogin".text = "";
     ".zshrc".source = ../zsh/.zshrc;
-    ".zprofile".source = ../zsh/.zprofile;
+    # ".zprofile".source = ../zsh/.zprofile;
   };
 
   # session variables

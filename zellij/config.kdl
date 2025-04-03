@@ -10,6 +10,7 @@ keybinds {
         bind "Ctrl l" { MoveFocus "Right"; }
         bind "Ctrl d" { NewPane "Right"; }
         bind "Ctrl Shift d" { NewPane "Down"; }
+        bind "Ctrl w" { CloseFocus; }
         bind "Ctrl Shift h" { GoToPreviousTab; }
         bind "Ctrl Shift l" { GoToNextTab; }
         bind "Ctrl Shift j" { ScrollDown; }

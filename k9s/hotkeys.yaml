@@ -1,0 +1,6 @@
+# hotKeys:
+#  d:
+#    shortCut: d
+#    description: Delete
+#    command: delete
+#    context: portforwards

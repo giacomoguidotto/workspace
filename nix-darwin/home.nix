@@ -21,6 +21,25 @@ in
 # https://daiderd.com/nix-darwin/manual/index.html
 # https://home-manager-options.extranix.com/release=master
 {
+  # nix configuration
+  nix = {
+    settings = {
+      warn-dirty = false;
+
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+    };
+
+    gc = {
+      automatic = true;
+
+      # Keep last 3 generations
+      options = "--delete-older-than +3";
+    };
+  };
+
   home.username = "giacomo";
   home.homeDirectory = "/Users/giacomo";
   xdg.enable = true;
@@ -44,11 +63,11 @@ in
     # desktop environment
     aerospace
 
-    # shells
-    nushell
-
     # terminals
     # ghostty
+
+    # shells
+    nushell
 
     # cli tools
     azure-cli
@@ -82,7 +101,8 @@ in
     # editors
     neovim
     zed-editor
-    jetbrains.pycharm-professional
+    code-cursor
+    # jetbrains.pycharm-professional
 
     # docker
     colima
@@ -135,17 +155,11 @@ in
   # session variables
   # available only if using a home-manager shell
   home.sessionVariables = {
-    NIX_CONF_DIR = "$HOME/.config/nix";
-
     EDITOR = "nvim";
     REACT_EDITOR = "nvim";
 
     # used to tell lazygit to use delta as pager (https://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Pagers.md#using-git-config)
     GIT_PAGER = "delta";
-
-    # make zellij auto attach to first session
-    ZELLIJ_AUTO_ATTACH = "true";
-    ZELLIJ_AUTO_EXIT = "false";
 
     # remove the direnv log when cd
     DIRENV_LOG_FORMAT = "";
@@ -173,12 +187,12 @@ in
   };
 
   # scripts ran after home-manager activation
-  home.activation = {
-    installXCode = lib.hm.dag.entryAfter [ "home.packages" ] ''
-      ${pkgs.mas}/bin/mas install 497799835 2> /dev/null
-    '';
-    installWhatsApp = lib.hm.dag.entryAfter [ "home.packages" ] ''
-      ${pkgs.mas}/bin/mas install 310633997 2> /dev/null
-    '';
-  };
+  # home.activation = {
+  #   installXCode = lib.hm.dag.entryAfter [ "home.packages" ] ''
+  #     ${pkgs.mas}/bin/mas install 497799835 2> /dev/null
+  #   '';
+  #   installWhatsApp = lib.hm.dag.entryAfter [ "home.packages" ] ''
+  #     ${pkgs.mas}/bin/mas install 310633997 2> /dev/null
+  #   '';
+  # };
 }

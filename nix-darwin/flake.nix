@@ -148,7 +148,7 @@
           nixpkgs.config.allowUnfreePredicate =
             pkg:
             builtins.elem (pkgs.lib.getName pkg) [
-              "warp-terminal"
+              "cursor"
               "raycast"
               "spotify"
               "discord"

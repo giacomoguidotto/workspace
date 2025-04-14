@@ -57,8 +57,7 @@ in
     nixfmt-rfc-style
 
     # sdks
-    tex
-    nodejs-slim
+    nodejs-slim # needed for gh copilot
 
     # desktop environment
     aerospace

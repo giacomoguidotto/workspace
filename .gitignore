@@ -5,3 +5,5 @@ zed/prompts
 
 .DS_Store
 .direnv
+
+btop.log*

@@ -22,14 +22,11 @@
       with pkgs;
       {
         devShell = mkShell {
-          name = "haskell";
+          name = "latex";
 
           buildInputs = [
-            cabal-install
-            ghc
-            haskell-language-server
-
-            zlib
+            texliveFull
+            tex-fmt
           ];
         };
       }

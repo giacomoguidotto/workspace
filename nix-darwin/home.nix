@@ -99,7 +99,7 @@
     mas
     raycast
     spotify
-    signal-desktop
+    # signal-desktop # not available on aarch64-apple-darwin
     obsidian
     # vlc # not available on aarch64-apple-darwin
 

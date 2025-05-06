@@ -1,23 +1,5 @@
 { pkgs, ... }:
 
-let
-  tex = (
-    pkgs.texlive.combine {
-      inherit (pkgs.texlive)
-        scheme-basic
-        dvisvgm
-        dvipng # for preview and export as html
-        wrapfig
-        amsmath
-        ulem
-        hyperref
-        capt-of
-        ;
-      #(setq org-latex-compiler "lualatex")
-      #(setq org-preview-latex-default-process 'dvisvgm)
-    }
-  );
-in
 # https://daiderd.com/nix-darwin/manual/index.html
 # https://home-manager-options.extranix.com/release=master
 {
@@ -58,6 +40,8 @@ in
 
     # sdks
     nodejs-slim # needed for gh copilot
+    texliveFull
+    tex-fmt
 
     # desktop environment
     aerospace
@@ -86,6 +70,7 @@ in
     lazydocker
     lazygit
     neofetch
+    nmap
     ripgrep
     starship
     stow

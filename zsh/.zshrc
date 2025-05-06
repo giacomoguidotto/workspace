@@ -21,6 +21,7 @@ alias tp="btop"
 alias up="nix flake update --flake ~/dev/dotfiles/nix-darwin"
 alias v="nvim"
 alias x="exit"
+alias z="zellij"
 alias za="zellij a"
 
 # navigation

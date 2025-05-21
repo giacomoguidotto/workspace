@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 # https://daiderd.com/nix-darwin/manual/index.html
 # https://home-manager-options.extranix.com/release=master
@@ -172,12 +172,12 @@
 
   # scripts ran after home-manager activation
   home.activation = {
-    # installXCode = lib.hm.dag.entryAfter [ "home.packages" ] ''
-    #   ${pkgs.mas}/bin/mas install 497799835 2> /dev/null
-    # '';
-    # installWhatsApp = lib.hm.dag.entryAfter [ "home.packages" ] ''
-    #   ${pkgs.mas}/bin/mas install 310633997 2> /dev/null
-    # '';
+    installXCode = lib.hm.dag.entryAfter [ "home.packages" ] ''
+      ${pkgs.mas}/bin/mas install 497799835 2> /dev/null
+    '';
+    installWhatsApp = lib.hm.dag.entryAfter [ "home.packages" ] ''
+      ${pkgs.mas}/bin/mas install 310633997 2> /dev/null
+    '';
     # # not working: sudo: command not found
     # setupDisplaySleep = ''
     #   sudo /usr/bin/pmset -b displaysleep 20

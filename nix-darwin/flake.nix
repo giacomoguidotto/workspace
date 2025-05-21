@@ -38,6 +38,7 @@
 
           # set git commit hash for darwin-version
           system.configurationRevision = self.rev or self.dirtyRev or null;
+          system.primaryUser = usr;
 
           # system configuration
           system.defaults = {
@@ -53,10 +54,10 @@
               persistent-others = [ ];
               show-recents = false;
               tilesize = 36;
-              wvous-tl-corner = 5; # start screensaver
+              wvous-tl-corner = 2; # mission control
               wvous-tr-corner = 12; # notification center
-              wvous-bl-corner = 1; # no action
-              wvous-br-corner = 1; # no action
+              wvous-bl-corner = 5; # start screensaver
+              wvous-br-corner = 5; # start screensaver
             };
 
             finder = {

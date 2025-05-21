@@ -15,6 +15,8 @@ keybinds {
         bind "Ctrl Shift l" { GoToNextTab; }
         bind "Ctrl Shift j" { ScrollDown; }
         bind "Ctrl Shift k" { ScrollUp; }
+        bind "Ctrl Shift =" { Resize "Increase"; }
+        bind "Ctrl Shift -" { Resize "Decrease"; }
     }
     locked {
         bind "Ctrl g" { SwitchToMode "Normal"; }

@@ -101,6 +101,7 @@
     spotify
     # signal-desktop # not available on aarch64-apple-darwin
     obsidian
+    wireshark
     # vlc # not available on aarch64-apple-darwin
 
     # nerd fonts

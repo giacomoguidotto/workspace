@@ -69,6 +69,7 @@
     k9s
     lazydocker
     lazygit
+    lazysql
     neofetch
     nmap
     ripgrep
@@ -84,9 +85,7 @@
 
     # editors
     neovim
-    zed-editor
     code-cursor
-    # jetbrains.pycharm-professional
 
     # docker
     colima
@@ -94,14 +93,12 @@
     docker-compose
 
     # apps
-    arc-browser
     discord
     mas
     raycast
     spotify
     # signal-desktop # not available on aarch64-apple-darwin
     obsidian
-    wireshark
     # vlc # not available on aarch64-apple-darwin
 
     # nerd fonts

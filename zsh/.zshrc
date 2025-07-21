@@ -8,7 +8,7 @@ alias .....="cd ../../../.."
 alias ......="cd ../../../../.."
 # alias cat="bat"
 alias cl="clear"
-alias cd="z"
+# alias cd="z"
 alias d='colima start'
 alias dlz="d && lzd"
 alias l="eza -l --icons --git -a"
@@ -45,6 +45,11 @@ source <(carapace _carapace)
 
 # direnv - directory-specific environments
 eval "$(direnv hook zsh)"
+
+if [[ -n "$VSCODE_INJECTION" && -z "$VSCODE_TERMINAL_DIRENV_LOADED" && -f .envrc ]]; then
+    cd .. && cd - > /dev/null
+    export VSCODE_TERMINAL_DIRENV_LOADED=1
+fi
 
 # fzf - fuzzy finder
 source <(fzf --zsh)

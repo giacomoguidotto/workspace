@@ -1,0 +1,32 @@
+[user]
+	name = Giacomo Guidotto
+	email = giacomo.guidotto@gmail.com
+
+[include]
+    path = ./catppuccin.gitconfig
+
+[core]
+    autocrlf = input
+    pager = delta
+    attributesfile = ./attributes
+
+[interactive]
+    diffFilter = delta
+
+[fetch]
+    prune = true
+
+[pull]
+    rebase = true
+
+[merge]
+    conflictstyle = zdiff3
+
+[delta]
+    navigate = true
+    line-numbers = true
+    hyperlinks = true
+    hyperlinks-file-link-format = "lazygit-edit://{path}:{line}"
+    side-by-side = true
+    paging = never
+    features = catppuccin-mocha

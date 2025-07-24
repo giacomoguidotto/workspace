@@ -1,0 +1,27 @@
+# dotbot config file
+# 20250723 v0.1
+
+# to update dotbot run:
+# `git submodule update --remote dotbot`
+# commit and run `./install` again
+
+- defaults:
+    link:
+      relink: true # removes the old link if it's a symlink
+
+- clean: ['~'] # remove dead symlinks
+
+- link:
+    ~/.zshrc: cfg-home/.zshrc
+    ~/.zshenv: cfg-home/.zshenv
+    ~/.condarc: cfg-home/.condarc
+    ~/.hushlogin: cfg-home/.hushlogin
+    ~/.config:
+      glob: true
+      path: cfg-xdg/*
+
+    ~/Library/Application Support/:
+      if: '[ `uname` = Darwin ]'
+      force: true
+      glob: true
+      path: app-support/*

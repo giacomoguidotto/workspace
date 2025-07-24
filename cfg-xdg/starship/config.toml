@@ -1,7 +1,7 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 format = '$directory$character'
-right_format = '$all$nix_shell'
+right_format = '$all$direnv$nix_shell'
 
 add_newline = false
 command_timeout = 1000
@@ -14,11 +14,16 @@ format = '[$symbol$branch(:$remote_branch)]($style) '
 format = '[$symbol\[$environment\]]($style) '
 symbol = "🅒 "
 
+[direnv]
+format = '[$loaded]($style) '
+loaded_msg = "📁"
+disabled = false
+
 [deno]
 disabled = true
 
 [nix_shell]
-format = '| [$symbol $name]($style) '
+format = '[$symbol $name]($style) '
 symbol = "❄️"
 
 [palettes.catppuccin_mocha]

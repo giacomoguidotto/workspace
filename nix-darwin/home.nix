@@ -111,28 +111,25 @@
   programs = {
     home-manager.enable = true;
 
-    zsh.enable = true;
-    zsh.enableCompletion = true;
+    # zsh.enable = true;
+    # zsh.enableCompletion = true;
 
     direnv = {
       enable = true;
+      config = {
+        whitelist = {
+          prefix = [
+            "~/dev"
+          ];
+        };
+      };
       nix-direnv.enable = true;
     };
   };
 
   # simlinks of files copied to the Nix store.
   # source path is relative to the flake root.
-  home.file = {
-    # ".config/nvim" = {
-    #   source = ../nvim;
-    #   recursive = true;
-    # };
-
-    ".condarc".source = ../conda/.condarc;
-    ".hushlogin".text = "";
-    ".zshrc".source = ../zsh/.zshrc;
-    # ".zprofile".source = ../zsh/.zprofile;
-  };
+  home.file = { };
 
   # session variables
   # available only if using a home-manager shell

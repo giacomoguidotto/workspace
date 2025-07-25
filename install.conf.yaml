@@ -12,16 +12,26 @@
 - clean: ['~'] # remove dead symlinks
 
 - link:
-    ~/.zshrc: cfg-home/.zshrc
-    ~/.zshenv: cfg-home/.zshenv
-    ~/.condarc: cfg-home/.condarc
-    ~/.hushlogin: cfg-home/.hushlogin
+    ~/.zshrc: cfg/home/.zshrc
+    ~/.zshenv: cfg/home/.zshenv
+    ~/.condarc: cfg/home/.condarc
+    ~/.hushlogin: cfg/home/.hushlogin
+
     ~/.config:
       glob: true
-      path: cfg-xdg/*
+      path: cfg/xdg/*
 
     ~/Library/Application Support/:
       if: '[ `uname` = Darwin ]'
       force: true
       glob: true
-      path: app-support/*
+      path: cfg/app-support/*
+
+    ~/.config/nix-darwin:
+      glob: true
+      path: nix/*
+
+- shell:
+    - command: sudo darwin-rebuild switch --flake ~/.config/nix-darwin
+      description: build and switch to the nix-darwin configuration
+      stdin: true

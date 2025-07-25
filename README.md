@@ -1,28 +1,25 @@
-# dotfiles
+# Workspace
 
-My dotfiles. Powered by Nix.
+[![Built with Nix](https://img.shields.io/badge/Built_With-Nix-5277C3.svg?logo=nixos&labelColor=73C3D5)](https://nixos.org)
 
-## Getting started
+Development environment configuration using [Nix](https://nixos.org). Multiples
+systems are supported using a modular approach that enables separation between
+system and user configuration.
 
-Install Nix ([docs](https://nix.dev/install-nix)):
+It doesn't rely fully on nix. Its intended purpose here is just to configure the
+system's settings and act as a declarative package manager. The configuration of
+the different user applications uses the conventional text files that follows
+the best practices and is more aligned with the community.
 
-```sh
-curl -L https://nixos.org/nix/install | sh
-```
+## Quick start
 
-Bootstrap nix-darwin: ([docs](https://github.com/LnL7/nix-darwin/?tab=readme-ov-file#step-2-installing-nix-darwin)):
+For macOS, installation of Nix is recommended but not required. The
+[Determinate Nix](https://docs.determinate.systems/) distro is suggested.
 
-```sh
-nix run nix-darwin -- switch --flake ./nix-darwin#main
-```
-
-Nix home-manager dotfiles have some issue due to protection policies.
-Some app need to access their configs in write mode.
-
-As a workaround, use `stow` (you might need to remove already existing folders inside `~/.config`):
+Clone the repo and run:
 
 ```sh
-stow .
+./install
 ```
 
 ## Quick links
@@ -31,9 +28,11 @@ stow .
 - [Nix Home Manager Search](https://home-manager-options.extranix.com/release=master)
 - [Nix Darwin Manual](https://daiderd.com/nix-darwin/manual/index.html)
 
-## Inspirations
+## Acknowledgments
 
-This dotfiles are heavily inspired by:
+Workspace is heavily inspired by:
 
-- [omerxx/dotfiles](https://github.com/omerxx/dotfiles)
-- [the-nix-way/dev-templates](https://github.com/the-nix-way/dev-templates)
+- [omerxx/dotfiles](https://github.com/omerxx/dotfiles) for its extensive
+  configuration of user applications
+- [marcocondrache/nix-config](https://github.com/marcocondrache/nix-config) for
+  its modular and scalable approach

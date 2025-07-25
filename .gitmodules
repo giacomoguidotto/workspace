@@ -1,3 +1,7 @@
 [submodule "nvim"]
-	path = nvim
+	path = xdg-config/nvim
 	url = https://github.com/GiacomoGuidotto/kickstart.nvim.git
+[submodule "dotbot"]
+	path = dotbot
+	url = https://github.com/anishathalye/dotbot
+	ignore = dirty

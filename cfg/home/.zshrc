@@ -16,6 +16,7 @@ alias lt="eza --tree --level=2 --long --icons --git"
 alias la="tree"
 alias lz="lazygit"
 alias lzd="lazydocker"
+alias lzq="lazysql"
 alias swc="sudo darwin-rebuild switch --flake ~/dev/dotfiles/nix-darwin#main"
 alias tp="btop"
 alias up="nix flake update --flake ~/dev/dotfiles/nix-darwin && swc"
@@ -46,11 +47,6 @@ source <(carapace _carapace)
 # direnv - directory-specific environments
 eval "$(direnv hook zsh)"
 
-if [[ -n "$VSCODE_INJECTION" && -z "$VSCODE_TERMINAL_DIRENV_LOADED" && -f .envrc ]]; then
-    cd .. && cd - > /dev/null
-    export VSCODE_TERMINAL_DIRENV_LOADED=1
-fi
-
 # fzf - fuzzy finder
 source <(fzf --zsh)
 
@@ -59,3 +55,9 @@ eval "$(starship init zsh)"
 
 # zoxide - directory jumping
 eval "$(zoxide init zsh)"
+
+# vscode workaround for not loading direnv when opening a new terminal
+if [[ -n "$VSCODE_INJECTION" && -z "$VSCODE_TERMINAL_DIRENV_LOADED" && -f .envrc ]]; then
+    cd .. && cd - > /dev/null
+    export VSCODE_TERMINAL_DIRENV_LOADED=1
+fi

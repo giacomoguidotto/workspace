@@ -4,5 +4,8 @@
 {
   imports = [
     ./base/darwin-base.nix
+    ../homes/giacomo.nix
   ];
+
+  system.primaryUser = "giacomo";
 }

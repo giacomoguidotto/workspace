@@ -17,3 +17,5 @@ export STARSHIP_CONFIG="$HOME/.config/starship/config.toml"
 # set the docker host to the colima socket
 export DOCKER_HOST="unix://$HOME/.config/colima/docker.sock"
 
+# load session variables from home-manager
+. "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh"

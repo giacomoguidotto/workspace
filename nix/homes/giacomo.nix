@@ -14,11 +14,9 @@
 }:
 let
   user = "giacomo";
-  isDarwin = builtins.match "-darwin" system != null;
+  isDarwin = builtins.match ".*darwin.*" system != null;
 in
 {
-  system.primaryUser = "giacomo";
-
   users.users.giacomo = {
     name = user;
     home = if isDarwin then "/Users/${user}" else "/home/${user}";
@@ -31,11 +29,10 @@ in
   nixpkgs.config.allowUnfreePredicate =
     pkg:
     builtins.elem (lib.getName pkg) [
-      # "cursor"
-      # "raycast"
-      # "spotify"
-      # "discord"
-      # "signal-desktop"
+      "cursor"
+      "discord"
+      "raycast"
+      "spotify"
     ];
 
   services = {
@@ -47,18 +44,14 @@ in
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
 
-  xdg.enable = true;
-
   # programs managed by home-manager
   programs = {
-    home-manager.enable = true;
-
     # zsh.enable = true;
     # zsh.enableCompletion = true;
 
     direnv = {
       enable = true;
-      config = {
+      settings = {
         whitelist = {
           prefix = [ "~/dev" ];
         };
@@ -69,97 +62,112 @@ in
 
   # inner home-manager module configuration
   # reference: https://nix-community.github.io/home-manager/options.xhtml
-  home-manager.users.giacomo = {
-    home = {
-      username = user;
-      homeDirectory = if isDarwin then "/Users/${user}" else "/home/${user}";
+  home-manager.users.giacomo =
+    { lib, ... }:
+    let
+      hmlib = lib;
+    in
+    {
+      xdg.enable = true;
 
-      stateVersion = lib.mkDefault "25.05";
+      home = {
+        username = user;
+        homeDirectory = if isDarwin then "/Users/${user}" else "/home/${user}";
 
-      packages = with pkgs; [
-        # nix internals
-        nixd
-        nil
-        nixfmt-rfc-style
+        stateVersion = hmlib.mkDefault "25.05";
 
-        # sdks
-        nodejs-slim # needed for gh copilot
-        texliveFull
-        tex-fmt
+        packages = with pkgs; [
+          # nix internals
+          nixd
+          nil
+          nixfmt-rfc-style
 
-        # desktop environment
-        aerospace
+          # sdks
+          # nodejs-slim # needed for gh copilot
+          # TODO: put in a shell
+          # texliveFull
+          # tex-fmt
 
-        # terminals
-        # ghostty
+          # desktop environment
+          aerospace
 
-        # shells
-        nushell
+          # terminals
+          # ghostty
 
-        # cli tools
-        azure-cli
-        atuin
-        bat
-        btop
-        carapace
-        delta
-        eza
-        fd
-        fzf
-        git
-        jankyborders
-        kubectl
-        kubectx
-        k9s
-        lazydocker
-        lazygit
-        lazysql
-        neofetch
-        nmap
-        ripgrep
-        starship
-        stow
-        tree
-        xh
-        watchman
-        ollama
-        yazi
-        zoxide
-        zellij
+          # shells
+          nushell
 
-        # editors
-        neovim
-        code-cursor
+          # cli tools
+          azure-cli
+          atuin
+          bat
+          btop
+          carapace
+          delta
+          eza
+          fd
+          fzf
+          git
+          jankyborders
+          kubectl
+          kubectx
+          k9s
+          lazydocker
+          lazygit
+          lazysql
+          neofetch
+          nmap
+          ripgrep
+          starship
+          stow
+          tree
+          xh
+          watchman
+          ollama
+          yazi
+          zoxide
+          zellij
 
-        # docker
-        colima
-        docker-client
-        docker-compose
+          # editors
+          neovim
+          code-cursor
 
-        # apps
-        discord
-        mas
-        raycast
-        spotify
-        # signal-desktop # not available on aarch64-apple-darwin
-        obsidian
-        # vlc # not available on aarch64-apple-darwin
+          # docker
+          colima
+          docker-client
+          docker-compose
 
-        # nerd fonts
-        nerd-fonts.blex-mono
-        nerd-fonts.jetbrains-mono
-        nerd-fonts.zed-mono
-      ];
+          # apps
+          discord
+          mas
+          raycast
+          spotify
+          # signal-desktop # not available on aarch64-apple-darwin
+          # vlc # not available on aarch64-apple-darwin
+
+          # nerd fonts
+          nerd-fonts.blex-mono
+          nerd-fonts.jetbrains-mono
+          nerd-fonts.zed-mono
+        ];
+
+        # simlinks of files copied to the Nix store.
+        # source path is relative to the flake root.
+        file = { };
+
+        # session variables
+        # available only if using a home-manager shell
+        sessionVariables = { };
+
+        # scripts ran after home-manager activation
+        activation = {
+          install-xcode = hmlib.hm.dag.entryAfter [ "home.packages" ] ''
+            ${pkgs.mas}/bin/mas install 497799835 2> /dev/null
+          '';
+          install-whatsapp = hmlib.hm.dag.entryAfter [ "home.packages" ] ''
+            ${pkgs.mas}/bin/mas install 310633997 2> /dev/null
+          '';
+        };
+      };
     };
-
-    # scripts ran after home-manager activation
-    home.activation = {
-      installXCode = lib.hm.dag.entryAfter [ "home.packages" ] ''
-        ${pkgs.mas}/bin/mas install 497799835 2> /dev/null
-      '';
-      installWhatsApp = lib.hm.dag.entryAfter [ "home.packages" ] ''
-        ${pkgs.mas}/bin/mas install 310633997 2> /dev/null
-      '';
-    };
-  };
 }

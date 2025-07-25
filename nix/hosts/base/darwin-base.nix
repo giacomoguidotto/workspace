@@ -1,11 +1,7 @@
 # attribute set for os underlying configuration
 # includes: security, desktop, system apps, keyboard layout, trackpad settings, brew
 # reference: https://nix-darwin.github.io/nix-darwin/manual/index.html
-{
-  lib,
-  host,
-  ...
-}:
+{ host, ... }:
 {
   imports = [
     ./nix-base.nix
@@ -15,7 +11,7 @@
     # used for backwards compatibility
     # please read the changelog BEFORE changing:
     # $ darwin-rebuild changelog
-    stateVersion = lib.mkDefault "25.05";
+    stateVersion = 6;
 
     defaults = {
       dock = {
@@ -117,6 +113,8 @@
           USBMouseStopsTrackpad = 0;
         };
       };
+
+      SoftwareUpdate.AutomaticallyInstallMacOSUpdates = true;
     };
   };
 
@@ -125,7 +123,6 @@
     localHostName = host;
   };
 
-  SoftwareUpdate.AutomaticallyInstallMacOSUpdates = true;
   security.pam.services.sudo_local.touchIdAuth = true;
 
   homebrew.enable = false;

@@ -26,7 +26,6 @@
         evolve = lib.makeSystem {
           host = "evolve";
           system = "aarch64-darwin";
-          darwin = true;
         };
       };
 
@@ -34,7 +33,6 @@
       #   anotherhost = lib.makeSystem {
       #     host = "anotherhost";
       #     system = "x86_64-linux";
-      #     darwin = false;
       #   };
       # };
     };

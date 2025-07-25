@@ -21,7 +21,7 @@ inputs@{ nixpkgs,  ... }:
         else 
           nixpkgs.lib.nixosSystem;
 
-      hostModule = import ../hosts/${host};
+      hostModule = import ../hosts/${host}.nix;
 
       homeModule =
         if isDarwin then

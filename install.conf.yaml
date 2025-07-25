@@ -18,6 +18,7 @@
     ~/.hushlogin: cfg/home/.hushlogin
 
     ~/.config:
+      force: true
       glob: true
       path: cfg/xdg/*
 
@@ -28,10 +29,17 @@
       path: cfg/app-support/*
 
     ~/.config/nix-darwin:
-      glob: true
-      path: nix/*
+      force: true
+      path: nix
 
 - shell:
-    - command: sudo darwin-rebuild switch --flake ~/.config/nix-darwin
+    - command: |
+        if command -v darwin-rebuild >/dev/null 2>&1; then
+          sudo darwin-rebuild switch --flake ~/.config/nix-darwin
+        else
+          sudo nix run nix-darwin/master#darwin-rebuild -- switch --flake ~/.config/nix-darwin
+        fi
       description: build and switch to the nix-darwin configuration
       stdin: true
+      stdout: true
+      stderr: true

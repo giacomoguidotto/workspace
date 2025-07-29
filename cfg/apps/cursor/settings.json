@@ -1,0 +1,110 @@
+{
+    // editor settings
+    "editor.formatOnType": false,
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "modificationsIfAvailable",
+    "editor.accessibilitySupport": "off",
+    // file settings
+    "files.autoSave": "onFocusChange",
+    "explorer.confirmDragAndDrop": false,
+    "explorer.confirmDelete": false,
+    "explorer.autoReveal": true,
+    // git settings
+    "git.confirmSync": false,
+    "git.autofetch": false,
+    "git.enableSmartCommit": true,
+    // window settings
+    "window.commandCenter": false,
+    "workbench.iconTheme": "catppuccin-mocha",
+    // language-specific settings
+    "[typescript]": {
+        "editor.formatOnPaste": false,
+        "editor.formatOnSave": false,
+        "editor.codeActionsOnSave": {
+            "source.fixAll": "explicit"
+        }
+    },
+    "[javascript]": {
+        "editor.formatOnPaste": false,
+        "editor.formatOnSave": false,
+        "editor.codeActionsOnSave": {
+            "source.fixAll": "explicit"
+        }
+    },
+    "[typescriptreact]": {
+        "editor.formatOnPaste": false,
+        "editor.formatOnSave": false,
+        "editor.codeActionsOnSave": {
+            "source.fixAll": "explicit"
+        }
+    },
+    "[javascriptreact]": {
+        "editor.formatOnPaste": false,
+        "editor.formatOnSave": false,
+        "editor.codeActionsOnSave": {
+            "source.fixAll": "explicit"
+        }
+    },
+    "[latex]": {
+        "editor.wordWrap": "on"
+    },
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnSave": true
+    },
+    // jupyter settings
+    "jupyter.askForKernelRestart": false,
+    "jupyter.interactiveWindow.creationMode": "perFile",
+    "notebook.lineNumbers": "on",
+    // latex settings
+    "latex-workshop.formatting.latex": "tex-fmt",
+    "latex-workshop.latex.autoClean.run": "onBuilt",
+    "latex-workshop.latex.clean.method": "glob",
+    // typescript settings
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    // terminal settings
+    "terminal.integrated.inheritEnv": false,
+    "terminal.integrated.fontFamily": "BlexMono Nerd Font",
+    // diff editor settings
+    "diffEditor.maxComputationTime": 0,
+    // eslint settings
+    "eslint.codeActionsOnSave.mode": "problems",
+    // cursor settings
+    "cursor.cpp.disabledLanguages": [],
+    // spell check settings
+    "cSpell.userWords": [
+        "Alsense",
+        "Brainboard",
+        "dagre",
+        "Damiano",
+        "entityapi",
+        "fontsize",
+        "GIACOMO",
+        "gorm",
+        "GUIDOTTO",
+        "Guids",
+        "keyvals",
+        "Kutta",
+        "layouted",
+        "Numpy",
+        "overfitting",
+        "Pasetto",
+        "pkgs",
+        "relu",
+        "Runge",
+        "scikit",
+        "softplus",
+        "venv"
+    ],
+    "diffEditor.hideUnchangedRegions.enabled": true,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "workbench.colorTheme": "Catppuccin Mocha",
+    "workbench.sideBar.location": "right",
+    "gitlens.ai.model": "gitkraken",
+    "gitlens.ai.gitkraken.model": "gemini:gemini-2.0-flash",
+    "gitlens.launchpad.indicator.enabled": false,
+    "editor.unicodeHighlight.invisibleCharacters": false,
+    "dafny.automaticVerification": "onsave",
+    "nix.enableLanguageServer": true
+}

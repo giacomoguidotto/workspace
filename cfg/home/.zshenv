@@ -19,3 +19,17 @@ export DOCKER_HOST="unix://$HOME/.config/colima/docker.sock"
 
 # load session variables from home-manager
 . "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh"
+
+# nix-darwin switch function
+# NOTE: should keep this file as small as possible but still need this function for bootstrapping
+# TODO: find a better solution
+swc() {
+  if ! command -v nix >/dev/null 2>&1; then
+    echo "nix not found, skipping switch..."
+  elif command -v darwin-rebuild >/dev/null 2>&1; then
+    sudo darwin-rebuild switch --flake ~/.config/nix-darwin
+  else
+    echo "first time running, switching with nix..."
+    sudo nix run nix-darwin/master#darwin-rebuild -- switch --flake ~/.config/nix-darwin
+  fi
+}

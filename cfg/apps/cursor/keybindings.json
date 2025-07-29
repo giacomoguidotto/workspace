@@ -1,0 +1,233 @@
+[
+    // global bindings (approximated context for menu navigation)
+    {
+        "key": "cmd+j",
+        "command": "list.focusDown",
+        "when": "listFocus && !inputFocus"
+    },
+    {
+        "key": "cmd+k",
+        "command": "list.focusUp",
+        "when": "listFocus && !inputFocus"
+    },
+    {
+        "key": "ctrl+shift+o",
+        "command": "workbench.action.openRecent"
+    },
+    {
+        "key": "ctrl+shift+h",
+        "command": "workbench.action.previousEditor"
+    },
+    {
+        "key": "ctrl+shift+l",
+        "command": "workbench.action.nextEditor"
+    },
+    // pane navigation from editor
+    {
+        "key": "ctrl+h",
+        "command": "workbench.action.focusLeftGroup",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+j",
+        "command": "workbench.action.focusBelowGroup",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+k",
+        "command": "workbench.action.focusAboveGroup",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+l",
+        "command": "workbench.action.focusRightGroup",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+shift+j",
+        "command": "editorScroll",
+        "args": {
+            "to": "down"
+        },
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+shift+k",
+        "command": "editorScroll",
+        "args": {
+            "to": "up"
+        },
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+-",
+        "command": "editor.action.fontZoomOut",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+=",
+        "command": "editor.action.fontZoomIn",
+        "when": "editorTextFocus"
+    },
+    // note: ctrl+d commonly conflicts with 'add selection to next find match'
+    {
+        "key": "ctrl+d",
+        "command": "workbench.action.splitEditorRight",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+shift+d",
+        "command": "workbench.action.splitEditorDown",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "cmd+shift+c",
+        "command": "copyRelativePath",
+        "when": "editorTextFocus"
+    },
+    // pane navigation from terminal
+    {
+        "key": "ctrl+h",
+        "command": "workbench.action.focusLeftGroup",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "ctrl+j",
+        "command": "workbench.action.focusBelowGroup",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "ctrl+k",
+        "command": "workbench.action.focusAboveGroup",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "ctrl+l",
+        "command": "workbench.action.focusRightGroup",
+        "when": "terminalFocus"
+    },
+    // pane navigation from project panel (explorer)
+    {
+        "key": "ctrl+h",
+        "command": "workbench.action.focusLeftGroup",
+        "when": "explorerviewletfocus"
+    },
+    {
+        "key": "ctrl+j",
+        "command": "workbench.action.focusBelowGroup",
+        "when": "explorerViewletFocus"
+    },
+    {
+        "key": "ctrl+k",
+        "command": "workbench.action.focusAboveGroup",
+        "when": "explorerViewletFocus"
+    },
+    {
+        "key": "ctrl+l",
+        "command": "workbench.action.focusRightGroup",
+        "when": "explorerViewletFocus"
+    },
+    // file explorer actions
+    {
+        "key": "ctrl+d",
+        "command": "explorer.newFolder",
+        "when": "explorerViewletFocus"
+    },
+    {
+        "key": "ctrl+f",
+        "command": "explorer.newFile",
+        "when": "explorerViewletFocus"
+    },
+    // scroll active buffer while focussing the explorer
+    {
+        "key": "shift+j",
+        "command": "editorScroll",
+        "args": {
+            "to": "down"
+        },
+        "when": "explorerViewletFocus"
+    },
+    {
+        "key": "shift+k",
+        "command": "editorScroll",
+        "args": {
+            "to": "up"
+        },
+        "when": "explorerViewletFocus"
+    },
+    // context menu / suggestion / code action navigation in editor
+    {
+        "key": "cmd+j",
+        "command": "selectNextSuggestion",
+        "when": "editorTextFocus && suggestWidgetVisible"
+    },
+    {
+        "key": "cmd+j",
+        "command": "list.focusDown",
+        "when": "editorTextFocus && quickFixWidgetVisible"
+    },
+    {
+        "key": "cmd+k",
+        "command": "selectPrevSuggestion",
+        "when": "editorTextFocus && suggestWidgetVisible"
+    },
+    {
+        "key": "cmd+k",
+        "command": "list.focusUp",
+        "when": "editorTextFocus && quickFixWidgetVisible"
+    },
+    {
+        "key": "cmd+/",
+        "command": "editor.action.commentLine",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+g",
+        "command": "editor.action.addSelectionToNextFindMatch",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "cmd+backspace",
+        "command": "editor.action.deleteLines",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "cmd+c",
+        "command": "editor.action.clipboardCopyAction",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "cmd+[",
+        "command": "workbench.action.navigateBack"
+    },
+    {
+        "key": "cmd+]",
+        "command": "workbench.action.navigateForward"
+    },
+    {
+        "key": "ctrl+cmd+z",
+        "command": "git.revertSelectedRanges",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    // multi-cursor navigation
+    {
+        "key": "alt+shift+up",
+        "command": "editor.action.insertCursorAbove",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "alt+shift+down",
+        "command": "editor.action.insertCursorBelow",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "cmd+shift+g",
+        "command": "workbench.view.scm"
+    },
+    // toggle replace mode
+    {
+        "key": "cmd+r",
+        "command": "editor.action.startFindReplaceAction",
+        "when": "editorTextFocus"
+    }
+]

@@ -1,14 +1,20 @@
 [[ ${-} = ${-/i/} ]] && return
 
+# system management functions
+up() {
+    sudo determinate-nixd upgrade
+    nix flake update --flake ~/.config/nix-darwin
+    swc
+}
+
+
 # aliases
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias ......="cd ../../../../.."
-# alias cat="bat"
 alias cl="clear"
-# alias cd="z"
 alias d='colima start'
 alias dlz="d && lzd"
 alias l="eza -l --icons --git -a"
@@ -17,11 +23,10 @@ alias la="tree"
 alias lz="lazygit"
 alias lzd="lazydocker"
 alias lzq="lazysql"
-alias swc="sudo darwin-rebuild switch --flake ~/dev/dotfiles/nix-darwin#main"
 alias tp="btop"
-alias up="nix flake update --flake ~/dev/dotfiles/nix-darwin && swc"
 alias v="nvim"
 alias x="exit"
+alias y="yazi"
 alias zz="zellij"
 alias za="zellij a"
 
@@ -61,3 +66,9 @@ if [[ -n "$VSCODE_INJECTION" && -z "$VSCODE_TERMINAL_DIRENV_LOADED" && -f .envrc
     cd .. && cd - > /dev/null
     export VSCODE_TERMINAL_DIRENV_LOADED=1
 fi
+
+# Nix
+if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+	. '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+fi
+# End Nix

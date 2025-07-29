@@ -14,13 +14,40 @@ the best practices and is more aligned with the community.
 ## Quick start
 
 For macOS, installation of Nix is recommended but not required. The
-[Determinate Nix](https://docs.determinate.systems/) distro is suggested.
+[Determinate Nix](https://determinate.systems/nix-installer/) distro is suggested.
 
 Clone the repo and run:
 
 ```sh
 ./install
 ```
+
+## Troubleshooting
+
+Collection of issues faced during the installation process. Hopefully useful for
+others :)
+
+### cannot create directory [...]: Operation not permitted
+
+In case of errors like the following:
+
+```
+error: Cannot build '/nix/store/8icjqwqrw122n9h3bliv1d3sbaxvphkx-cursor-1.2.2.drv'.
+       Reason: builder failed with exit code 1.
+       Output paths:
+         /nix/store/mdwh1hkzgqib6kj3xkjzaf3rhd2gh2wm-cursor-1.2.2
+       Last 8 log lines:
+       > Running phase: unpackPhase
+       > unpacking source archive /nix/store/r64az1s96fa6s50z3fn2bjz34xxqacy6-Cursor-darwin-arm64.dmg
+       > source root is Cursor.app
+       > Running phase: patchPhase
+       > Running phase: updateAutotoolsGnuConfigScriptsPhase
+       > Running phase: glibPreInstallPhase
+       > Running phase: installPhase
+       > mkdir: cannot create directory '/nix/store/mdwh1hkzgqib6kj3xkjzaf3rhd2gh2wm-cursor-1.2.2/Applications/Cursor.app': Operation not permitted
+```
+
+follow the instructions in [this issue](https://github.com/nix-darwin/nix-darwin/issues/1315#issuecomment-2821371305)
 
 ## Quick links
 

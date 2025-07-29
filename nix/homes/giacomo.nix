@@ -82,16 +82,11 @@ in
           nil
           nixfmt-rfc-style
 
-          # sdks
-          # nodejs-slim # needed for gh copilot
-          # TODO: put in a shell
-          # texliveFull
-          # tex-fmt
-
           # desktop environment
           aerospace
 
           # terminals
+          # not available on aarch64-apple-darwin
           # ghostty
 
           # shells
@@ -142,8 +137,11 @@ in
           mas
           raycast
           spotify
-          # signal-desktop # not available on aarch64-apple-darwin
-          # vlc # not available on aarch64-apple-darwin
+          brave
+
+          # not available on aarch64-apple-darwin
+          # signal-desktop
+          # vlc
 
           # nerd fonts
           nerd-fonts.blex-mono

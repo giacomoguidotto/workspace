@@ -7,7 +7,6 @@ up() {
     swc
 }
 
-
 # aliases
 alias ..="cd .."
 alias ...="cd ../.."
@@ -15,10 +14,12 @@ alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias ......="cd ../../../../.."
 alias cl="clear"
-alias d='colima start'
+alias d="colima start"
+alias ds="colima stop"
 alias dlz="d && lzd"
-alias l="eza -l --icons --git -a"
-alias lt="eza --tree --level=2 --long --icons --git"
+alias dv="devbox"
+alias l="eza -la --icons --git"
+alias lt="l --tree --level=2 --long"
 alias la="tree"
 alias lz="lazygit"
 alias lzd="lazydocker"
@@ -27,8 +28,8 @@ alias tp="btop"
 alias v="nvim"
 alias x="exit"
 alias y="yazi"
-alias zz="zellij"
 alias za="zellij a"
+alias zz="zellij"
 
 # navigation
 _fselect() { fd "$@" 2>/dev/null | fzf --height 40% --reverse --preview 'tree -C {} | head -100' --query "${@: -1}"; }
@@ -67,8 +68,3 @@ if [[ -n "$VSCODE_INJECTION" && -z "$VSCODE_TERMINAL_DIRENV_LOADED" && -f .envrc
     export VSCODE_TERMINAL_DIRENV_LOADED=1
 fi
 
-# Nix
-if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
-	. '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
-fi
-# End Nix

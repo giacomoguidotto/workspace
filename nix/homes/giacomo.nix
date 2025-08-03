@@ -99,6 +99,7 @@ in
           btop
           carapace
           delta
+          devbox
           eza
           fd
           fzf
@@ -133,11 +134,11 @@ in
           docker-compose
 
           # apps
+          brave
           discord
           mas
           raycast
           spotify
-          brave
 
           # not available on aarch64-apple-darwin
           # signal-desktop

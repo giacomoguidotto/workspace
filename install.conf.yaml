@@ -14,7 +14,6 @@
 - link:
     ~/.zshrc: cfg/home/.zshrc
     ~/.zshenv: cfg/home/.zshenv
-    ~/.condarc: cfg/home/.condarc
     ~/.hushlogin: cfg/home/.hushlogin
 
     ~/.config:

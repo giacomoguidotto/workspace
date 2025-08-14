@@ -47,7 +47,7 @@ if.app-name-regex-substring = 'finder|spotify|music|discord|facetime'
 run = 'layout floating'
 
 [[on-window-detected]]
-if.app-name-regex-substring = 'zen|brave'
+if.app-name-regex-substring = 'zen'
 run = 'move-node-to-workspace 1'
 
 [[on-window-detected]]

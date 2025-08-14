@@ -62,3 +62,9 @@ eval "$(starship init zsh)"
 # zoxide - directory jumping
 eval "$(zoxide init zsh)"
 
+# vscode workaround for not loading direnv when opening a new terminal
+if [[ -n "$VSCODE_INJECTION" && -z "$VSCODE_TERMINAL_DIRENV_LOADED" && -f .envrc ]]; then
+    cd .. && cd - > /dev/null
+    export VSCODE_TERMINAL_DIRENV_LOADED=1
+fi
+

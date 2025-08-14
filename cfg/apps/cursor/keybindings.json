@@ -1,91 +1,73 @@
 [
-    // global bindings (approximated context for menu navigation)
+    // editor navigation
     {
-        "key": "cmd+j",
-        "command": "list.focusDown",
-        "when": "listFocus && !inputFocus"
+        "key": "cmd+[",
+        "command": "workbench.action.navigateBack"
     },
     {
-        "key": "cmd+k",
-        "command": "list.focusUp",
-        "when": "listFocus && !inputFocus"
+        "key": "cmd+]",
+        "command": "workbench.action.navigateForward"
     },
     {
-        "key": "ctrl+shift+o",
-        "command": "workbench.action.openRecent"
-    },
-    {
-        "key": "ctrl+shift+h",
+        "key": "ctrl+[",
         "command": "workbench.action.previousEditor"
     },
     {
-        "key": "ctrl+shift+l",
+        "key": "ctrl+]",
         "command": "workbench.action.nextEditor"
     },
-    // pane navigation from editor
     {
-        "key": "ctrl+h",
-        "command": "workbench.action.focusLeftGroup",
-        "when": "editorTextFocus"
+        "key": "ctrl+shift+h",
+        "command": "workbench.action.focusAuxiliaryBar"
     },
     {
-        "key": "ctrl+j",
-        "command": "workbench.action.focusBelowGroup",
-        "when": "editorTextFocus"
-    },
-    {
-        "key": "ctrl+k",
-        "command": "workbench.action.focusAboveGroup",
-        "when": "editorTextFocus"
-    },
-    {
-        "key": "ctrl+l",
-        "command": "workbench.action.focusRightGroup",
-        "when": "editorTextFocus"
+        "key": "ctrl+shift+h",
+        "command": "workbench.action.toggleAuxiliaryBar",
+        "when": "auxiliaryBarFocus"
     },
     {
         "key": "ctrl+shift+j",
-        "command": "editorScroll",
-        "args": {
-            "to": "down"
-        },
-        "when": "editorTextFocus"
+        "command": "workbench.action.focusPanel"
+    },
+    {
+        "key": "ctrl+shift+j",
+        "command": "workbench.action.togglePanel",
+        "when": "panelFocus"
     },
     {
         "key": "ctrl+shift+k",
-        "command": "editorScroll",
-        "args": {
-            "to": "up"
-        },
+        "command": "workbench.action.focusFirstEditorGroup"
+    },
+    {
+        "key": "ctrl+shift+l",
+        "command": "workbench.view.explorer"
+    },
+    {
+        "key": "ctrl+shift+l",
+        "command": "workbench.action.toggleSidebarVisibility",
+        "when": "explorerViewletFocus"
+    },
+    // pane navigation
+    {
+        "key": "ctrl+h",
+        "command": "workbench.action.focusLeftGroup",
         "when": "editorTextFocus"
     },
     {
-        "key": "ctrl+-",
-        "command": "editor.action.fontZoomOut",
+        "key": "ctrl+j",
+        "command": "workbench.action.focusBelowGroup",
         "when": "editorTextFocus"
     },
     {
-        "key": "ctrl+=",
-        "command": "editor.action.fontZoomIn",
-        "when": "editorTextFocus"
-    },
-    // note: ctrl+d commonly conflicts with 'add selection to next find match'
-    {
-        "key": "ctrl+d",
-        "command": "workbench.action.splitEditorRight",
+        "key": "ctrl+k",
+        "command": "workbench.action.focusAboveGroup",
         "when": "editorTextFocus"
     },
     {
-        "key": "ctrl+shift+d",
-        "command": "workbench.action.splitEditorDown",
+        "key": "ctrl+l",
+        "command": "workbench.action.focusRightGroup",
         "when": "editorTextFocus"
     },
-    {
-        "key": "cmd+shift+c",
-        "command": "copyRelativePath",
-        "when": "editorTextFocus"
-    },
-    // pane navigation from terminal
     {
         "key": "ctrl+h",
         "command": "workbench.action.focusLeftGroup",
@@ -106,7 +88,6 @@
         "command": "workbench.action.focusRightGroup",
         "when": "terminalFocus"
     },
-    // pane navigation from project panel (explorer)
     {
         "key": "ctrl+h",
         "command": "workbench.action.focusLeftGroup",
@@ -127,18 +108,72 @@
         "command": "workbench.action.focusRightGroup",
         "when": "explorerViewletFocus"
     },
-    // file explorer actions
+    // editor actions
+    {
+        "key": "cmd+/",
+        "command": "editor.action.commentLine",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "cmd+backspace",
+        "command": "editor.action.deleteLines",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "cmd+c",
+        "command": "editor.action.clipboardCopyAction",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "cmd+ctrl+z",
+        "command": "git.revertSelectedRanges",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    // multicursor
+    {
+        "key": "cmd+shift+k",
+        "command": "editor.action.insertCursorAbove",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "cmd+shift+j",
+        "command": "editor.action.insertCursorBelow",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    // editor splittingc
     {
         "key": "ctrl+d",
-        "command": "explorer.newFolder",
-        "when": "explorerViewletFocus"
+        "command": "workbench.action.splitEditorRight",
+        "when": "editorTextFocus"
     },
     {
-        "key": "ctrl+f",
-        "command": "explorer.newFile",
-        "when": "explorerViewletFocus"
+        "key": "ctrl+shift+d",
+        "command": "workbench.action.splitEditorDown",
+        "when": "editorTextFocus"
     },
-    // scroll active buffer while focussing the explorer
+    // find and replace
+    {
+        "key": "cmd+r",
+        "command": "editor.action.startFindReplaceAction",
+        "when": "editorTextFocus"
+    },
+    // scrolling
+    {
+        "key": "cmd+ctrl+shift+j",
+        "command": "editorScroll",
+        "args": {
+            "to": "down"
+        },
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "cmd+ctrl+shift+k",
+        "command": "editorScroll",
+        "args": {
+            "to": "up"
+        },
+        "when": "editorTextFocus"
+    },
     {
         "key": "shift+j",
         "command": "editorScroll",
@@ -155,10 +190,26 @@
         },
         "when": "explorerViewletFocus"
     },
-    // context menu / suggestion / code action navigation in editor
+    // zoom
+    {
+        "key": "ctrl+-",
+        "command": "editor.action.fontZoomOut",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+=",
+        "command": "editor.action.fontZoomIn",
+        "when": "editorTextFocus"
+    },
+    // suggestions and quick fixes
     {
         "key": "cmd+j",
         "command": "selectNextSuggestion",
+        "when": "editorTextFocus && suggestWidgetVisible"
+    },
+    {
+        "key": "cmd+k",
+        "command": "selectPrevSuggestion",
         "when": "editorTextFocus && suggestWidgetVisible"
     },
     {
@@ -168,66 +219,69 @@
     },
     {
         "key": "cmd+k",
-        "command": "selectPrevSuggestion",
-        "when": "editorTextFocus && suggestWidgetVisible"
+        "command": "list.focusUp",
+        "when": "editorTextFocus && quickFixWidgetVisible"
+    },
+    // list navigation
+    {
+        "key": "cmd+j",
+        "command": "list.focusDown",
+        "when": "listFocus && !inputFocus"
     },
     {
         "key": "cmd+k",
         "command": "list.focusUp",
-        "when": "editorTextFocus && quickFixWidgetVisible"
+        "when": "listFocus && !inputFocus"
+    },
+    // file explorer
+    {
+        "key": "d",
+        "command": "explorer.newFolder",
+        "when": "explorerViewletFocus && !inputFocus"
     },
     {
-        "key": "cmd+/",
-        "command": "editor.action.commentLine",
-        "when": "editorTextFocus && !editorReadonly"
+        "key": "f",
+        "command": "explorer.newFile",
+        "when": "explorerViewletFocus && !inputFocus"
     },
     {
-        "key": "ctrl+g",
-        "command": "editor.action.addSelectionToNextFindMatch",
-        "when": "editorTextFocus && !editorReadonly"
+        "key": "cmd+shift+c",
+        "command": "copyRelativeFilePath",
+        "when": "editorTextFocus"
+    },
+    // terminal
+    {
+        "key": "cmd+`",
+        "command": "workbench.action.terminal.toggleTerminal"
     },
     {
-        "key": "cmd+backspace",
-        "command": "editor.action.deleteLines",
-        "when": "editorTextFocus && !editorReadonly"
+        "key": "cmd+k",
+        "command": "workbench.action.terminal.clear",
+        "when": "terminalFocus"
     },
-    {
-        "key": "cmd+c",
-        "command": "editor.action.clipboardCopyAction",
-        "when": "editorTextFocus && !editorReadonly"
-    },
-    {
-        "key": "cmd+[",
-        "command": "workbench.action.navigateBack"
-    },
-    {
-        "key": "cmd+]",
-        "command": "workbench.action.navigateForward"
-    },
-    {
-        "key": "ctrl+cmd+z",
-        "command": "git.revertSelectedRanges",
-        "when": "editorTextFocus && !editorReadonly"
-    },
-    // multi-cursor navigation
-    {
-        "key": "alt+shift+up",
-        "command": "editor.action.insertCursorAbove",
-        "when": "editorTextFocus && !editorReadonly"
-    },
-    {
-        "key": "alt+shift+down",
-        "command": "editor.action.insertCursorBelow",
-        "when": "editorTextFocus && !editorReadonly"
-    },
+    // git
     {
         "key": "cmd+shift+g",
         "command": "workbench.view.scm"
     },
-    // toggle replace mode
+    // go to reference/implementation
     {
-        "key": "cmd+r",
-        "command": "editor.action.startFindReplaceAction",
-        "when": "editorTextFocus"
-    }
+        "key": "cmd+j",
+        "command": "editor.action.goToReferences",
+        "when": "editorHasReferenceProvider"
+    },
+    // recent files
+    {
+        "key": "ctrl+shift+o",
+        "command": "workbench.action.openRecent"
+    },
+    // remove defaults
+    {
+        "key": "cmd+b",
+        "command": "-workbench.action.toggleSidebarVisibility"
+    },
+    {
+        "key": "cmd+j",
+        "command": "-workbench.action.togglePanel"
+    },
 ]

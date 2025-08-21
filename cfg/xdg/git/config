@@ -34,6 +34,5 @@
     paging = never
     features = catppuccin-mocha
 
-[url "git@ssh.dev.azure.com:v3/danfoss/Alsense/alsense.shared.go"]
-	insteadOf = https://danfoss.visualstudio.com/Alsense/_git/alsense.shared.go
-
+[url "git@ssh.dev.azure.com:v3/danfoss/Alsense/"]
+	insteadOf = https://danfoss.visualstudio.com/Alsense/_git/

@@ -101,17 +101,21 @@ in
           carapace
           delta
           devbox
+          dust
           eza
           fd
           fzf
           git
+          hyperfine
           jankyborders
           kubectl
           kubectx
           k9s
+          kondo
           lazydocker
           lazygit
           lazysql
+          ncspot
           neofetch
           nmap
           ripgrep
@@ -121,6 +125,8 @@ in
           xh
           watchman
           ollama
+          tokei
+          wiki-tui 
           yazi
           zoxide
           zellij

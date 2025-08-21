@@ -16,3 +16,227 @@ exit
 x
 exit
 git submodule update --remote
+swc
+cd /Users/giacomo/dev/workspace && nu --check cfg/xdg/nushell/config.nu
+nu --check cfg/xdg/nushell/config.nu
+nu -c "source cfg/xdg/nushell/config.nu"
+zz -s w -n zlayout.kdl
+swc
+dust
+dust --print-errors
+sudo dust --print-errors
+duso
+dust
+wsc
+swc
+ncspot 
+z .co
+l
+lt
+bat configstore/update-notifier-npm-check-updates.json 
+rm -rf configstore/
+cat github-copilot/versions.json 
+v
+l
+rm -rf github-copilot/
+l
+v
+l
+lt
+bat ncspot/config.toml 
+lt raycast/extensions/
+bat ncspot/config.toml 
+lt
+ncspot
+ping -4 api.spotify.com
+ping api.spotify.com
+z
+swc
+l dev/
+z dev
+lt
+z sipipa
+z latex/sir-pinn-paper/
+bat ../devbox.json 
+devbox init
+devbox add texliveFull@latest tex-fmt@latest
+dv gen direnv
+...
+mv latex/sir-pinn-paper/ sir-pinn-paper
+lt
+rm -rf latex/
+lt
+mv sir-pinn-paper/ uni/sir-pinn-paper
+mkdir uni
+mv danfoss/ work/
+lt
+mv sir-pinn-paper/ uni/sir-pinn-paper
+lt
+rm -rf redis/
+z python/
+bat devbox.json 
+z sir-pinn/
+dv init
+dv add uv@latest
+dv gen direnv
+l
+...
+mv python/sir-pinn/ uni/sir-pinn
+lt
+rm -rf python/
+lt
+rm .DS_Store
+lt
+mkdir life
+mv workspace/ life/workspace/
+z life/workspace/
+./install
+..
+lt
+z nodejs/
+bat devbox.json 
+z guidotto-dev/
+dv init
+dv add nodejs@latest npm-check-updates bun@latest biome@latest
+dv gen direnv
+z sir
+...
+mv nodejs/guidotto-dev/ life/guidotto.dev
+lt
+rm -rf nodejs/
+lt
+mv vault/ life/vault/
+lt
+z .co
+lt
+z Ap
+..
+z `Library/Application Support/`
+z lazygit/
+lt
+v state.yml 
+z
+lz
+z dev/life/workspace/
+lz
+..
+l
+z vault/
+lz
+z gui
+z ../guidotto.dev/
+lz
+...
+z uni/sir-pinn/
+dv gen direnv
+lz
+z ../sir-pinn-paper/
+lz
+...
+z work/entity-api/
+z ../shared.go/
+z ../web/
+z wspa
+z worksp
+cursor .
+z enti
+cursor .
+z web
+cursor .
+cat ../../life/guidotto.dev/devbox.json 
+..
+dv add nodejs@latest npm-check-updates bun@latest biome@latest
+z web/
+yarn
+..
+dv gen direnv
+l
+direnv reload 
+..
+z -
+z web/
+yarn
+.. 
+devbox info nodejs
+v devbox.json 
+z web/
+yarn
+..
+lt
+l
+cursor deployment/
+cursor energy-api/
+cursor draw-api/
+rm -rf authz/
+rmdir script.ini/
+rm -rf script.ini/
+fd .env
+fd .envrc
+l
+fd -h
+fd -H .envrc
+swc
+zz k w
+zz delete-all-sessions
+zz ls
+z work
+up
+zz -s w -n zlayout.kdl
+lz
+z .config/
+lt
+cursor entity-api/
+kf
+make dev
+lz
+make dev 
+ma
+kf -p entity
+cursor  shared.go/
+..
+z -
+make dev
+kf -p entity
+go
+make
+z shared.go/
+make format
+make lint
+make
+direnv reload 
+make lint
+make dev 
+direnv reload 
+rm -rf .vscode/
+cursor .
+lz
+make
+direnv reload 
+make lint
+make format
+make test
+make update
+GOPRIVATE=danfoss.visualstudio.com go mod tidy -v
+GOPRIVATE=danfoss.visualstudio.com go get -v -u ./...
+git config --global url."git@ssh.dev.azure.com:v3/danfoss/Alsense/".insteadOf "https://danfoss.visualstudio.com/Alsense/_git/"
+z
+z .ssh/
+l
+echo id_rsa.pub
+cat id_rsa.pub
+cat id_rsa.pub | pbcopy 
+make update
+scutil --get ComputerName
+ssh-keygen -t rsa
+cat id_rsa.pub 
+cat id_rsa.pub | pbcopy
+z ent
+make update
+GOPRIVATE=danfoss.visualstudio.com go get -v -u ./...
+z -
+bat known_hosts 
+ssh-keygen
+l
+bat id_ed25519.pub 
+cat id_ed25519.pub  | pbpaste 
+cat id_ed25519.pub  | pbcopy 

@@ -21,14 +21,14 @@ symbol = "🅒 "
 [direnv]
 format = '[$loaded]($style) '
 loaded_msg = "📁"
-disabled = false
+disabled = true
 
 [deno]
 disabled = true
 
 [nix_shell]
-format = '[$symbol $name]($style) '
-symbol = "❄️"
+format = '[$symbol]($style) '
+symbol = "❄️ "
 
 [palettes.catppuccin_mocha]
 rosewater = "#f5e0dc"

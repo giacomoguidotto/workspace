@@ -4,6 +4,17 @@ if not $nu.is-interactive {
 }
 
 # system management functions
+def swc [] {
+  if (which nix | is-empty) {
+    echo "nix not found, skipping switch..."
+  } else if (which darwin-rebuild | is-not-empty) {
+    sudo darwin-rebuild switch --flake ~/.config/nix-darwin
+  } else {
+    echo "first time running, switching with nix..."
+    sudo nix run "nix-darwin/master#darwin-rebuild" -- switch --flake ~/.config/nix-darwin
+  }
+}
+
 def up [] {
   sudo determinate-nixd upgrade
   nix flake update --flake ~/.config/nix-darwin
@@ -22,7 +33,7 @@ alias d       = colima start
 alias ds      = colima stop
 alias dlz     = d | lzd
 alias dv      = devbox
-alias l       = eza -la --icons --git
+alias l       = eza -la --icons --git --sort type
 alias lt      = l --tree --level=2 --long
 alias la      = ^tree
 alias lz      = lazygit

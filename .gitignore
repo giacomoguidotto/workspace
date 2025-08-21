@@ -1,10 +1,4 @@
-karabiner/automatic_backups
-nushell/history.txt
-zed/conversations
-zed/prompts
-
 .DS_Store
-.direnv
 
 btop.log*
 btop.log

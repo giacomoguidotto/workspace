@@ -1,0 +1,18 @@
+history
+zz ls
+zz k w
+zz --help
+zsh
+zz delete-all-sessions
+z dan
+git submodule add https://github.com/nushell/nu_scripts.git cfg/xdg/nushell/nu_scripts
+x
+exit
+./install
+z .con
+l
+l nushell/
+exit
+x
+exit
+git submodule update --remote

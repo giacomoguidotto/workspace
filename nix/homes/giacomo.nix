@@ -33,6 +33,7 @@ in
       "discord"
       "raycast"
       "spotify"
+      "obsidian"
     ];
 
   services = {
@@ -139,6 +140,7 @@ in
           mas
           raycast
           spotify
+          obsidian
 
           # not available on aarch64-apple-darwin
           # signal-desktop

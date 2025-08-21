@@ -49,6 +49,14 @@ error: Cannot build '/nix/store/8icjqwqrw122n9h3bliv1d3sbaxvphkx-cursor-1.2.2.dr
 
 follow the instructions in [this issue](https://github.com/nix-darwin/nix-darwin/issues/1315#issuecomment-2821371305)
 
+### updating the submodules
+
+Just run:
+
+```sh
+git submodule update --remote
+```
+
 ## Quick links
 
 - [Nix Home Manager Manual](https://daiderd.com/nix-darwin/manual/index.html)

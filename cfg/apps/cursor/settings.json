@@ -107,5 +107,9 @@
     "editor.unicodeHighlight.invisibleCharacters": false,
     "dafny.automaticVerification": "onsave",
     "nix.enableLanguageServer": true,
-    "editor.tabSize": 2
+    "editor.tabSize": 2,
+    "json.schemaDownload.enable": true,
+    "remote.SSH.remotePlatform": {
+        "entity-api.devpod": "linux"
+    }
 }

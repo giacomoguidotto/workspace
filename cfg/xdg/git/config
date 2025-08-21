@@ -2,6 +2,9 @@
 	name = Giacomo Guidotto
 	email = giacomo.guidotto@gmail.com
 
+[init]
+	defaultBranch = main
+
 [include]
     path = ./catppuccin.gitconfig
 
@@ -33,3 +36,4 @@
 
 [url "git@ssh.dev.azure.com:v3/danfoss/Alsense/alsense.shared.go"]
 	insteadOf = https://danfoss.visualstudio.com/Alsense/_git/alsense.shared.go
+

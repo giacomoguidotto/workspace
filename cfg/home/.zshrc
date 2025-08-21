@@ -1,4 +1,10 @@
+# ignore config for non-interactive shells
 [[ ${-} = ${-/i/} ]] && return
+
+# launch nushell, if interactive shell and not already running
+if [ -t 1 ] && command -v nu >/dev/null 2>&1; then
+  exec nu
+fi
 
 # system management functions
 up() {

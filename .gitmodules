@@ -5,3 +5,6 @@
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
 	ignore = dirty
+[submodule "cfg/xdg/nushell/nu_scripts"]
+	path = cfg/xdg/nushell/nu_scripts
+	url = https://github.com/nushell/nu_scripts.git

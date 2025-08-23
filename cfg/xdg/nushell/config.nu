@@ -23,10 +23,10 @@ def up [] {
 
 # aliases
 alias ..      = cd ..
-alias ...     = cd ../..
-alias ....    = cd ../../..
-alias .....   = cd ../../../..
-alias ......  = cd ../../../../..
+alias ...     = cd ...
+alias ....    = cd ....
+alias .....   = cd .....
+alias ......  = cd ......
 
 alias cl      = clear
 alias d       = colima start
@@ -99,6 +99,23 @@ $env.config.hooks.pre_prompt = (
 $env.config.show_banner = false
 $env.config.edit_mode = "vi"
 $env.config.buffer_editor = "v"
+
+$env.config.keybindings ++= [{
+    name: complete_hint
+    modifier: control
+    keycode: char_f
+    mode: [emacs, vi_insert, vi_normal]
+    event: { send: historyhintcomplete }
+}, {
+  name: atuin_in_vi_normal
+  modifier: none
+  keycode: char_k
+  mode: [vi_normal]
+  event: {
+    send: executehostcommand
+    cmd: "with-env { ATUIN_LOG: error, ATUIN_QUERY: (commandline) } { commandline edit (run-external atuin search "--interactive"  e>| str trim) }"
+  }
+}]
 
 # vscode workaround for direnv
 if (('VSCODE_INJECTION' in $env)

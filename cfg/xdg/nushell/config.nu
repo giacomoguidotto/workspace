@@ -21,6 +21,10 @@ def up [] {
   swc
 }
 
+def gc [] {
+  sudo nix-collect-garbage -d
+}
+
 # aliases
 alias ..      = cd ..
 alias ...     = cd ...
@@ -40,6 +44,7 @@ alias lz      = lazygit
 alias lzd     = lazydocker
 alias lzq     = lazysql
 alias tp      = btop
+alias ts      = tailscale
 alias v       = nvim
 alias x       = exit
 alias y       = yazi
@@ -118,11 +123,11 @@ $env.config.keybindings ++= [{
 }]
 
 # vscode workaround for direnv
-if (('VSCODE_INJECTION' in $env)
-  and (not ('VSCODE_TERMINAL_DIRENV_LOADED' in $env))
-  and ('.envrc' | path exists)
+if (
+  ('VSCODE_INJECTION' in $env) and
+  (not ('VSCODE_TERMINAL_DIRENV_LOADED' in $env))
 ) {
-  cd ..
+  cd
   cd -
   $env.VSCODE_TERMINAL_DIRENV_LOADED = "1"
 }

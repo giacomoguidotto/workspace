@@ -9,11 +9,11 @@
         "command": "workbench.action.navigateForward"
     },
     {
-        "key": "ctrl+[",
+        "key": "cmd+shift+[",
         "command": "workbench.action.previousEditor"
     },
     {
-        "key": "ctrl+]",
+        "key": "cmd+shift+]",
         "command": "workbench.action.nextEditor"
     },
     {
@@ -283,5 +283,36 @@
     {
         "key": "cmd+j",
         "command": "-workbench.action.togglePanel"
+    },
+    {
+        "key": "cmd+l",
+        "command": "-composer.sendToAgent",
+        "when": "editorHasPromptBar && editorPromptBarFocused"
+    },
+    {
+        "key": "cmd+l",
+        "command": "-aichat.newchataction"
+    },
+    {
+        "key": "shift+cmd+h",
+        "command": "aichat.insertselectionintochat"
+    },
+    {
+        "key": "shift+cmd+l",
+        "command": "-aichat.insertselectionintochat"
+    },
+    {
+        "key": "ctrl+cmd+h",
+        "command": "addCursorsAtSearchResults",
+        "when": "fileMatchOrMatchFocus && searchViewletVisible"
+    },
+    {
+        "key": "shift+cmd+l",
+        "command": "-addCursorsAtSearchResults",
+        "when": "fileMatchOrMatchFocus && searchViewletVisible"
+    },
+    {
+        "key": "shift+cmd+h",
+        "command": "aichat.newchataction"
     },
 ]

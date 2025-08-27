@@ -26,6 +26,12 @@ disabled = true
 [deno]
 disabled = true
 
+[nodejs]
+format = '[$symbol$version]($style) '
+
+[golang]
+format = '[$symbol$version]($style) '
+
 [nix_shell]
 format = '[$symbol]($style) '
 symbol = "❄️ "

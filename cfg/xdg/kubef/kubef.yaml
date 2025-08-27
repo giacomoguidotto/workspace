@@ -1,0 +1,157 @@
+groups:
+  all:
+    # auth
+
+    - &enforcer
+      alias: enforcer
+      namespace: dev
+      selector:
+        type: service
+        match: authz-enforcer
+      ports:
+        remote: 8080
+        local: 5000
+
+    - &authz
+      alias: authz
+      namespace: dev
+      selector:
+        type: service
+        match: authz
+      ports:
+        remote: 8080
+        local: 4000
+
+    # storage
+
+    - &dsidb
+      alias: dsidb
+      namespace: dev
+      selector:
+        type: service
+        match: dsidb-primary-internal
+      ports:
+        remote: 5432
+        local: 5435
+
+    - &redis
+      alias: redis
+      namespace: dev
+      selector:
+        type: service
+        match: keydb
+      ports:
+        remote: 6379
+        local: 6379
+
+    - &vm
+      alias: vm
+      namespace: dev
+      selector:
+        type: service
+        match: vmselect-vmcluster
+      ports:
+        remote: 8080
+        local: 8481
+
+    # gdm
+
+    - &device-registry
+      alias: device-registry
+      namespace: dev
+      selector:
+        type: service
+        match: device-registry-api-lhm
+      ports:
+        remote: 8080
+        local: 8082
+
+    - &provisioning
+      alias: provisioning
+      namespace: dev
+      selector:
+        type: service
+        match: provisioning-api-lhm
+      ports:
+        remote: 3000
+        local: 8084 
+
+    - &simulator 
+      alias: simulator
+      namespace: dev
+      selector:
+        type: service
+        match: gdm-spbv1-publisher
+      ports:
+        remote: 8080
+        local: 9000
+
+    # microservices
+    
+    - &core
+      alias: core
+      namespace: dev
+      selector:
+        type: service
+        match: core-api
+      ports:
+        remote: 3000
+        local: 8085
+
+    - &entity
+      alias: entity
+      namespace: dev
+      selector:
+        type: service
+        match: entity-api
+      ports:
+        remote: 8080
+        local: 8083
+
+    - &dsi
+      alias: dsi
+      namespace: dev
+      selector:
+        type: service
+        match: dsi-api
+      ports:
+        remote: 8080
+        local: 8087
+
+    - &irf
+      alias: irf
+      namespace: dev
+      selector:
+        type: service
+        match: irf-api
+      ports:
+        remote: 8080
+        local: 8089
+
+    - &extracts
+      alias: extracts
+      namespace: dev
+      selector:
+        type: service
+        match: extracts-api
+      ports:
+        remote: 8080
+        local: 8086
+
+    - &graphing
+      alias: graphing
+      namespace: dev
+      selector:
+        type: service
+        match: graphing-api
+      ports:
+        remote: 3000
+        local: 8086
+
+  entity-dev:
+    - *enforcer
+    - *redis
+    - *dsidb
+    - *extracts
+    - *core
+  

@@ -150,8 +150,9 @@ groups:
 
   entity-dev:
     - *enforcer
-    - *redis
     - *dsidb
-    - *extracts
+    - *redis
+    - *vm
     - *core
+    - *extracts
   

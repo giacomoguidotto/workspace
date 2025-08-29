@@ -34,6 +34,7 @@ in
       "raycast"
       "spotify"
       "obsidian"
+      "postman"
     ];
 
   services = {
@@ -147,6 +148,7 @@ in
           raycast
           spotify
           obsidian
+          postman
 
           # not available on aarch64-apple-darwin
           # signal-desktop

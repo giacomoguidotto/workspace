@@ -131,12 +131,12 @@
     },
     // multicursor
     {
-        "key": "cmd+shift+k",
+        "key": "alt+shift+k",
         "command": "editor.action.insertCursorAbove",
         "when": "editorTextFocus && !editorReadonly"
     },
     {
-        "key": "cmd+shift+j",
+        "key": "alt+shift+j",
         "command": "editor.action.insertCursorBelow",
         "when": "editorTextFocus && !editorReadonly"
     },
@@ -201,7 +201,7 @@
         "command": "editor.action.fontZoomIn",
         "when": "editorTextFocus"
     },
-    // suggestions and quick fixes
+    // list navigation
     {
         "key": "cmd+j",
         "command": "selectNextSuggestion",
@@ -222,7 +222,16 @@
         "command": "list.focusUp",
         "when": "editorTextFocus && quickFixWidgetVisible"
     },
-    // list navigation
+    {
+        "key": "cmd+j",
+        "command": "quickInput.next",
+        "when": "inQuickInput && quickInputType == 'quickPick'"
+    },
+    {
+        "key": "cmd+k",
+        "command": "quickInput.previous",
+        "when": "inQuickInput && quickInputType == 'quickPick'"
+    },
     {
         "key": "cmd+j",
         "command": "list.focusDown",
@@ -259,14 +268,19 @@
         "command": "workbench.action.terminal.clear",
         "when": "terminalFocus"
     },
-    // git
+    // quick view
     {
-        "key": "cmd+shift+g",
+        "key": "ctrl+shift+g",
         "command": "workbench.view.scm"
+    },
+    {
+        "key": "ctrl+shift+e",
+        "command": "workbench.view.explorer",
+        "when": "viewContainer.workbench.view.explorer.enabled"
     },
     // go to reference/implementation
     {
-        "key": "cmd+j",
+        "key": "cmd+shift+j",
         "command": "editor.action.goToReferences",
         "when": "editorHasReferenceProvider"
     },
@@ -346,7 +360,10 @@
         "when": "!openFolderWorkspaceSupport && workbenchState == 'workspace'"
     },
     {
-        // TODO: find a shortcut for this (?)
+        "key": "ctrl+o",
+        "command": "workbench.action.showAllSymbols"
+    },
+    {
         "key": "cmd+t",
         "command": "-workbench.action.showAllSymbols"
     },
@@ -358,4 +375,29 @@
         "key": "cmd+p",
         "command": "-workbench.action.quickOpen"
     },
+    {
+        "key": "ctrl+down",
+        "command": "-quickInput.next",
+        "when": "inQuickInput && quickInputType == 'quickPick'"
+    },
+    {
+        "key": "ctrl+up",
+        "command": "-quickInput.previous",
+        "when": "inQuickInput && quickInputType == 'quickPick'"
+    },
+    {
+        "key": "ctrl+j",
+        "command": "-quickInput.next",
+        "when": "inQuickInput && quickInputType == 'quickPick'"
+    },
+    {
+        "key": "ctrl+k",
+        "command": "-quickInput.previous",
+        "when": "inQuickInput && quickInputType == 'quickPick'"
+    },
+    {
+        "key": "shift+cmd+e",
+        "command": "-workbench.view.explorer",
+        "when": "viewContainer.workbench.view.explorer.enabled"
+    }
 ]

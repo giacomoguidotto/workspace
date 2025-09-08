@@ -127,7 +127,6 @@ if (
   ('VSCODE_INJECTION' in $env) and
   (not ('VSCODE_TERMINAL_DIRENV_LOADED' in $env))
 ) {
-  cd
-  cd -
+  direnv reload
   $env.VSCODE_TERMINAL_DIRENV_LOADED = "1"
 }

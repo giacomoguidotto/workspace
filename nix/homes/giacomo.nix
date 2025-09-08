@@ -107,6 +107,7 @@ in
           fd
           fzf
           git
+          gh
           hyperfine
           jankyborders
           kubectl
@@ -126,6 +127,7 @@ in
           xh
           watchman
           ollama
+          posting
           tokei
           wiki-tui 
           yazi

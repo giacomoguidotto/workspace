@@ -1,128 +1,136 @@
 {
-    // editor settings
-    "editor.formatOnType": false,
-    "editor.formatOnPaste": true,
-    "editor.formatOnSave": true,
-    "editor.formatOnSaveMode": "modificationsIfAvailable",
-    "editor.accessibilitySupport": "off",
-    // file settings
-    "files.autoSave": "onFocusChange",
-    "explorer.confirmDragAndDrop": false,
-    "explorer.confirmDelete": false,
-    "explorer.autoReveal": true,
-    // git settings
-    "git.confirmSync": false,
-    "git.autofetch": false,
-    "git.enableSmartCommit": true,
-    // window settings
-    "window.commandCenter": false,
-    "workbench.iconTheme": "catppuccin-mocha",
-    // language-specific settings
-    "[typescript]": {
-        "editor.formatOnPaste": false,
-        "editor.formatOnSave": false,
-        "editor.codeActionsOnSave": {
-            "source.fixAll": "explicit"
-        }
-    },
-    "[javascript]": {
-        "editor.formatOnPaste": false,
-        "editor.formatOnSave": false,
-        "editor.codeActionsOnSave": {
-            "source.fixAll": "explicit"
-        }
-    },
-    "[typescriptreact]": {
-        "editor.formatOnPaste": false,
-        "editor.formatOnSave": false,
-        "editor.codeActionsOnSave": {
-            "source.fixAll": "explicit"
-        }
-    },
-    "[javascriptreact]": {
-        "editor.formatOnPaste": false,
-        "editor.formatOnSave": false,
-        "editor.codeActionsOnSave": {
-            "source.fixAll": "explicit"
-        }
-    },
-    "[python]": {
-        "editor.defaultFormatter": "charliermarsh.ruff",
-        "editor.codeActionsOnSave": {
-            "source.fixAll": "explicit"
-        }
-    },
-    "[latex]": {
-        "editor.wordWrap": "on"
-    },
-    // latex settings
-    "latex-workshop.formatting.latex": "tex-fmt",
-    "latex-workshop.latex.autoClean.run": "onBuilt",
-    "latex-workshop.latex.clean.method": "glob",
-    // typescript settings
-    "typescript.updateImportsOnFileMove.enabled": "always",
-    // terminal settings
-    "terminal.integrated.inheritEnv": false,
-    "terminal.integrated.fontFamily": "BlexMono Nerd Font",
-    // diff editor settings
-    "diffEditor.maxComputationTime": 0,
-    // cursor settings
-    "cursor.cpp.disabledLanguages": [],
-    // spell check settings
-    "cSpell.userWords": [
-        "Alsense",
-        "Brainboard",
-        "cmap",
-        "colormaps",
-        "dagre",
-        "Damiano",
-        "entityapi",
-        "figsize",
-        "fontsize",
-        "GIACOMO",
-        "gorm",
-        "GUIDOTTO",
-        "Guids",
-        "keyvals",
-        "Kutta",
-        "layouted",
-        "linalg",
-        "lineplot",
-        "linestyle",
-        "logdir",
-        "lookback",
-        "mathrm",
-        "Numpy",
-        "ndarray",
-        "odeint",
-        "overfitting",
-        "Pasetto",
-        "perceptrons",
-        "pkgs",
-        "PINN",
-        "pycache",
-        "relu",
-        "Runge",
-        "scikit",
-        "selu",
-        "SIRPINN",
-        "SMMA",
-        "softplus",
-        "venv",
-        "viridis",
-        "xlabel",
-        "ylabel"
-    ],
-    "diffEditor.hideUnchangedRegions.enabled": true,
-    "diffEditor.ignoreTrimWhitespace": false,
-    "workbench.colorTheme": "Catppuccin Mocha",
-    "workbench.sideBar.location": "right",
-    "gitlens.ai.model": "gitkraken",
-    "gitlens.ai.gitkraken.model": "gemini:gemini-2.0-flash",
-    "gitlens.launchpad.indicator.enabled": false,
-    "editor.unicodeHighlight.invisibleCharacters": false,
-    "nix.enableLanguageServer": true,
-    "editor.tabSize": 4,
-    "json.schemaDownload.enable": true,
-    "vim.useSystemClipboard": true
+	// editor settings
+	"editor.formatOnType": false,
+	"editor.formatOnPaste": true,
+	"editor.formatOnSave": true,
+	"editor.formatOnSaveMode": "modificationsIfAvailable",
+	"editor.accessibilitySupport": "off",
+	// file settings
+	"files.autoSave": "onFocusChange",
+	"explorer.confirmDragAndDrop": false,
+	"explorer.confirmDelete": false,
+	"explorer.autoReveal": true,
+	// git settings
+	"git.confirmSync": false,
+	"git.autofetch": false,
+	"git.enableSmartCommit": true,
+	// window settings
+	"window.commandCenter": false,
+	"workbench.iconTheme": "catppuccin-mocha",
+	// language-specific settings
+	"[typescript]": {
+		"editor.defaultFormatter": "biomejs.biome",
+		"editor.codeActionsOnSave": {
+			"source.fixAll.biome": "explicit",
+			"source.organizeImports.biome": "explicit"
+		}
+	},
+	"[javascript]": {
+		"editor.defaultFormatter": "biomejs.biome",
+		"editor.codeActionsOnSave": {
+			"source.fixAll.biome": "explicit",
+			"source.organizeImports.biome": "explicit"
+		}
+	},
+	"[typescriptreact]": {
+		"editor.defaultFormatter": "biomejs.biome",
+		"editor.codeActionsOnSave": {
+			"source.fixAll.biome": "explicit",
+			"source.organizeImports.biome": "explicit"
+		}
+	},
+	"[javascriptreact]": {
+		"editor.defaultFormatter": "biomejs.biome",
+		"editor.codeActionsOnSave": {
+			"source.fixAll.biome": "explicit",
+			"source.organizeImports.biome": "explicit"
+		}
+	},
+	"[jsonc]": {
+		"editor.defaultFormatter": "vscode.json-language-features"
+	},
+	"[json]": {
+		"editor.defaultFormatter": "vscode.json-language-features"
+	},
+	"[python]": {
+		"editor.defaultFormatter": "charliermarsh.ruff",
+		"editor.codeActionsOnSave": {
+			"source.fixAll": "explicit"
+		}
+	},
+	"[latex]": {
+		"editor.wordWrap": "on"
+	},
+	// latex settings
+	"latex-workshop.formatting.latex": "tex-fmt",
+	"latex-workshop.latex.autoClean.run": "onBuilt",
+	"latex-workshop.latex.clean.method": "glob",
+	// typescript settings
+	"typescript.updateImportsOnFileMove.enabled": "always",
+	// terminal settings
+	"terminal.integrated.inheritEnv": false,
+	"terminal.integrated.fontFamily": "BlexMono Nerd Font",
+	// diff editor settings
+	"diffEditor.maxComputationTime": 0,
+	// cursor settings
+	"cursor.cpp.disabledLanguages": [],
+	// spell check settings
+	"cSpell.userWords": [
+		"Alsense",
+		"Brainboard",
+		"cmap",
+		"colormaps",
+		"dagre",
+		"Damiano",
+		"entityapi",
+		"figsize",
+		"fontsize",
+		"GIACOMO",
+		"gorm",
+		"GUIDOTTO",
+		"Guids",
+		"keyvals",
+		"Kutta",
+		"layouted",
+		"linalg",
+		"lineplot",
+		"linestyle",
+		"logdir",
+		"lookback",
+		"mathrm",
+		"Numpy",
+		"ndarray",
+		"odeint",
+		"overfitting",
+		"Pasetto",
+		"perceptrons",
+		"pkgs",
+		"PINN",
+		"pycache",
+		"relu",
+		"Runge",
+		"scikit",
+		"selu",
+		"SIRPINN",
+		"SMMA",
+		"softplus",
+		"venv",
+		"viridis",
+		"xlabel",
+		"ylabel"
+	],
+	"diffEditor.hideUnchangedRegions.enabled": true,
+	"diffEditor.ignoreTrimWhitespace": false,
+	"workbench.colorTheme": "Catppuccin Mocha",
+	"workbench.sideBar.location": "right",
+	"gitlens.ai.model": "gitkraken",
+	"gitlens.ai.gitkraken.model": "gemini:gemini-2.0-flash",
+	"gitlens.launchpad.indicator.enabled": false,
+	"editor.unicodeHighlight.invisibleCharacters": false,
+	"nix.enableLanguageServer": true,
+	"editor.tabSize": 4,
+	"json.schemaDownload.enable": true,
+	"vim.useSystemClipboard": true,
+	"direnv.restart.automatic": true,
+	"biome.suggestInstallingGlobally": false
 }

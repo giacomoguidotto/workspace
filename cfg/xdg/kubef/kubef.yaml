@@ -32,7 +32,7 @@ groups:
         match: dsidb-primary-internal
       ports:
         remote: 5432
-        local: 5435
+        local: 5432
 
     - &redis
       alias: redis
@@ -64,7 +64,7 @@ groups:
         match: device-registry-api-lhm
       ports:
         remote: 8080
-        local: 8082
+        local: 9002
 
     - &provisioning
       alias: provisioning
@@ -74,7 +74,7 @@ groups:
         match: provisioning-api-lhm
       ports:
         remote: 3000
-        local: 8084 
+        local: 9001 
 
     - &simulator 
       alias: simulator
@@ -96,7 +96,17 @@ groups:
         match: core-api
       ports:
         remote: 3000
-        local: 8085
+        local: 8081
+
+    - &dsi
+      alias: dsi
+      namespace: dev
+      selector:
+        type: service
+        match: dsi-api
+      ports:
+        remote: 8080
+        local: 8082
 
     - &entity
       alias: entity
@@ -108,16 +118,6 @@ groups:
         remote: 8080
         local: 8083
 
-    - &dsi
-      alias: dsi
-      namespace: dev
-      selector:
-        type: service
-        match: dsi-api
-      ports:
-        remote: 8080
-        local: 8087
-
     - &irf
       alias: irf
       namespace: dev
@@ -126,7 +126,7 @@ groups:
         match: irf-api
       ports:
         remote: 8080
-        local: 8089
+        local: 8084
 
     - &extracts
       alias: extracts
@@ -136,7 +136,7 @@ groups:
         match: extracts-api
       ports:
         remote: 8080
-        local: 8086
+        local: 8085
 
     - &graphing
       alias: graphing
@@ -148,11 +148,19 @@ groups:
         remote: 3000
         local: 8086
 
-  entity-dev:
+  entity-local:
     - *enforcer
+    - *authz
     - *dsidb
     - *redis
     - *vm
     - *core
     - *extracts
   
+  energy-local:
+    - *enforcer
+    - *authz
+    - *dsidb
+    - *redis
+    - *core
+    - *graphing

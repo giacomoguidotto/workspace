@@ -46,17 +46,15 @@
             "source.fixAll": "explicit"
         }
     },
+    "[python]": {
+        "editor.defaultFormatter": "charliermarsh.ruff",
+        "editor.codeActionsOnSave": {
+            "source.fixAll": "explicit"
+        }
+    },
     "[latex]": {
         "editor.wordWrap": "on"
     },
-    "[python]": {
-        "editor.defaultFormatter": "ms-python.black-formatter",
-        "editor.formatOnSave": true
-    },
-    // jupyter settings
-    "jupyter.askForKernelRestart": false,
-    "jupyter.interactiveWindow.creationMode": "perFile",
-    "notebook.lineNumbers": "on",
     // latex settings
     "latex-workshop.formatting.latex": "tex-fmt",
     "latex-workshop.latex.autoClean.run": "onBuilt",
@@ -68,17 +66,18 @@
     "terminal.integrated.fontFamily": "BlexMono Nerd Font",
     // diff editor settings
     "diffEditor.maxComputationTime": 0,
-    // eslint settings
-    "eslint.codeActionsOnSave.mode": "problems",
     // cursor settings
     "cursor.cpp.disabledLanguages": [],
     // spell check settings
     "cSpell.userWords": [
         "Alsense",
         "Brainboard",
+        "cmap",
+        "colormaps",
         "dagre",
         "Damiano",
         "entityapi",
+        "figsize",
         "fontsize",
         "GIACOMO",
         "gorm",
@@ -87,15 +86,32 @@
         "keyvals",
         "Kutta",
         "layouted",
+        "linalg",
+        "lineplot",
+        "linestyle",
+        "logdir",
+        "lookback",
+        "mathrm",
         "Numpy",
+        "ndarray",
+        "odeint",
         "overfitting",
         "Pasetto",
+        "perceptrons",
         "pkgs",
+        "PINN",
+        "pycache",
         "relu",
         "Runge",
         "scikit",
+        "selu",
+        "SIRPINN",
+        "SMMA",
         "softplus",
-        "venv"
+        "venv",
+        "viridis",
+        "xlabel",
+        "ylabel"
     ],
     "diffEditor.hideUnchangedRegions.enabled": true,
     "diffEditor.ignoreTrimWhitespace": false,
@@ -105,7 +121,6 @@
     "gitlens.ai.gitkraken.model": "gemini:gemini-2.0-flash",
     "gitlens.launchpad.indicator.enabled": false,
     "editor.unicodeHighlight.invisibleCharacters": false,
-    "dafny.automaticVerification": "onsave",
     "nix.enableLanguageServer": true,
     "editor.tabSize": 4,
     "json.schemaDownload.enable": true,

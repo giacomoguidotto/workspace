@@ -1,4 +1,7 @@
 [
+    // TODO: cmd+h for the ai stuff
+    // TODO: remove cmd+shift+j for the cursor setting keybinding
+    // TODO: use cmd+shift+j/k for something useful
     // editor navigation
     {
         "key": "cmd+[",

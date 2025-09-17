@@ -11,7 +11,9 @@ system's settings and act as a declarative package manager. The configuration of
 the different user applications uses the conventional text files that follows
 the best practices and is more aligned with the community.
 
-## Quick start
+## 🚀 Quick start
+
+### 🍏 macOS
 
 For macOS, installation of Nix is recommended but not required. The
 [Determinate Nix](https://determinate.systems/nix-installer/) distro is suggested.
@@ -22,7 +24,24 @@ Clone the repo and run:
 ./install
 ```
 
-## Troubleshooting
+### 📱 Android
+
+For Android, using Termux, the following steps are required:
+
+```sh
+pkg install -y zsh python
+chsh -s zsh
+```
+
+Close and reopen the terminal.
+
+Then, clone the repo and run:
+
+```sh
+./install
+```
+
+## 🔧 Troubleshooting
 
 Collection of issues faced during the installation process. Hopefully useful for
 others :)

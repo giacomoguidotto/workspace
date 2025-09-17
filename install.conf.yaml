@@ -32,12 +32,13 @@
       path: cfg/apps/cursor/keybindings.json
 
     ~/.config/nix-darwin:
+      if: '[ -z "${TERMUX_VERSION-}" ]'
       force: true
       path: nix
 
 - shell:
     - command: swc
-      description: build and switch to the nix-darwin configuration
+      description: installing workspace dependencies...
       stdin: true
       stdout: true
       stderr: true

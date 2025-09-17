@@ -43,6 +43,7 @@ alias la      = ^tree
 alias lz      = lazygit
 alias lzd     = lazydocker
 alias lzq     = lazysql
+alias spt     = spotify_player
 alias tp      = btop
 alias ts      = tailscale
 alias v       = nvim
@@ -122,11 +123,3 @@ $env.config.keybindings ++= [{
   }
 }]
 
-# vscode workaround for direnv
-if (
-  ('VSCODE_INJECTION' in $env) and
-  (not ('VSCODE_TERMINAL_DIRENV_LOADED' in $env))
-) {
-  direnv reload
-  $env.VSCODE_TERMINAL_DIRENV_LOADED = "1"
-}

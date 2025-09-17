@@ -117,12 +117,12 @@ in
           lazydocker
           lazygit
           lazysql
-          ncspot
           neofetch
           nmap
           ripgrep
           starship
           stow
+          spotify-player
           tree
           xh
           watchman
@@ -130,6 +130,7 @@ in
           posting
           tokei
           wiki-tui 
+          watchexec
           yazi
           zoxide
           zellij

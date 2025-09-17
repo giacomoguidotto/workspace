@@ -14,7 +14,7 @@
     attributesfile = ./attributes
 
 [interactive]
-    diffFilter = delta
+    diffFilter = delta --color-only
 
 [fetch]
     prune = true

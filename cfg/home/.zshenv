@@ -18,12 +18,21 @@ export STARSHIP_CONFIG="$HOME/.config/starship/config.toml"
 export DOCKER_HOST="unix://$HOME/.config/colima/docker.sock"
 
 # load session variables from home-manager
-. "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh"
+if [ -z "${TERMUX_VERSION-}" ]; then
+  . "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh"
+fi
 
-# nix-darwin switch function
+# system management functions
 # NOTE: should keep this file as small as possible but still need this function for bootstrapping
 # TODO: find a better solution
 swc() {
+  if [ "${TERMUX_VERSION-}" ]; then
+    echo "android termux env detected, installing dependencies..."
+    pkg update -y
+    pkg install -y zsh neovim fzf starship zoxide direnv eza bat lazygit git-delta ripgrep tokei watchexec yazi zellij
+    return
+  fi
+
   if ! command -v nix >/dev/null 2>&1; then
     echo "nix not found, skipping switch..."
   elif command -v darwin-rebuild >/dev/null 2>&1; then
@@ -32,4 +41,10 @@ swc() {
     echo "first time running, switching with nix..."
     sudo nix run nix-darwin/master#darwin-rebuild -- switch --flake ~/.config/nix-darwin
   fi
+}
+
+up() {
+    sudo determinate-nixd upgrade
+    nix flake update --flake ~/.config/nix-darwin
+    swc
 }

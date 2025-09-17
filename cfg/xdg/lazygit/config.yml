@@ -2,7 +2,7 @@ notARepository: skip
 
 git:
   paging:
-    useConfig: true
+    pager: delta
 
 gui:
   sidePanelWidth: 0.25

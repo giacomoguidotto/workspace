@@ -98,16 +98,6 @@ groups:
         remote: 3000
         local: 8081
 
-    - &dsi
-      alias: dsi
-      namespace: dev
-      selector:
-        type: service
-        match: dsi-api
-      ports:
-        remote: 8080
-        local: 8082
-
     - &entity
       alias: entity
       namespace: dev
@@ -116,7 +106,37 @@ groups:
         match: entity-api
       ports:
         remote: 8080
+        local: 8082
+
+    - &dsi
+      alias: dsi
+      namespace: dev
+      selector:
+        type: service
+        match: dsi-api
+      ports:
+        remote: 8080
         local: 8083
+
+    - &alarms
+      alias: alarms
+      namespace: dev
+      selector:
+        type: service
+        match: alarms-api
+      ports:
+        remote: 8080
+        local: 8084
+
+    - &energy
+      alias: energy
+      namespace: dev
+      selector:
+        type: service
+        match: energy-api
+      ports:
+        remote: 8080
+        local: 8085
 
     - &irf
       alias: irf
@@ -126,17 +146,17 @@ groups:
         match: irf-api
       ports:
         remote: 8080
-        local: 8084
+        local: 8086
 
-    - &extracts
-      alias: extracts
+    - &dashboard
+      alias: dashboard
       namespace: dev
       selector:
         type: service
-        match: extracts-api
+        match: dashboard-api
       ports:
         remote: 8080
-        local: 8085
+        local: 8087
 
     - &graphing
       alias: graphing
@@ -146,7 +166,27 @@ groups:
         match: graphing-api
       ports:
         remote: 3000
-        local: 8086
+        local: 8088
+
+    - &extracts
+      alias: extracts
+      namespace: dev
+      selector:
+        type: service
+        match: extracts-api
+      ports:
+        remote: 8080
+        local: 8089
+
+    - &jobs
+      alias: jobs
+      namespace: dev
+      selector:
+        type: service
+        match: jobs-api
+      ports:
+        remote: 8080
+        local: 8090
 
   entity-local:
     - *enforcer

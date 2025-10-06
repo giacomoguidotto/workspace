@@ -1,6 +1,7 @@
 [user]
 	name = Giacomo Guidotto
 	email = giacomo.guidotto@gmail.com
+    signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINoa9KM7X6vxq/mXeA86sKpOGeszjDOJi8qIhVOVcmxS
 
 [init]
 	defaultBranch = main
@@ -33,6 +34,15 @@
     side-by-side = true
     paging = never
     features = catppuccin-mocha
+
+[gpg]
+  format = ssh
+
+[gpg "ssh"]
+  program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+
+[commit]
+  gpgsign = true
 
 [url "git@ssh.dev.azure.com:v3/danfoss/Alsense/alsense.shared.go"]
     insteadOf = "https://danfoss.visualstudio.com/Alsense/_git/alsense.shared.go"

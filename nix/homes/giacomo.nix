@@ -29,6 +29,7 @@ in
   nixpkgs.config.allowUnfreePredicate =
     pkg:
     builtins.elem (lib.getName pkg) [
+      "1password-cli"
       "cursor"
       "discord"
       "raycast"
@@ -88,13 +89,13 @@ in
           aerospace
 
           # terminals
-          # not available on aarch64-apple-darwin
-          # ghostty
+          # ghostty # not available on aarch64-apple-darwin
 
           # shells
           nushell
 
           # cli tools
+          _1password-cli
           azure-cli
           atuin
           bat
@@ -147,15 +148,15 @@ in
           # apps
           brave
           discord
+          # helium-browser # uncomment when available
           mas
-          raycast
-          spotify
           obsidian
+          raycast
+          # signal-desktop # uncomment when available
+          spotify
           postman
-
-          # not available on aarch64-apple-darwin
-          # signal-desktop
-          # vlc
+          # vlc # uncomment when available
+          zed-editor
 
           # nerd fonts
           nerd-fonts.blex-mono

@@ -101,25 +101,29 @@ $env.config.hooks.pre_prompt = (
   $env.config.hooks.pre_prompt | append (source nu_scripts/nu-hooks/nu-hooks/direnv/config.nu)
 )
 
+# 1password - password manager
+$env.OP_PLUGIN_ALIASES_SOURCED = '1'
+alias gh = op plugin run -- gh
+
 # general settings
 $env.config.show_banner = false
 $env.config.edit_mode = "vi"
 $env.config.buffer_editor = "v"
 
-$env.config.keybindings ++= [{
-    name: complete_hint
-    modifier: control
-    keycode: char_f
-    mode: [emacs, vi_insert, vi_normal]
-    event: { send: historyhintcomplete }
-}, {
-  name: atuin_in_vi_normal
-  modifier: none
-  keycode: char_k
-  mode: [vi_normal]
-  event: {
-    send: executehostcommand
-    cmd: "with-env { ATUIN_LOG: error, ATUIN_QUERY: (commandline) } { commandline edit (run-external atuin search "--interactive"  e>| str trim) }"
-  }
-}]
+# $env.config.keybindings ++= [{
+#     name: complete_hint
+#     modifier: control
+#     keycode: char_f
+#     mode: [emacs, vi_insert, vi_normal]
+#     event: { send: historyhintcomplete }
+# }, {
+#   name: atuin_in_vi_normal
+#   modifier: none
+#   keycode: char_k
+#   mode: [vi_normal]
+#   event: {
+#     send: executehostcommand
+#     cmd: "with-env { ATUIN_LOG: error, ATUIN_QUERY: (commandline) } { commandline edit (run-external atuin search "--interactive"  e>| str trim) }"
+#   }
+# }]
 

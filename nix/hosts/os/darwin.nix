@@ -3,10 +3,6 @@
 # reference: https://nix-darwin.github.io/nix-darwin/manual/index.html
 { host, ... }:
 {
-  imports = [
-    ./nix-base.nix
-  ];
-
   system = {
     # used for backwards compatibility
     # please read the changelog BEFORE changing:

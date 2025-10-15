@@ -103,6 +103,7 @@ in
           carapace
           delta
           devbox
+          devenv
           dust
           eza
           fd

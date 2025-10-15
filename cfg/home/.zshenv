@@ -17,6 +17,9 @@ export STARSHIP_CONFIG="$HOME/.config/starship/config.toml"
 # set the docker host to the colima socket
 export DOCKER_HOST="unix://$HOME/.config/colima/docker.sock"
 
+# executables from
+export PATH="$HOME/.local/bin:$PATH"
+
 # load session variables from home-manager
 if [ -z "${TERMUX_VERSION-}" ]; then
   . "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh"

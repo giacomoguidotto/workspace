@@ -4,6 +4,7 @@
 # to update dotbot run:
 # `git submodule update --remote dotbot`
 # commit and run `./install` again
+# docs: https://github.com/anishathalye/dotbot?tab=readme-ov-file#configuration
 
 - defaults:
     link:
@@ -12,14 +13,24 @@
 - clean: ['~'] # remove dead symlinks
 
 - link:
-    ~/.zshrc: cfg/home/.zshrc
-    ~/.zshenv: cfg/home/.zshenv
-    ~/.hushlogin: cfg/home/.hushlogin
-
     ~/.config:
       force: true
       glob: true
       path: cfg/xdg/*
+
+    ~/.zshrc:
+      force: true
+      path: cfg/home/.zshrc
+    ~/.zshenv:
+      force: true
+      path: cfg/home/.zshenv
+    ~/.hushlogin:
+      force: true
+      path: cfg/home/.hushlogin
+    ~/dev/work/zlayout.kdl:
+      force: true
+      create: true
+      path: cfg/home/work-zlayout.kdl
 
     ~/Library/Application Support/Cursor/User/settings.json:
       if: '[ `uname` = Darwin ]'

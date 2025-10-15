@@ -15,7 +15,7 @@ inputs@{ nixpkgs,  ... }:
     let
       isDarwin = builtins.match ".*darwin.*" system != null;
 
-      systemFunction = 
+      createSystem =
         if isDarwin then 
           inputs.nix-darwin.lib.darwinSystem 
         else 
@@ -29,12 +29,15 @@ inputs@{ nixpkgs,  ... }:
         else
           inputs.home-manager.nixosModules.home-manager;
     in
-    systemFunction {
+    createSystem {
       inherit system;
 
       specialArgs = { inherit inputs; } // args;
 
       modules = [
+         # nix is handled by determinate-nix
+        { nix.enable = false; }
+
         hostModule
         homeModule
       ];

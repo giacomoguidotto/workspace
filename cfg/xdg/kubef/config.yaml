@@ -54,38 +54,6 @@ groups:
         remote: 8080
         local: 8481
 
-    # gdm
-
-    - &simulator 
-      alias: simulator
-      namespace: dev
-      selector:
-        type: service
-        match: gdm-spbv1-publisher
-      ports:
-        remote: 8080
-        local: 9000
-
-    - &provisioning
-      alias: provisioning
-      namespace: dev
-      selector:
-        type: service
-        match: provisioning-api-lhm
-      ports:
-        remote: 3000
-        local: 9001 
-
-    - &device-registry
-      alias: device-registry
-      namespace: dev
-      selector:
-        type: service
-        match: device-registry-api-lhm
-      ports:
-        remote: 8080
-        local: 9002
-
     # microservices
     
     - &core
@@ -198,6 +166,38 @@ groups:
         remote: 8080
         local: 8091
 
+    # gdm
+
+    - &simulator 
+      alias: simulator
+      namespace: dev
+      selector:
+        type: service
+        match: gdm-spbv1-publisher
+      ports:
+        remote: 8080
+        local: 9000
+
+    - &provisioning
+      alias: provisioning
+      namespace: dev
+      selector:
+        type: service
+        match: provisioning-api-lhm
+      ports:
+        remote: 3000
+        local: 9001 
+
+    - &device-registry
+      alias: device-registry
+      namespace: dev
+      selector:
+        type: service
+        match: device-registry-api-lhm
+      ports:
+        remote: 8080
+        local: 9002
+
   entity-profile:
     - *enforcer
     - *authz
@@ -214,3 +214,7 @@ groups:
     - *redis
     - *core
     - *graphing
+  
+  simulator-profile:
+    - *provisioning
+    - *device-registry

@@ -3,7 +3,7 @@
 { ... }:
 {
   imports = [
-    ./base/darwin-base.nix
+    ./os/darwin.nix
     ../homes/giacomo.nix
   ];
 

@@ -15,14 +15,15 @@ def swc [] {
   }
 }
 
+def gc [] {
+  sudo nix-collect-garbage -d
+}
+
 def up [] {
   sudo determinate-nixd upgrade
   nix flake update --flake ~/.config/nix-darwin
   swc
-}
-
-def gc [] {
-  sudo nix-collect-garbage -d
+  gc
 }
 
 # aliases

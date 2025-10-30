@@ -27,10 +27,6 @@
     ~/.hushlogin:
       force: true
       path: cfg/home/.hushlogin
-    ~/dev/work/zlayout.kdl:
-      force: true
-      create: true
-      path: cfg/home/work-zlayout.kdl
 
     ~/Library/Application Support/Cursor/User/settings.json:
       if: '[ `uname` = Darwin ]'

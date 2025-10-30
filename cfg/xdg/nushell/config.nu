@@ -44,6 +44,7 @@ alias la      = ^tree
 alias lz      = lazygit
 alias lzd     = lazydocker
 alias lzq     = lazysql
+alias rd      = rm -rf
 alias spt     = spotify_player
 alias tp      = btop
 alias ts      = tailscale
@@ -70,7 +71,7 @@ def cx [dir?: string] {
   l
 }
 
-def mkcd [dir: string] {
+def md [dir: string] {
   mkdir $dir
   cd $dir
 }

@@ -432,5 +432,11 @@
         "key": "f5",
         "command": "-workbench.action.debug.start",
         "when": "debuggersAvailable && debugState == 'inactive'"
+    },
+    {
+        "key": "cmd+space",
+        "command": "editor.action.inlineSuggest.trigger"
     }
+ 
+
 ]

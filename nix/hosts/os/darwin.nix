@@ -58,24 +58,19 @@
           AppleEnabledInputSources = [
             {
               InputSourceKind = "Keyboard Layout";
-              "KeyboardLayout ID" = 223;
-              "KeyboardLayout Name" = "Italian - Pro";
-            }
-            {
-              InputSourceKind = "Keyboard Layout";
-              "KeyboardLayout ID" = 250;
-              "KeyboardLayout Name" = "British-PC";
+              "KeyboardLayout ID" = 252;
+              "KeyboardLayout Name" = "ABC";
             }
           ];
           AppleSelectedInputSources = [
             {
               InputSourceKind = "Keyboard Layout";
-              "KeyboardLayout ID" = 250;
-              "KeyboardLayout Name" = "British-PC";
+              "KeyboardLayout ID" = 252;
+              "KeyboardLayout Name" = "ABC";
             }
           ];
           AppleFnUsageType = 1; # change input source
-          AppleCurrentKeyboardLayoutInputSourceID = "com.apple.keylayout.British-PC";
+          AppleCurrentKeyboardLayoutInputSourceID = "com.apple.keylayout.ABC";
           AppleDictationAutoEnable = 1;
         };
 

@@ -55,9 +55,7 @@ in
     direnv = {
       enable = true;
       settings = {
-        whitelist = {
-          prefix = [ "~/dev" ];
-        };
+        whitelist.prefix = [ "~/dev" ];
       };
       nix-direnv.enable = true;
     };
@@ -85,14 +83,21 @@ in
           nil
           nixfmt-rfc-style
 
-          # desktop environment
-          aerospace
+          # nerd fonts
+          nerd-fonts.blex-mono
+          nerd-fonts.jetbrains-mono
+          nerd-fonts.zed-mono
 
-          # terminals
-          # ghostty # not available on aarch64-apple-darwin
+          # docker
+          colima
+          docker-client
+          docker-compose
 
           # shells
           nushell
+
+          # terminals
+          # ghostty # uncomment when available
 
           # cli tools
           _1password-cli
@@ -137,32 +142,26 @@ in
           zoxide
           zellij
 
+          # window manager
+          aerospace
+
           # editors
           neovim
           code-cursor
+          obsidian
+          zed-editor
 
-          # docker
-          colima
-          docker-client
-          docker-compose
+          # browsers
+          brave
+          # helium-browser # uncomment when available
 
           # apps
-          brave
           discord
-          # helium-browser # uncomment when available
           mas
-          obsidian
           raycast
           # signal-desktop # uncomment when available
           spotify
           postman
-          # vlc # uncomment when available
-          zed-editor
-
-          # nerd fonts
-          nerd-fonts.blex-mono
-          nerd-fonts.jetbrains-mono
-          nerd-fonts.zed-mono
         ];
 
         # simlinks of files copied to the Nix store.
@@ -178,9 +177,9 @@ in
           install-xcode = hmlib.hm.dag.entryAfter [ "home.packages" ] ''
             ${pkgs.mas}/bin/mas install 497799835 2> /dev/null
           '';
-          install-whatsapp = hmlib.hm.dag.entryAfter [ "home.packages" ] ''
-            ${pkgs.mas}/bin/mas install 310633997 2> /dev/null
-          '';
+          # install-whatsapp = hmlib.hm.dag.entryAfter [ "home.packages" ] ''
+          #   ${pkgs.mas}/bin/mas install 310633997 2> /dev/null
+          # '';
         };
       };
     };

@@ -101,6 +101,7 @@
 		"cmap",
 		"colloc",
 		"Collocationset",
+		"colorbar",
 		"colormaps",
 		"conflictstyle",
 		"copyloopvar",
@@ -136,6 +137,7 @@
 		"figlet",
 		"figsize",
 		"finalizer",
+		"fkey",
 		"fontsize",
 		"Foundf",
 		"fselect",
@@ -194,6 +196,7 @@
 		"linestyle",
 		"logdir",
 		"lookback",
+		"markersize",
 		"mathrm",
 		"milli",
 		"millis",
@@ -231,6 +234,7 @@
 		"ollama",
 		"omitzero",
 		"openapitools",
+		"optim",
 		"optimise",
 		"otelhttp",
 		"otelhttptrace",
@@ -241,9 +245,12 @@
 		"perceptrons",
 		"pgtype",
 		"PINN",
+		"pkey",
 		"pkgs",
 		"platacard",
 		"posargs",
+		"prealloc",
+		"preds",
 		"pycache",
 		"pytest",
 		"relu",
@@ -252,6 +259,7 @@
 		"scikit",
 		"securitydefinitions",
 		"selu",
+		"setop",
 		"Setpoint",
 		"Setpoints",
 		"signingkey",
@@ -321,5 +329,8 @@
 	"remote.SSH.remotePlatform": {
 		"coder-vscode.coder.alsenseplatform.com--giacomo-guidotto--test.alsense-jobs-mageai": "linux"
 	},
-	"remote.SSH.connectTimeout": 1800
+	"remote.SSH.connectTimeout": 1800,
+	"sqltools.format": {
+		"linesBetweenQueries": 2
+	}
 }

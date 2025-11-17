@@ -1,9 +1,7 @@
 notARepository: skip
-
 git:
-  paging:
-    pager: delta
-
+  pagers:
+    - pager: delta
 gui:
   sidePanelWidth: 0.25
   theme:
@@ -26,6 +24,5 @@ gui:
       - "#cdd6f4"
     searchingActiveBorderColor:
       - "#f9e2af"
-
   authorColors:
     "*": "#b4befe"

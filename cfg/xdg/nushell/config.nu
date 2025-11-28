@@ -3,6 +3,11 @@ if not $nu.is-interactive {
   return
 }
 
+# general settings
+$env.config.show_banner = false
+$env.config.edit_mode = "vi"
+$env.config.buffer_editor = "v"
+
 # system management functions
 def swc [] {
   if (which nix | is-empty) {
@@ -107,11 +112,6 @@ $env.config.hooks.pre_prompt = (
 # 1password - password manager
 $env.OP_PLUGIN_ALIASES_SOURCED = '1'
 alias gh = op plugin run -- gh
-
-# general settings
-$env.config.show_banner = false
-$env.config.edit_mode = "vi"
-$env.config.buffer_editor = "v"
 
 # $env.config.keybindings ++= [{
 #     name: complete_hint

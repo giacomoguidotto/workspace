@@ -133,8 +133,7 @@ in
           tree
           xh
           watchman
-          ollama
-          posting
+          # ollama
           tokei
           wiki-tui 
           watchexec

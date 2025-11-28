@@ -1,8 +1,74 @@
 [
-    // TODO: cmd+h for the ai stuff
-    // TODO: remove cmd+shift+j for the cursor setting keybinding
-    // TODO: use cmd+shift+j/k for something useful
-    // editor navigation
+    // =================================================================================================
+    // GLOBAL NAVIGATION & FOCUS
+    // Strategy: Ctrl + H/J/K/L for movement between window parts (Editor, Sidebar, Panel)
+    // =================================================================================================
+    // Navigate between Editor, Sidebar, and Panel
+    {
+        "key": "ctrl+h",
+        "command": "workbench.action.navigateLeft"
+    },
+    {
+        "key": "ctrl+j",
+        "command": "workbench.action.navigateDown"
+    },
+    {
+        "key": "ctrl+k",
+        "command": "workbench.action.navigateUp"
+    },
+    {
+        "key": "ctrl+l",
+        "command": "workbench.action.navigateRight"
+    },
+    // Toggle Panel
+    {
+        "key": "cmd+shift+j",
+        "command": "workbench.action.togglePanel"
+    },
+    {
+        "key": "cmd+j",
+        "command": "-workbench.action.togglePanel"
+    },
+    // Toggle Sidebar (Using Cmd+Shift+L to match "Right" movement idea or specific binding)
+    {
+        "key": "cmd+shift+l",
+        "command": "workbench.action.focusSideBar"
+    },
+    {
+        "key": "cmd+shift+l",
+        "command": "workbench.action.closeSidebar",
+        "when": "!auxiliaryBarFocus && !panelFocus && !editorFocus"
+    },
+    {
+        "key": "cmd+0",
+        "command": "-workbench.action.focusSideBar",
+        "when": "!isAuxiliaryWindowFocusedContext"
+    },
+    {
+        "key": "cmd+b",
+        "command": "-workbench.action.toggleSidebarVisibility"
+    },
+    // Focus Active Editor
+    {
+        "key": "cmd+shift+k",
+        "command": "workbench.action.focusActiveEditorGroup"
+    },
+    // =================================================================================================
+    // EDITOR NAVIGATION & TABS
+    // Strategy: Cmd + Shift + [ / ] (or H/L concept) for cycling content within the focused view
+    // =================================================================================================
+    // Cycle Tabs (Editors)
+    {
+        "key": "cmd+shift+[",
+        "command": "workbench.action.previousEditor",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "cmd+shift+]",
+        "command": "workbench.action.nextEditor",
+        "when": "editorTextFocus"
+    },
+    // Navigation History (Back/Forward)
     {
         "key": "cmd+[",
         "command": "workbench.action.navigateBack"
@@ -11,107 +77,48 @@
         "key": "cmd+]",
         "command": "workbench.action.navigateForward"
     },
-    {
-        "key": "cmd+shift+[",
-        "command": "workbench.action.previousEditor"
-    },
+    // =================================================================================================
+    // PANEL & TERMINAL MANAGEMENT
+    // Strategy: Reuse Tab cycling keys for Panel views; Standardize Terminal actions
+    // =================================================================================================
+    // Cycle Panel Views (Terminal -> Output -> Debug -> Problems)
     {
         "key": "cmd+shift+]",
-        "command": "workbench.action.nextEditor"
-    },
-    {
-        "key": "ctrl+shift+h",
-        "command": "workbench.action.focusAuxiliaryBar"
-    },
-    {
-        "key": "ctrl+shift+h",
-        "command": "workbench.action.toggleAuxiliaryBar",
-        "when": "auxiliaryBarFocus"
-    },
-    {
-        "key": "ctrl+shift+j",
-        "command": "workbench.action.focusPanel"
-    },
-    {
-        "key": "ctrl+shift+j",
-        "command": "workbench.action.togglePanel",
+        "command": "workbench.action.nextPanelView",
         "when": "panelFocus"
     },
     {
-        "key": "ctrl+shift+k",
-        "command": "workbench.action.focusFirstEditorGroup"
+        "key": "cmd+shift+[",
+        "command": "workbench.action.previousPanelView",
+        "when": "panelFocus"
     },
+    // Clear Terminal (Cmd+K is standard for clearing)
     {
-        "key": "ctrl+shift+l",
-        "command": "workbench.view.explorer"
-    },
-    {
-        "key": "ctrl+shift+l",
-        "command": "workbench.action.toggleSidebarVisibility",
-        "when": "explorerViewletFocus"
-    },
-    // pane navigation
-    {
-        "key": "ctrl+h",
-        "command": "workbench.action.focusLeftGroup",
-        "when": "editorTextFocus"
-    },
-    {
-        "key": "ctrl+j",
-        "command": "workbench.action.focusBelowGroup",
-        "when": "editorTextFocus"
-    },
-    {
-        "key": "ctrl+k",
-        "command": "workbench.action.focusAboveGroup",
-        "when": "editorTextFocus"
-    },
-    {
-        "key": "ctrl+l",
-        "command": "workbench.action.focusRightGroup",
-        "when": "editorTextFocus"
-    },
-    {
-        "key": "ctrl+h",
-        "command": "workbench.action.focusLeftGroup",
+        "key": "cmd+k",
+        "command": "workbench.action.terminal.clear",
         "when": "terminalFocus"
     },
+    // Split Terminal
     {
-        "key": "ctrl+j",
-        "command": "workbench.action.focusBelowGroup",
-        "when": "terminalFocus"
+        "key": "ctrl+d",
+        "command": "workbench.action.terminal.split",
+        "when": "terminalFocus && terminalProcessSupported || terminalFocus && terminalWebExtensionContributedProfile"
     },
     {
-        "key": "ctrl+k",
-        "command": "workbench.action.focusAboveGroup",
-        "when": "terminalFocus"
+        "key": "cmd+\\",
+        "command": "-workbench.action.terminal.split",
+        "when": "terminalFocus && terminalProcessSupported || terminalFocus && terminalWebExtensionContributedProfile"
     },
+    // =================================================================================================
+    // EDITING & CONTENT ACTIONS
+    // Strategy: Cmd + Key for actions on the text/content
+    // =================================================================================================
+    // Basic Editing
     {
-        "key": "ctrl+l",
-        "command": "workbench.action.focusRightGroup",
-        "when": "terminalFocus"
+        "key": "cmd+c",
+        "command": "editor.action.clipboardCopyAction",
+        "when": "editorTextFocus && !editorReadonly"
     },
-    {
-        "key": "ctrl+h",
-        "command": "workbench.action.focusLeftGroup",
-        "when": "explorerviewletfocus"
-    },
-    {
-        "key": "ctrl+j",
-        "command": "workbench.action.focusBelowGroup",
-        "when": "explorerViewletFocus"
-    },
-    {
-        "key": "ctrl+k",
-        "command": "workbench.action.focusAboveGroup",
-        "when": "explorerViewletFocus"
-    },
-    {
-        "key": "ctrl+l",
-        "command": "workbench.action.focusRightGroup",
-        "when": "explorerViewletFocus"
-    },
-    // editor actions
     {
         "key": "cmd+/",
         "command": "editor.action.commentLine",
@@ -123,27 +130,33 @@
         "when": "editorTextFocus && !editorReadonly"
     },
     {
-        "key": "cmd+c",
-        "command": "editor.action.clipboardCopyAction",
-        "when": "editorTextFocus && !editorReadonly"
-    },
-    {
-        "key": "cmd+ctrl+z",
+        "key": "ctrl+z",
         "command": "git.revertSelectedRanges",
         "when": "editorTextFocus && !editorReadonly"
     },
-    // multicursor
+    // Multi-Cursor (Vertical Cloning)
     {
-        "key": "alt+shift+k",
+        "key": "cmd+shift+\\",
         "command": "editor.action.insertCursorAbove",
         "when": "editorTextFocus && !editorReadonly"
     },
     {
-        "key": "alt+shift+j",
+        "key": "cmd+shift+'",
         "command": "editor.action.insertCursorBelow",
         "when": "editorTextFocus && !editorReadonly"
     },
-    // editor splittingc
+    // Add Selection to Next Match (Cmd+L replaces Cmd+D)
+    {
+        "key": "cmd+l",
+        "command": "editor.action.addSelectionToNextFindMatch",
+        "when": "editorFocus"
+    },
+    {
+        "key": "cmd+d",
+        "command": "-editor.action.addSelectionToNextFindMatch",
+        "when": "editorFocus"
+    },
+    // Split Editor
     {
         "key": "ctrl+d",
         "command": "workbench.action.splitEditorRight",
@@ -154,15 +167,13 @@
         "command": "workbench.action.splitEditorDown",
         "when": "editorTextFocus"
     },
-    // find and replace
+    // =================================================================================================
+    // SCROLLING & ZOOM
+    // Strategy: Shift modifiers for fine-grained control or secondary actions
+    // =================================================================================================
+    // Scroll Viewport (keeping cursor static)
     {
-        "key": "cmd+r",
-        "command": "editor.action.startFindReplaceAction",
-        "when": "editorTextFocus"
-    },
-    // scrolling
-    {
-        "key": "cmd+ctrl+shift+j",
+        "key": "cmd+'",
         "command": "editorScroll",
         "args": {
             "to": "down"
@@ -170,13 +181,14 @@
         "when": "editorTextFocus"
     },
     {
-        "key": "cmd+ctrl+shift+k",
+        "key": "cmd+\\",
         "command": "editorScroll",
         "args": {
             "to": "up"
         },
         "when": "editorTextFocus"
     },
+    // Scroll Explorer
     {
         "key": "shift+j",
         "command": "editorScroll",
@@ -193,18 +205,36 @@
         },
         "when": "explorerViewletFocus"
     },
-    // zoom
+    // Zoom (Cmd + Shift + +/-)
     {
-        "key": "ctrl+-",
+        "key": "cmd+shift+-",
         "command": "editor.action.fontZoomOut",
         "when": "editorTextFocus"
     },
     {
-        "key": "ctrl+=",
+        "key": "cmd+shift+=",
         "command": "editor.action.fontZoomIn",
         "when": "editorTextFocus"
     },
-    // list navigation
+    // =================================================================================================
+    // LIST & WIDGET NAVIGATION
+    // Strategy: Cmd + J/K for navigating lists (Suggestions, Quick Pick, etc.)
+    // =================================================================================================
+    // Suggest Widget
+    {
+        "key": "cmd+space",
+        "command": "editor.action.triggerSuggest",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "escape",
+        "command": "hideSuggestWidget",
+        "when": "suggestWidgetVisible && textInputFocus"
+    },
+    {
+        "key": "cmd+space",
+        "command": "-editor.action.inlineSuggest.trigger"
+    },
     {
         "key": "cmd+j",
         "command": "selectNextSuggestion",
@@ -215,16 +245,7 @@
         "command": "selectPrevSuggestion",
         "when": "editorTextFocus && suggestWidgetVisible"
     },
-    {
-        "key": "cmd+j",
-        "command": "list.focusDown",
-        "when": "editorTextFocus && quickFixWidgetVisible"
-    },
-    {
-        "key": "cmd+k",
-        "command": "list.focusUp",
-        "when": "editorTextFocus && quickFixWidgetVisible"
-    },
+    // Quick Pick / Quick Input
     {
         "key": "cmd+j",
         "command": "quickInput.next",
@@ -234,149 +255,6 @@
         "key": "cmd+k",
         "command": "quickInput.previous",
         "when": "inQuickInput && quickInputType == 'quickPick'"
-    },
-    {
-        "key": "cmd+j",
-        "command": "list.focusDown",
-        "when": "listFocus && !inputFocus"
-    },
-    {
-        "key": "cmd+k",
-        "command": "list.focusUp",
-        "when": "listFocus && !inputFocus"
-    },
-    // file explorer
-    {
-        "key": "d",
-        "command": "explorer.newFolder",
-        "when": "explorerViewletFocus && !inputFocus"
-    },
-    {
-        "key": "f",
-        "command": "explorer.newFile",
-        "when": "explorerViewletFocus && !inputFocus"
-    },
-    {
-        "key": "cmd+shift+c",
-        "command": "copyRelativeFilePath",
-        "when": "editorTextFocus"
-    },
-    // terminal
-    {
-        "key": "cmd+`",
-        "command": "workbench.action.terminal.toggleTerminal"
-    },
-    {
-        "key": "cmd+k",
-        "command": "workbench.action.terminal.clear",
-        "when": "terminalFocus"
-    },
-    // quick view
-    {
-        "key": "ctrl+shift+g",
-        "command": "workbench.view.scm"
-    },
-    {
-        "key": "ctrl+shift+e",
-        "command": "workbench.view.explorer",
-        "when": "viewContainer.workbench.view.explorer.enabled"
-    },
-    // go to reference/implementation
-    {
-        "key": "cmd+shift+j",
-        "command": "editor.action.goToReferences",
-        "when": "editorHasReferenceProvider"
-    },
-    // recent files
-    {
-        "key": "cmd+o",
-        "command": "workbench.action.openRecent"
-    },
-    // remove defaults
-    {
-        "key": "cmd+b",
-        "command": "-workbench.action.toggleSidebarVisibility"
-    },
-    {
-        "key": "cmd+j",
-        "command": "-workbench.action.togglePanel"
-    },
-    {
-        "key": "cmd+l",
-        "command": "-composer.sendToAgent",
-        "when": "editorHasPromptBar && editorPromptBarFocused"
-    },
-    {
-        "key": "cmd+l",
-        "command": "-aichat.newchataction"
-    },
-    {
-        "key": "shift+cmd+h",
-        "command": "aichat.insertselectionintochat"
-    },
-    {
-        "key": "shift+cmd+l",
-        "command": "-aichat.insertselectionintochat"
-    },
-    {
-        "key": "ctrl+cmd+h",
-        "command": "addCursorsAtSearchResults",
-        "when": "fileMatchOrMatchFocus && searchViewletVisible"
-    },
-    {
-        "key": "shift+cmd+l",
-        "command": "-addCursorsAtSearchResults",
-        "when": "fileMatchOrMatchFocus && searchViewletVisible"
-    },
-    {
-        "key": "shift+cmd+h",
-        "command": "aichat.newchataction"
-    },
-    {
-        "key": "shift+cmd+o",
-        "command": "workbench.action.files.openFileFolder",
-        "when": "isMacNative && openFolderWorkspaceSupport"
-    },
-    {
-        "key": "cmd+o",
-        "command": "-workbench.action.files.openFileFolder",
-        "when": "isMacNative && openFolderWorkspaceSupport"
-    },
-    {
-        "key": "shift+cmd+o",
-        "command": "workbench.action.files.openFile",
-        "when": "false"
-    },
-    {
-        "key": "cmd+o",
-        "command": "-workbench.action.files.openFile",
-        "when": "false"
-    },
-    {
-        "key": "shift+cmd+o",
-        "command": "workbench.action.files.openFolderViaWorkspace",
-        "when": "!openFolderWorkspaceSupport && workbenchState == 'workspace'"
-    },
-    {
-        "key": "cmd+o",
-        "command": "-workbench.action.files.openFolderViaWorkspace",
-        "when": "!openFolderWorkspaceSupport && workbenchState == 'workspace'"
-    },
-    {
-        "key": "ctrl+o",
-        "command": "workbench.action.showAllSymbols"
-    },
-    {
-        "key": "cmd+t",
-        "command": "-workbench.action.showAllSymbols"
-    },
-    {
-        "key": "cmd+t",
-        "command": "workbench.action.quickOpen"
-    },
-    {
-        "key": "cmd+p",
-        "command": "-workbench.action.quickOpen"
     },
     {
         "key": "ctrl+down",
@@ -398,11 +276,152 @@
         "command": "-quickInput.previous",
         "when": "inQuickInput && quickInputType == 'quickPick'"
     },
+    // Generic List Focus
     {
-        "key": "shift+cmd+e",
-        "command": "-workbench.view.explorer",
-        "when": "viewContainer.workbench.view.explorer.enabled"
+        "key": "cmd+j",
+        "command": "list.focusDown",
+        "when": "listFocus && !inputFocus"
     },
+    {
+        "key": "cmd+k",
+        "command": "list.focusUp",
+        "when": "listFocus && !inputFocus"
+    },
+    // Quick Fix / Code Action Widget
+    {
+        "key": "cmd+j",
+        "command": "selectNextCodeAction",
+        "when": "codeActionMenuVisible"
+    },
+    {
+        "key": "cmd+k",
+        "command": "selectPrevCodeAction",
+        "when": "codeActionMenuVisible"
+    },
+    // Fallback/Legacy Support for Quick Fix
+    {
+        "key": "cmd+j",
+        "command": "quickFixWidget.focusNext",
+        "when": "quickFixWidgetVisible"
+    },
+    {
+        "key": "cmd+k",
+        "command": "quickFixWidget.focusPrevious",
+        "when": "quickFixWidgetVisible"
+    },
+    // =================================================================================================
+    // FILE EXPLORER
+    // Strategy: Fast file creation and navigation
+    // =================================================================================================
+    {
+        "key": "d",
+        "command": "explorer.newFolder",
+        "when": "explorerViewletFocus && !inputFocus"
+    },
+    {
+        "key": "f",
+        "command": "explorer.newFile",
+        "when": "explorerViewletFocus && !inputFocus"
+    },
+    {
+        "key": "cmd+shift+c",
+        "command": "copyRelativeFilePath",
+        "when": "editorTextFocus"
+    },
+    // =================================================================================================
+    // FILE SEARCH & SYMBOLS
+    // Strategy: Cmd + T for files, Ctrl + O for symbols
+    // =================================================================================================
+    // Quick Open (Files)
+    {
+        "key": "cmd+t",
+        "command": "workbench.action.quickOpen"
+    },
+    {
+        "key": "cmd+p",
+        "command": "-workbench.action.quickOpen"
+    },
+    // Open Recent
+    {
+        "key": "cmd+o",
+        "command": "workbench.action.openRecent"
+    },
+    {
+        "key": "cmd+o",
+        "command": "-workbench.action.files.openFileFolder",
+        "when": "isMacNative && openFolderWorkspaceSupport"
+    },
+    {
+        "key": "shift+cmd+o",
+        "command": "workbench.action.files.openFileFolder",
+        "when": "isMacNative && openFolderWorkspaceSupport"
+    },
+    // Symbols
+    {
+        "key": "ctrl+o",
+        "command": "workbench.action.showAllSymbols"
+    },
+    {
+        "key": "cmd+t",
+        "command": "-workbench.action.showAllSymbols"
+    },
+    // =================================================================================================
+    // AI & AUTOMATION (CURSOR/GHOST TEXT)
+    // Strategy: Cmd + H for generation, centered on home row
+    // =================================================================================================
+    // Inline Generate (Editor)
+    {
+        "key": "cmd+h",
+        "command": "aipopup.action.modal.generate",
+        "when": "editorFocus && !composerBarIsVisible"
+    },
+    {
+        "key": "cmd+k",
+        "command": "-aipopup.action.modal.generate",
+        "when": "editorFocus && !composerBarIsVisible"
+    },
+    {
+        "key": "cmd+shift+k",
+        "command": "-aipopup.action.modal.generate",
+        "when": "editorFocus && !composerBarIsVisible"
+    },
+    // AI in Terminal
+    {
+        "key": "cmd+h",
+        "command": "cursorai.action.generateInTerminal",
+        "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported || terminalHasBeenCreated && terminalPromptBarVisible || terminalProcessSupported && terminalPromptBarVisible"
+    },
+    {
+        "key": "cmd+k",
+        "command": "-cursorai.action.generateInTerminal",
+        "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported || terminalHasBeenCreated && terminalPromptBarVisible || terminalProcessSupported && terminalPromptBarVisible"
+    },
+    // Chat & Composer Cleanups
+    {
+        "key": "shift+cmd+l",
+        "command": "-composer.newAgentChat"
+    },
+    {
+        "key": "cmd+l",
+        "command": "-composer.sendToAgent",
+        "when": "editorHasPromptBar && editorPromptBarFocused"
+    },
+    {
+        "key": "cmd+l",
+        "command": "-aichat.newchataction"
+    },
+    {
+        "key": "shift+cmd+l",
+        "command": "-aichat.insertselectionintochat"
+    },
+    {
+        "key": "shift+cmd+h",
+        "command": "aichat.newchataction"
+    },
+    // =================================================================================================
+    // DEBUGGING
+    // Strategy: Standard F-keys with modifiers or mnemonics
+    // =================================================================================================
     {
         "key": "ctrl+shift+r",
         "command": "workbench.action.debug.restart",
@@ -433,10 +452,39 @@
         "command": "-workbench.action.debug.start",
         "when": "debuggersAvailable && debugState == 'inactive'"
     },
+    // =================================================================================================
+    // VERSION CONTROL (SCM)
+    // =================================================================================================
     {
-        "key": "cmd+space",
-        "command": "editor.action.inlineSuggest.trigger"
+        "key": "shift+cmd+g",
+        "command": "workbench.view.scm"
+    },
+    {
+        "key": "shift+cmd+g",
+        "command": "workbench.view.scm",
+        "when": "workbench.scm.active"
+    },
+    {
+        "key": "ctrl+shift+g",
+        "command": "-workbench.view.scm",
+        "when": "workbench.scm.active"
+    },
+    {
+        "key": "shift+cmd+g",
+        "command": "workbench.view.scm",
+        "when": "workbench.scm.active && !gitlens:disabled && config.gitlens.keymap == 'chorded'"
+    },
+    {
+        "key": "ctrl+shift+g",
+        "command": "-workbench.view.scm",
+        "when": "workbench.scm.active && !gitlens:disabled && config.gitlens.keymap == 'chorded'"
+    },
+    // =================================================================================================
+    // GO TO
+    // =================================================================================================
+    {
+        "key": "cmd+;",
+        "command": "editor.action.goToReferences"
+        // "when": "editorHasReferenceProvider" // TODO: uncomment if cmd+; is used for something else
     }
- 
-
 ]

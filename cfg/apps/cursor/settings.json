@@ -326,11 +326,10 @@
 	"editor.inlineSuggest.enabled": false,
 	"editor.inlineSuggest.showToolbar": "always",
 	"editor.acceptSuggestionOnEnter": "smart",
-	"remote.SSH.remotePlatform": {
-		"coder-vscode.coder.alsenseplatform.com--giacomo-guidotto--test.alsense-jobs-mageai": "linux"
-	},
 	"remote.SSH.connectTimeout": 1800,
 	"sqltools.format": {
 		"linesBetweenQueries": 2
-	}
+	},
+	"remote.autoForwardPortsSource": "hybrid",
+	"redhat.telemetry.enabled": false
 }

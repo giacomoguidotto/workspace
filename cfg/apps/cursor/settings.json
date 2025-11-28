@@ -79,6 +79,8 @@
 	"cursor.cpp.disabledLanguages": [],
 	// spell check settings
 	"cSpell.userWords": [
+		"aichat",
+		"aipopup",
 		"Alsense",
 		"alsenseplatform",
 		"apikey",
@@ -109,6 +111,7 @@
 		"coverprofile",
 		"creds",
 		"Cronspec",
+		"cursorai",
 		"Customtype",
 		"dagre",
 		"Damiano",
@@ -331,5 +334,5 @@
 		"linesBetweenQueries": 2
 	},
 	"remote.autoForwardPortsSource": "hybrid",
-	"redhat.telemetry.enabled": false
+	"redhat.telemetry.enabled": false,
 }

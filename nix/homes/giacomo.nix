@@ -146,21 +146,21 @@ in
 
           # editors
           neovim
-          code-cursor
-          obsidian
-          zed-editor
+          # code-cursor
+          # obsidian
+          # zed-editor
 
           # browsers
-          brave
+          # brave
           # helium-browser # uncomment when available
 
           # apps
-          discord
-          mas
-          raycast
+          # discord
+          # mas
+          # postman
+          # raycast
           # signal-desktop # uncomment when available
-          spotify
-          postman
+          # spotify
         ];
 
         # simlinks of files copied to the Nix store.
@@ -173,9 +173,9 @@ in
 
         # scripts ran after home-manager activation
         activation = {
-          install-xcode = hmlib.hm.dag.entryAfter [ "home.packages" ] ''
-            ${pkgs.mas}/bin/mas install 497799835 2> /dev/null
-          '';
+          # install-xcode = hmlib.hm.dag.entryAfter [ "home.packages" ] ''
+          #   ${pkgs.mas}/bin/mas install 497799835 2> /dev/null
+          # '';
           # install-whatsapp = hmlib.hm.dag.entryAfter [ "home.packages" ] ''
           #   ${pkgs.mas}/bin/mas install 310633997 2> /dev/null
           # '';

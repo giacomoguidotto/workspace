@@ -23,7 +23,12 @@
     // Toggle Panel
     {
         "key": "cmd+shift+j",
-        "command": "workbench.action.togglePanel"
+        "command": "workbench.action.focusPanel"
+    },
+    {
+        "key": "cmd+shift+j",
+        "command": "workbench.action.closePanel",
+        "when": "panelFocus"
     },
     {
         "key": "cmd+j",

@@ -8,6 +8,8 @@
 
 [include]
     path = ./catppuccin.gitconfig
+    # TODO: find a way to include only for repo in ~/dev/work
+    # path = ~/dev/work/.gitconfig
 
 [core]
     autocrlf = input
@@ -43,6 +45,3 @@
 
 [commit]
   gpgsign = true
-
-[url "git@ssh.dev.azure.com:v3/danfoss/Alsense/alsense.shared.go"]
-    insteadOf = "https://danfoss.visualstudio.com/Alsense/_git/alsense.shared.go"

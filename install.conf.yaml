@@ -27,6 +27,9 @@
     ~/.hushlogin:
       force: true
       path: cfg/home/.hushlogin
+    ~/.ssh/config:
+      force: true
+      path: cfg/home/.sshconfig
 
     ~/Library/Application Support/Cursor/User/settings.json:
       if: '[ `uname` = Darwin ]'

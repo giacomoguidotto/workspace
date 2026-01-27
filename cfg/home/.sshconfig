@@ -1,0 +1,18 @@
+Include ~/.ssh/config.local
+
+Include ~/.config/colima/ssh_config
+
+Host *
+  IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+
+Host life-github
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/life-auth.pub
+  IdentitiesOnly yes
+
+Host work-github
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/work-auth.pub
+  IdentitiesOnly yes

@@ -3,18 +3,6 @@
 	email = giacomo.guidotto@gmail.com
     signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINoa9KM7X6vxq/mXeA86sKpOGeszjDOJi8qIhVOVcmxS
 
-[include]
-    path = ./catppuccin.gitconfig
-
-[includeIf "gitdir:~/dev/work/"]
-    path = ~/dev/work/.gitconfig
-
-[url "git@life-github:"]
-    insteadOf = "https://github.com/"
-
-[url "git@life-github:"]
-    insteadOf = "git@github.com:"
-
 [init]
 	defaultBranch = main
 
@@ -52,3 +40,17 @@
 
 [commit]
   gpgsign = true
+
+[include]
+    path = ./catppuccin.gitconfig
+
+# override with work config for work repos
+[includeIf "gitdir:~/dev/work/*/"]
+    path = ~/dev/work/.gitconfig
+
+# url rewrites works on a first-match basis, so needs to be after the overrides
+[url "git@life-github:"]
+    insteadOf = "https://github.com/"
+
+[url "git@life-github:"]
+    insteadOf = "git@github.com:"

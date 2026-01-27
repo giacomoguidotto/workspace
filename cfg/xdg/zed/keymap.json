@@ -1,56 +1,41 @@
 [
   {
-    "bindings": {
-      "cmd-h": null,
-      "cmd-j": "menu::SelectNext",
-      "cmd-k": "menu::SelectPrevious",
-      "ctrl-shift-o": "projects::OpenRecent",
-      "ctrl-shift-h": "pane::ActivatePreviousItem",
-      "ctrl-shift-l": "pane::ActivateNextItem"
+    "context": "Workspace",
+      "bindings": {
+      "cmd-shift-j": "terminal_panel::ToggleFocus"
     }
   },
-  // Pane Navigation from Editor
+  {
+    "context": "(Editor && edit_prediction_conflict)",
+    "bindings": {
+      "alt-;": "editor::AcceptEditPrediction"
+    }
+  },
+  {
+    "context": "(Editor && edit_prediction)",
+    "bindings": {
+      "alt-;": "editor::AcceptEditPrediction"
+    }
+  },
   {
     "context": "Editor",
     "bindings": {
-      "ctrl-h": "workspace::ActivatePaneLeft",
-      "ctrl-j": "workspace::ActivatePaneDown",
-      "ctrl-k": "workspace::ActivatePaneUp",
-      "ctrl-l": "workspace::ActivatePaneRight",
-      "ctrl-shift-j": "vim::ScrollDown",
-      "ctrl-shift-k": "vim::ScrollUp",
-      "ctrl--": "zed::DecreaseBufferFontSize",
-      "ctrl-=": "zed::IncreaseBufferFontSize",
-      "ctrl-d": "pane::SplitRight",
-      "ctrl-shift-d": "pane::SplitDown",
-      "cmd-shift-c": "workspace::CopyRelativePath"
-    }
-  },
-  // Pane Navigation from Terminal
-  {
-    "context": "Terminal",
-    "bindings": {
-      "ctrl-h": "workspace::ActivatePaneLeft",
-      "ctrl-j": "workspace::ActivatePaneDown",
-      "ctrl-k": "workspace::ActivatePaneUp",
-      "ctrl-l": "workspace::ActivatePaneRight"
-    }
-  },
-  // Pane Navigation from Project Panel
-  {
-    "context": "ProjectPanel",
-    "bindings": {
-      "ctrl-h": "workspace::ActivatePaneLeft",
-      "ctrl-j": "workspace::ActivatePaneDown",
-      "ctrl-k": "workspace::ActivatePaneUp",
-      "ctrl-l": "workspace::ActivatePaneRight"
+      "cmd-space": "editor::ShowCompletions"
     }
   },
   {
-    "context": "Editor && (showing_code_actions || showing_completions)",
     "bindings": {
-      "cmd-j": "editor::ContextMenuNext",
-      "cmd-k": "editor::ContextMenuPrevious"
+      "cmd-o": [
+        "projects::OpenRecent",
+        {
+          "create_new_window": false
+        }
+      ]
+    }
+  },
+  {
+    "bindings": {
+      "alt-cmd-o": "workspace::Open"
     }
   }
 ]

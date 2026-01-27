@@ -7,18 +7,28 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
-  "assistant": {
+  "edit_predictions": {
+    "mode": "subtle"
+  },
+  "agent": {
     "default_model": {
       "provider": "zed.dev",
       "model": "claude-3-5-sonnet-latest"
-    },
-    "version": "2"
+    }
   },
 
   "auto_update": false,
-  "base_keymap": "JetBrains",
-  "theme": "Catppuccin Mocha (Blur)",
-  "icon_theme": "Catppuccin Mocha",
+  "base_keymap": "Cursor",
+  "theme": {
+    "mode": "dark",
+    "light": "Catppuccin Mocha (Blur)",
+    "dark": "Catppuccin Mocha (Blur)"
+  },
+  "icon_theme": {
+    "mode": "dark",
+    "light": "Catppuccin Mocha",
+    "dark": "Catppuccin Mocha"
+  },
   // "ui_font_family": "BlexMono Nerd Font Mono",
   "buffer_font_family": "BlexMono Nerd Font Mono",
 

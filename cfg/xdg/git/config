@@ -3,13 +3,20 @@
 	email = giacomo.guidotto@gmail.com
     signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINoa9KM7X6vxq/mXeA86sKpOGeszjDOJi8qIhVOVcmxS
 
-[init]
-	defaultBranch = main
-
 [include]
     path = ./catppuccin.gitconfig
-    # TODO: find a way to include only for repo in ~/dev/work
-    # path = ~/dev/work/.gitconfig
+
+[includeIf "gitdir:~/dev/work/"]
+    path = ~/dev/work/.gitconfig
+
+[url "git@life-github:"]
+    insteadOf = "https://github.com/"
+
+[url "git@life-github:"]
+    insteadOf = "git@github.com:"
+
+[init]
+	defaultBranch = main
 
 [core]
     autocrlf = input

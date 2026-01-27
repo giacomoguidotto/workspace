@@ -1,4 +1,5 @@
 gui:
+  returnImmediately: true
   theme:
     activeBorderColor:
       - "#89b4fa"

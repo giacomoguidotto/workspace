@@ -38,7 +38,7 @@ alias ....    = cd ....
 alias .....   = cd .....
 alias ......  = cd ......
 
-alias c       = cursor
+alias c       = claude
 alias cl      = clear
 alias d       = colima start
 alias ds      = colima stop
@@ -96,7 +96,7 @@ mkdir $autoload_dir
 atuin init nu | save -f ($autoload_dir | path join "atuin.nu")
 
 # carapace - completions
-$env.CARAPACE_BRIDGES = 'zsh,fish,bash,inshellisense' 
+$env.CARAPACE_BRIDGES = 'zsh,fish,bash,inshellisense'
 carapace _carapace nushell | save -f ($autoload_dir | path join "carapace.nu")
 
 # starship - prompt
@@ -130,4 +130,3 @@ alias gh = op plugin run -- gh
 #     cmd: "with-env { ATUIN_LOG: error, ATUIN_QUERY: (commandline) } { commandline edit (run-external atuin search "--interactive"  e>| str trim) }"
 #   }
 # }]
-

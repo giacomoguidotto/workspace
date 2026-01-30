@@ -10,7 +10,7 @@
     link:
       relink: true # removes the old link if it's a symlink
 
-- clean: ['~'] # remove dead symlinks
+- clean: ["~"] # remove dead symlinks
 
 - link:
     ~/.config:
@@ -20,24 +20,32 @@
 
     ~/.zshrc:
       force: true
-      path: cfg/home/.zshrc
+      path: cfg/.zshrc
     ~/.zshenv:
       force: true
-      path: cfg/home/.zshenv
+      path: cfg/.zshenv
     ~/.hushlogin:
       force: true
-      path: cfg/home/.hushlogin
+      path: cfg/.hushlogin
     ~/.ssh/config:
       force: true
-      path: cfg/home/.sshconfig
+      path: cfg/.ssh/config
+    ~/.claude/settings.json:
+      force: true
+      path: cfg/.claude/settings.json
+    ~/.claude/skills:
+      create: true
+      force: true
+      glob: true
+      path: cfg/.claude/skills/*
 
     ~/Library/Application Support/Cursor/User/settings.json:
-      if: '[ `uname` = Darwin ]'
+      if: "[ `uname` = Darwin ]"
       force: true
       path: cfg/apps/cursor/settings.json
 
     ~/Library/Application Support/Cursor/User/keybindings.json:
-      if: '[ `uname` = Darwin ]'
+      if: "[ `uname` = Darwin ]"
       force: true
       path: cfg/apps/cursor/keybindings.json
 

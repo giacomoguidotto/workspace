@@ -2,9 +2,9 @@
 [[ ${-} = ${-/i/} ]] && return
 
 # launch nushell, if interactive shell, not already running, and not in VS Code
-if [ -t 1 ] && command -v nu > /dev/null 2>&1 && [ -z "$VSCODE_INJECTION" ]; then
-  exec nu
-fi
+# if [ -t 1 ] && command -v nu > /dev/null 2>&1 && [ -z "$VSCODE_INJECTION" ]; then
+#   exec nu
+# fi
 
 # aliases
 alias ..="cd .."
@@ -12,7 +12,7 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias ......="cd ../../../../.."
-alias c="cursor"
+alias c="claude"
 alias cl="clear"
 alias d="colima start"
 alias ds="colima stop"
@@ -82,4 +82,3 @@ if [ -n "$VSCODE_INJECTION" ] && [ -z "$VSCODE_TERMINAL_DIRENV_LOADED" ]; then
     cd ~ && cd - > /dev/null
     export VSCODE_TERMINAL_DIRENV_LOADED=1
 fi
-

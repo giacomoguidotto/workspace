@@ -46,8 +46,13 @@ swc() {
   fi
 }
 
+gc() {
+  sudo nix-collect-garbage -d
+}
+
 up() {
     sudo determinate-nixd upgrade
     nix flake update --flake ~/.config/nix-darwin
     swc
+    gc
 }

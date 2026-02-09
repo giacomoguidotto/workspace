@@ -79,6 +79,8 @@
 	"cursor.cpp.disabledLanguages": [],
 	// spell check settings
 	"cSpell.userWords": [
+		"ADMINPASSWORD",
+		"ADMINUSERNAME",
 		"aichat",
 		"aipopup",
 		"Alsense",
@@ -279,6 +281,7 @@
 		"perceptrons",
 		"pgtype",
 		"PINN",
+		"PKCS",
 		"pkey",
 		"pkgs",
 		"platacard",

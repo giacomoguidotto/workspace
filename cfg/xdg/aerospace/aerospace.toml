@@ -51,7 +51,7 @@ if.app-name-regex-substring = 'zen'
 run = 'move-node-to-workspace 1'
 
 [[on-window-detected]]
-if.app-name-regex-substring = 'cursor'
+if.app-name-regex-substring = 'cursor|zed'
 run = 'move-node-to-workspace 2'
 
 [[on-window-detected]]

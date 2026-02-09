@@ -54,3 +54,6 @@
 
 [url "git@life-github:"]
     insteadOf = "git@github.com:"
+
+[coderabbit]
+	machineId = cli/af04308149f94713bb3e3339f3d9bed1

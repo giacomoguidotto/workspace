@@ -2,7 +2,7 @@
 keybinds {
     normal {
         bind "Ctrl q" { Detach; }
-        bind "Super Shift c" { Copy; }
+        bind "Super c" { Copy; }
         bind "Super k" { Clear; }
         bind "Ctrl h" { MoveFocus "Left"; }
         bind "Ctrl j" { MoveFocus "Down"; }

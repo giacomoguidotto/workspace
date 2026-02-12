@@ -9,10 +9,10 @@ k9s:
   ui:
     skin: catppuccin-mocha-transparent
     enableMouse: false
-    headless: false
+    headless: true
     logoless: false
     crumbsless: false
-    reactive: false
+    reactive: true
     noIcons: true
     defaultsToFullScreen: false
   skipLatestRevCheck: false

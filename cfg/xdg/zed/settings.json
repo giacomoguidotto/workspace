@@ -8,10 +8,10 @@
 // from the command palette or from `Zed` application menu.
 {
   "notification_panel": {
-    "dock": "left"
+    "dock": "left",
   },
   "git_panel": {
-    "dock": "right"
+    "dock": "right",
   },
   "project_panel": {
     "starts_open": false,
@@ -71,6 +71,12 @@
     },
     "Python": {
       "language_servers": ["ty", "!basedpyright"],
+    },
+    "JavaScript": {
+      "language_servers": ["!eslint", "..."],
+    },
+    "TypeScript": {
+      "language_servers": ["!eslint", "..."],
     },
   },
   "lsp": {

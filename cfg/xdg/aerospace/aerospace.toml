@@ -51,7 +51,7 @@ if.app-name-regex-substring = 'zen'
 run = 'move-node-to-workspace 1'
 
 [[on-window-detected]]
-if.app-name-regex-substring = 'cursor|zed'
+if.app-name-regex-substring = 'zed'
 run = 'move-node-to-workspace 2'
 
 [[on-window-detected]]
@@ -61,6 +61,10 @@ run = 'move-node-to-workspace 3'
 [[on-window-detected]]
 if.app-name-regex-substring = 'teams|outlook'
 run = 'move-node-to-workspace 4'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'cursor'
+run = 'move-node-to-workspace 5'
 
 # Possible values: (qwerty|dvorak)
 # See https://nikitabobko.github.io/AeroSpace/guide#key-mapping

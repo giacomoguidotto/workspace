@@ -116,5 +116,5 @@
 
   security.pam.services.sudo_local.touchIdAuth = true;
 
-  homebrew.enable = false;
+  homebrew.enable = true;
 }

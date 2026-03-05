@@ -88,3 +88,6 @@ if [ -n "$VSCODE_INJECTION" ] && [ -z "$VSCODE_TERMINAL_DIRENV_LOADED" ]; then
     cd ~ && cd - > /dev/null
     export VSCODE_TERMINAL_DIRENV_LOADED=1
 fi
+
+# brew - the easiest way to clutter your dev env
+eval "$(/opt/homebrew/bin/brew shellenv zsh)"

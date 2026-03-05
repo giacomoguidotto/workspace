@@ -1,3 +1,17 @@
 theme = catppuccin-mocha.conf
 background-opacity = 0.88
 background-blur-radius = 95
+
+keybind = super+shift+bracket_left=unbind
+keybind = super+shift+bracket_right=unbind
+keybind = super+t=unbind
+keybind = super+w=unbind
+keybind = super+one=unbind
+keybind = super+two=unbind
+keybind = super+three=unbind
+keybind = super+four=unbind
+keybind = super+five=unbind
+keybind = super+six=unbind
+keybind = super+seven=unbind
+keybind = super+eight=unbind
+keybind = super+nine=unbind

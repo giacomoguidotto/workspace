@@ -124,7 +124,6 @@ in
           lazydocker
           lazygit
           lazysql
-          neofetch
           nmap
           ripgrep
           starship
@@ -135,7 +134,7 @@ in
           watchman
           # ollama
           tokei
-          wiki-tui 
+          wiki-tui
           watchexec
           yazi
           zoxide

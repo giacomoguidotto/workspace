@@ -15,3 +15,4 @@ keybind = super+six=unbind
 keybind = super+seven=unbind
 keybind = super+eight=unbind
 keybind = super+nine=unbind
+keybind = super+h=unbind

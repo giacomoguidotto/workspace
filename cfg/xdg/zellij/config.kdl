@@ -15,7 +15,11 @@ keybinds {
         bind "Ctrl Shift l" { GoToNextTab; }
         bind "Super Shift [" { GoToPreviousTab; }
         bind "Super Shift ]" { GoToNextTab; }
-        bind "Super t" { NewTab; }
+        bind "Super t" {
+            LaunchOrFocusPlugin "https://github.com/AlexZasorin/zellij-newtab-plus/releases/download/v0.5.0/zellij-newtab-plus.wasm" {
+                floating true
+            };
+        }
         bind "Super w" { CloseTab; }
         bind "Super Shift h" { MoveTab "Left"; }
         bind "Super Shift l" { MoveTab "Right"; }

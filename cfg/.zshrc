@@ -36,7 +36,6 @@ alias spt="spotify_player"
 alias tp="btop"
 alias v="nvim"
 alias x="exit"
-alias y="yazi"
 alias za="zellij a"
 alias zz="zellij"
 
@@ -46,6 +45,14 @@ _fselect() { fd "$@" 2>/dev/null | fzf --height 40% --reverse --preview 'tree -C
 cx() { cd "$@" && l; }
 mkcd() { mkdir -p "$1" && cd "$1" }
 ff() { aerospace list-windows --all | fzf --bind 'enter:execute(bash -c "aerospace focus --window-id {1}")+abort'}
+
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	command yazi "$@" --cwd-file="$tmp"
+	IFS= read -r -d '' cwd < "$tmp"
+	[ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
+	rm -f -- "$tmp"
+}
 
 # key bindings
 bindkey jj vi-cmd-mode

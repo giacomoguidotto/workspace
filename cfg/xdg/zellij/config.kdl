@@ -20,6 +20,8 @@ keybinds clear-defaults=true {
         bind "Super d" { NewPane "Right"; }
         bind "Super Shift d" { NewPane "Down"; }
         bind "Super Shift k" { Clear; Write 10; }
+        bind "Super [" { FocusPreviousPane; }
+        bind "Super ]" { FocusNextPane; }
         bind "Super Shift [" { GoToPreviousTab; }
         bind "Super Shift ]" { GoToNextTab; }
         bind "Super Shift h" { MoveTab "Left"; }

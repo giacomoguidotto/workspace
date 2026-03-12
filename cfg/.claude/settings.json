@@ -5,6 +5,5 @@
     "gopls-lsp@claude-plugins-official": true,
     "swift-lsp@claude-plugins-official": true
   },
-  "autoMemoryEnabled": false,
-  "effortLevel": "high"
+  "autoMemoryEnabled": false
 }

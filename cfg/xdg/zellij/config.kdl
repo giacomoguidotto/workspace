@@ -4,6 +4,7 @@ keybinds clear-defaults=true {
         bind "Ctrl q" { Detach; }
         bind "Super c" { Copy; }
 
+        // old flow
         bind "Ctrl h" { MoveFocus "Left"; }
         bind "Ctrl j" { MoveFocus "Down"; }
         bind "Ctrl k" { MoveFocus "Up"; }
@@ -13,21 +14,24 @@ keybinds clear-defaults=true {
         bind "Ctrl Shift h" { GoToPreviousTab; }
         bind "Ctrl Shift l" { GoToNextTab; }
 
-        bind "Super h" { MoveFocus "Left"; }
-        bind "Super j" { MoveFocus "Down"; }
-        bind "Super k" { MoveFocus "Up"; }
-        bind "Super l" { MoveFocus "Right"; }
-        bind "Super d" { NewPane "Right"; }
-        bind "Super Shift d" { NewPane "Down"; }
-        bind "Super Shift k" { Clear; Write 10; }
+        // new flow
+        bind "Super h" { MovePane "Left"; }
+        bind "Super j" { MovePane "Down"; }
+        bind "Super k" { MovePane "Up"; }
+        bind "Super l" { MovePane "Right"; }
+        bind "Super Shift h" { MoveTab "Left"; }
+        bind "Super Shift l" { MoveTab "Right"; }
+
         bind "Super [" { FocusPreviousPane; }
         bind "Super ]" { FocusNextPane; }
         bind "Super Shift [" { GoToPreviousTab; }
         bind "Super Shift ]" { GoToNextTab; }
-        bind "Super Shift h" { MoveTab "Left"; }
-        bind "Super Shift l" { MoveTab "Right"; }
 
-        bind "Super w" { CloseTab; }
+        bind "Super d" { NewPane "Right"; }
+        bind "Super Shift d" { NewPane "Down"; }
+        bind "Super Shift k" { Clear; Write 10; }
+
+        bind "Super w" { CloseFocus; }
         bind "Super t" {
             LaunchOrFocusPlugin "https://github.com/AlexZasorin/zellij-newtab-plus/releases/download/v0.5.0/zellij-newtab-plus.wasm" {
                 floating true

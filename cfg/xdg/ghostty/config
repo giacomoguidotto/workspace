@@ -17,6 +17,15 @@ keybind = super+six=unbind
 keybind = super+seven=unbind
 keybind = super+eight=unbind
 keybind = super+nine=unbind
+keybind = super+digit_1=unbind
+keybind = super+digit_2=unbind
+keybind = super+digit_3=unbind
+keybind = super+digit_4=unbind
+keybind = super+digit_5=unbind
+keybind = super+digit_6=unbind
+keybind = super+digit_7=unbind
+keybind = super+digit_8=unbind
+keybind = super+digit_9=unbind
 keybind = super+h=unbind
 keybind = super+d=unbind
 keybind = super+shift+d=unbind

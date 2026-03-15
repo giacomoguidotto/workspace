@@ -114,6 +114,7 @@ in
           fd
           fzf
           git
+          git-absorb
           gh
           hyperfine
           jankyborders
@@ -132,7 +133,7 @@ in
           tree
           xh
           watchman
-          # ollama
+          ollama
           tokei
           wiki-tui
           watchexec

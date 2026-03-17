@@ -90,11 +90,8 @@ if command -v zoxide > /dev/null 2>&1; then
   eval "$(zoxide init zsh)"
 fi
 
-# vscode workaround for not loading direnv when opening a new terminal
-if [ -n "$VSCODE_INJECTION" ] && [ -z "$VSCODE_TERMINAL_DIRENV_LOADED" ]; then
-    cd ~ && cd - > /dev/null
-    export VSCODE_TERMINAL_DIRENV_LOADED=1
-fi
+# mise - manage your shell environment
+eval "$(/Users/giacomo/.local/bin/mise activate zsh)"
 
-# brew - the easiest way to clutter your dev env
+# brew - the easiest way to clutter your workspace
 eval "$(/opt/homebrew/bin/brew shellenv zsh)"

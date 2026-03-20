@@ -2,8 +2,8 @@
 # session variables
 export XDG_CONFIG_HOME="$HOME/.config"
 
-export EDITOR="nvim"
-export REACT_EDITOR="nvim"
+export EDITOR="zed --wait"
+export REACT_EDITOR="zed --wait"
 
 # used to tell lazygit to use delta as pager (https://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Pagers.md#using-git-config)
 export GIT_PAGER="delta"

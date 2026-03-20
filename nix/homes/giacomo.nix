@@ -110,6 +110,7 @@ in
           devbox
           devenv
           dust
+          duti
           eza
           fd
           fzf

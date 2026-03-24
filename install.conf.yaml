@@ -18,26 +18,34 @@
       glob: true
       path: cfg/xdg/*
 
+    # home dotfiles
     ~/.zshrc:
       force: true
-      path: cfg/.zshrc
+      path: cfg/home/zshrc
     ~/.zshenv:
       force: true
-      path: cfg/.zshenv
+      path: cfg/home/zshenv
     ~/.hushlogin:
       force: true
-      path: cfg/.hushlogin
+      path: cfg/home/hushlogin
     ~/.ssh/config:
       force: true
-      path: cfg/.ssh/config
-    ~/.claude/settings.json:
+      path: cfg/home/ssh/config
+
+    # agents (cross-agent skills)
+    ~/.agents/skills:
+      create: true
       force: true
-      path: cfg/.claude/settings.json
+      path: cfg/home/agents/skills
     ~/.claude/skills:
       create: true
       force: true
-      glob: true
-      path: cfg/.claude/skills/*
+      path: cfg/home/agents/skills
+
+    # claude
+    ~/.claude/settings.json:
+      force: true
+      path: cfg/home/claude/settings.json
 
     ~/Library/Application Support/Cursor/User/settings.json:
       if: "[ `uname` = Darwin ]"

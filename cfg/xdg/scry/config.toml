@@ -1,0 +1,48 @@
+[trigger]
+# Trigger search by force-clicking (deep press) on a trackpad
+force_click = true
+# Force-click threshold (0.0–1.0, higher = harder press needed)
+pressure_sensitivity = 0.8
+# Keyboard trigger. Formats:
+#   Single modifier tap: "globe", "cmd", "opt", "ctrl", "shift"
+#   Double-tap modifier: "cmd cmd", "shift shift", etc.
+#   Key combination: "cmd+shift+g", "ctrl+opt+k", etc.
+#   Set to "" to disable
+hotkey = "globe"
+
+[appearance]
+panel_opacity = 1.0
+show_animations = true
+# Options: system, light, dark
+theme = "system"
+
+[behavior]
+# Provider used when opening a new search panel
+# Options: google, duckduckgo, wikipedia, ai
+default_provider = "google"
+# Re-open with the last provider you used instead of the default
+remember_last_provider = true
+# Close the panel when you click a link in the results
+dismiss_on_link_click = true
+# Options: defaultBrowser, safari, chrome
+open_links_in = "defaultBrowser"
+# Show keyboard shortcut hints in the search panel
+show_shortcut_hints = true
+max_query_length = 200
+# Only listed providers are enabled, in this order
+# Options: google, duckduckgo, wikipedia, ai
+providers = ["google", "duckduckgo", "wikipedia"]
+
+[system]
+launch_at_login = false
+show_menu_bar_icon = true
+
+[ai]
+enabled = false
+# Options: claude, openai, ollama, custom
+provider_type = "claude"
+model = "claude-sonnet-4-6"
+# Custom OpenAI-compatible endpoint URL (only used when provider_type = "custom")
+custom_endpoint = ""
+# Size in px of the screenshot region captured around the cursor for AI analysis
+screenshot_region_size = 300.0

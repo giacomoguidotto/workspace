@@ -1,4 +1,5 @@
 cfg/xdg/nushell/history.txt
+*.mdb
 
 .DS_Store
 

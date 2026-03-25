@@ -78,6 +78,9 @@
     "TypeScript": {
       "language_servers": ["!eslint", "..."],
     },
+    "Proto": {
+      "language_servers": ["!protobuf-language-server", "protols"],
+    },
   },
   "lsp": {
     "nil": {

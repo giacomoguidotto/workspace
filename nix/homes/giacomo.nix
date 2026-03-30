@@ -136,6 +136,7 @@ in
           watchman
           ollama
           tokei
+          usage
           wiki-tui
           watchexec
           yazi

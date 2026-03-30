@@ -92,6 +92,7 @@ fi
 
 # mise - manage your shell environment
 eval "$(/Users/giacomo/.local/bin/mise activate zsh)"
+eval "$(mise completion zsh)"
 
 # brew - the easiest way to clutter your workspace
 eval "$(/opt/homebrew/bin/brew shellenv zsh)"

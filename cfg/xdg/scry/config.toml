@@ -8,7 +8,7 @@ pressure_sensitivity = 0.8
 #   Double-tap modifier: "cmd cmd", "shift shift", etc.
 #   Key combination: "cmd+shift+g", "ctrl+opt+k", etc.
 #   Set to "" to disable
-hotkey = "globe"
+hotkey = "opt opt"
 
 [appearance]
 panel_opacity = 1.0
@@ -38,11 +38,13 @@ launch_at_login = false
 show_menu_bar_icon = true
 
 [ai]
-enabled = false
+enabled = true
 # Options: claude, openai, ollama, custom
-provider_type = "claude"
-model = "claude-sonnet-4-6"
+provider_type = "ollama"
+model = "qwen3.5:4b"
 # Custom OpenAI-compatible endpoint URL (only used when provider_type = "custom")
 custom_endpoint = ""
 # Size in px of the screenshot region captured around the cursor for AI analysis
 screenshot_region_size = 300.0
+# Options: region, window, screen
+screenshot_mode = "window"

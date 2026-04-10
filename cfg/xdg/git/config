@@ -23,6 +23,14 @@
 [merge]
     conflictstyle = zdiff3
 
+[rebase]
+	updateRefs = true
+	autoSquash = true
+	autoStash = true
+
+[rerere]
+	enabled = true
+
 [delta]
     navigate = true
     line-numbers = true

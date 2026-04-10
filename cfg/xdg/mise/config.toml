@@ -1,2 +1,5 @@
 [settings]
 trusted_config_paths = ["~/dev"]
+
+[tools]
+pitchfork = "latest"

@@ -391,5 +391,7 @@
     "coder-vscode.coder.alsenseplatform.com--giacomo-guidotto--mageai.alsense-jobs-mageai": "linux",
     "coder-vscode.coder.alsenseplatform.com--giacomo-guidotto--mage2.alsense-jobs-mageai": "linux",
     "coder-vscode.coder.alsenseplatform.com--giacomo-guidotto--mage.alsense-jobs-mageai": "linux"
-  }
+  },
+  "cursor.composer.shouldChimeAfterChatFinishes": true,
+  "cursor.general.emailPrivacyEnabled": true
 }

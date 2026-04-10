@@ -113,6 +113,7 @@ in
           duti
           eza
           fd
+          ffmpeg
           fzf
           git
           git-absorb

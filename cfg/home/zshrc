@@ -91,7 +91,7 @@ if command -v zoxide > /dev/null 2>&1; then
 fi
 
 # mise - declarative environment
-eval "$(/Users/giacomo/.local/bin/mise activate zsh)"
+eval "$(mise activate zsh)"
 eval "$(mise completion zsh)"
 
 # pitchfork - declarative deamons

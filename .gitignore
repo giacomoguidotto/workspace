@@ -5,3 +5,6 @@ cfg/xdg/nushell/history.txt
 
 btop.log*
 btop.log
+
+# Added by ggshield
+.cache_ggshield

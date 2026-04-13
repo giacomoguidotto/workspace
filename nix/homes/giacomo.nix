@@ -115,9 +115,10 @@ in
           fd
           ffmpeg
           fzf
+          gh
           git
           git-absorb
-          gh
+          git-filter-repo
           hyperfine
           jankyborders
           kubectl

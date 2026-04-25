@@ -48,11 +48,11 @@ if.app-name-regex-substring = 'finder|spotify|music|discord|facetime'
 run = 'layout floating'
 
 [[on-window-detected]]
-if.app-name-regex-substring = 'zen|helium'
+if.app-name-regex-substring = 'helium'
 run = 'move-node-to-workspace 1'
 
 [[on-window-detected]]
-if.app-name-regex-substring = 'zed'
+if.app-name-regex-substring = 'zed|t3 code'
 run = 'move-node-to-workspace 2'
 
 [[on-window-detected]]

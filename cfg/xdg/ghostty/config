@@ -2,30 +2,30 @@ theme = catppuccin-mocha.conf
 background-opacity = 0.88
 background-blur-radius = 95
 
-keybind = super+[=unbind
-keybind = super+]=unbind
-keybind = super+shift+[=unbind
-keybind = super+shift+]=unbind
-keybind = super+t=unbind
-keybind = super+w=unbind
-keybind = super+one=unbind
-keybind = super+two=unbind
-keybind = super+three=unbind
-keybind = super+four=unbind
-keybind = super+five=unbind
-keybind = super+six=unbind
-keybind = super+seven=unbind
-keybind = super+eight=unbind
-keybind = super+nine=unbind
-keybind = super+digit_1=unbind
-keybind = super+digit_2=unbind
-keybind = super+digit_3=unbind
-keybind = super+digit_4=unbind
-keybind = super+digit_5=unbind
-keybind = super+digit_6=unbind
-keybind = super+digit_7=unbind
-keybind = super+digit_8=unbind
-keybind = super+digit_9=unbind
-keybind = super+h=unbind
-keybind = super+d=unbind
-keybind = super+shift+d=unbind
+# keybind = super+[=unbind
+# keybind = super+]=unbind
+# keybind = super+shift+[=unbind
+# keybind = super+shift+]=unbind
+# keybind = super+t=unbind
+# keybind = super+w=unbind
+# keybind = super+one=unbind
+# keybind = super+two=unbind
+# keybind = super+three=unbind
+# keybind = super+four=unbind
+# keybind = super+five=unbind
+# keybind = super+six=unbind
+# keybind = super+seven=unbind
+# keybind = super+eight=unbind
+# keybind = super+nine=unbind
+# keybind = super+digit_1=unbind
+# keybind = super+digit_2=unbind
+# keybind = super+digit_3=unbind
+# keybind = super+digit_4=unbind
+# keybind = super+digit_5=unbind
+# keybind = super+digit_6=unbind
+# keybind = super+digit_7=unbind
+# keybind = super+digit_8=unbind
+# keybind = super+digit_9=unbind
+# keybind = super+h=unbind
+# keybind = super+d=unbind
+# keybind = super+shift+d=unbind

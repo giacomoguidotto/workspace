@@ -81,7 +81,7 @@ in
           # nix internals
           nixd
           nil
-          nixfmt-rfc-style
+          nixfmt
 
           # nerd fonts
           nerd-fonts.blex-mono

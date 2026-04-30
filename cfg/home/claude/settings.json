@@ -6,5 +6,6 @@
     "swift-lsp@claude-plugins-official": true
   },
   "effortLevel": "medium",
-  "autoMemoryEnabled": false
+  "autoMemoryEnabled": false,
+  "theme": "dark-ansi"
 }

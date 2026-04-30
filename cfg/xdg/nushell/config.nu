@@ -88,6 +88,20 @@ def ff [] {
   | ^fzf --bind 'enter:execute(bash -c "aerospace focus --window-id {1}")+abort'
 }
 
+def klp [...ports: int] {
+  for port in $ports {
+    let result = (do { ^lsof -ti $":($port)" } | complete)
+    if ($result.stdout | str trim | is-empty) {
+      print $"no process on port ($port)"
+    } else {
+      $result.stdout | lines | where { ($in | str trim) != "" } | each { |pid|
+        ^kill -9 ($pid | str trim)
+      }
+      print $"killed port ($port)"
+    }
+  }
+}
+
 # tools
 let autoload_dir = ($nu.data-dir | path join "vendor/autoload")
 mkdir $autoload_dir

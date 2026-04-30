@@ -54,6 +54,8 @@ function y() {
 	rm -f -- "$tmp"
 }
 
+klp() { for p in "$@"; do lsof -ti ":$p" | xargs kill -9 2>/dev/null && echo "killed port $p" || echo "no process on port $p"; done; }
+
 # key bindings
 bindkey jj vi-cmd-mode
 

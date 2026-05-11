@@ -52,11 +52,11 @@ if.app-name-regex-substring = 'helium'
 run = 'move-node-to-workspace 1'
 
 [[on-window-detected]]
-if.app-name-regex-substring = 'zed|t3 code'
+if.app-name-regex-substring = 't3 code'
 run = 'move-node-to-workspace 2'
 
 [[on-window-detected]]
-if.app-name-regex-substring = 'ghostty'
+if.app-name-regex-substring = 'zed|ghostty'
 run = 'move-node-to-workspace 3'
 
 [[on-window-detected]]

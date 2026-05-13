@@ -48,15 +48,15 @@ if.app-name-regex-substring = 'finder|spotify|music|discord|facetime'
 run = 'layout floating'
 
 [[on-window-detected]]
-if.app-name-regex-substring = 'helium'
+if.app-name-regex-substring = 'helium|notion'
 run = 'move-node-to-workspace 1'
 
 [[on-window-detected]]
-if.app-name-regex-substring = 't3 code'
+if.app-name-regex-substring = 't3 code|ghostty'
 run = 'move-node-to-workspace 2'
 
 [[on-window-detected]]
-if.app-name-regex-substring = 'zed|ghostty'
+if.app-name-regex-substring = 'zed'
 run = 'move-node-to-workspace 3'
 
 [[on-window-detected]]
@@ -64,7 +64,7 @@ if.app-name-regex-substring = 'teams|outlook'
 run = 'move-node-to-workspace 4'
 
 [[on-window-detected]]
-if.app-name-regex-substring = 'cursor'
+if.app-name-regex-substring = 'facetime'
 run = 'move-node-to-workspace 5'
 
 # Possible values: (qwerty|dvorak)

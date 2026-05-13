@@ -1,5 +1,5 @@
 [settings]
-trusted_config_paths = ["~/dev"]
+trusted_config_paths = ["~/dev", "~/.t3/worktrees"]
 
 [tools]
 pitchfork = "latest"

@@ -7,11 +7,12 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "cli_default_open_behavior": "new_window",
   "outline_panel": {
-    "dock": "left"
+    "dock": "left",
   },
   "collaboration_panel": {
-    "dock": "left"
+    "dock": "left",
   },
   "notification_panel": {
     "dock": "left",
@@ -38,8 +39,8 @@
   "auto_update": false,
   "base_keymap": "Cursor",
   "theme": {
-    "mode": "dark",
-    "light": "Catppuccin Mocha (Blur)",
+    "mode": "system",
+    "light": "Catppuccin Latte (Blur) [Heavy]",
     "dark": "Catppuccin Mocha (Blur) [Heavy]",
   },
   "icon_theme": {

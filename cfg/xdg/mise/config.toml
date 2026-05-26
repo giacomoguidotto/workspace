@@ -2,4 +2,7 @@
 trusted_config_paths = ["~/dev", "~/.t3/worktrees"]
 
 [tools]
+node = "lts"
+"npm:@earendil-works/pi-coding-agent" = "latest"
 pitchfork = "latest"
+uv = "latest"

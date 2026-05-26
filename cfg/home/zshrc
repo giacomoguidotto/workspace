@@ -13,6 +13,7 @@ alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias ......="cd ../../../../.."
 
+alias bunr="bun run"
 alias c="code"
 alias cc="claude"
 alias cl="clear"
@@ -28,7 +29,17 @@ alias kx="kubectx"
 alias l="eza -la --icons --git --sort type"
 alias lt="l --tree --level=2 --long"
 alias la="tree"
-alias lz="lazygit"
+lz() {
+  local cfg_dir="${XDG_CONFIG_HOME:-$HOME/.config}/lazygit"
+  local flavor
+  if defaults read -g AppleInterfaceStyle &>/dev/null; then
+    flavor=mocha
+  else
+    flavor=latte
+  fi
+  LG_CONFIG_FILE="$cfg_dir/config.yml,$cfg_dir/themes/$flavor-blue.yml" \
+    lazygit "$@"
+}
 alias lzd="lazydocker"
 alias lzq="lazysql"
 alias rd="rm -rf"
@@ -101,3 +112,10 @@ eval "$(pitchfork activate zsh)"
 
 # brew - the easiest way to clutter your workspace
 eval "$(/opt/homebrew/bin/brew shellenv zsh)"
+
+# bun completions
+[ -s "/Users/giacomo/.bun/_bun" ] && source "/Users/giacomo/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

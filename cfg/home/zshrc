@@ -119,3 +119,9 @@ eval "$(/opt/homebrew/bin/brew shellenv zsh)"
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+# Launch pi with secrets injected from 1Password (NOTION_TOKEN, etc.).
+# Edit ~/.config/pi/secrets.env to add more `op://...` references.
+pi() {
+  op run --env-file="$HOME/.config/pi/secrets.env" -- command pi "$@"
+}

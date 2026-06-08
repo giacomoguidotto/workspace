@@ -4,5 +4,6 @@ trusted_config_paths = ["~/dev", "~/.t3/worktrees"]
 [tools]
 node = "lts"
 "npm:@earendil-works/pi-coding-agent" = "latest"
+"npm:@openai/codex" = "latest"
 pitchfork = "latest"
 uv = "latest"

@@ -44,7 +44,7 @@ on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 automatically-unhide-macos-hidden-apps = false
 
 [[on-window-detected]]
-if.app-name-regex-substring = 'finder|spotify|music|discord|facetime'
+if.app-name-regex-substring = 'finder|spotify|music|discord|facetime|shottr'
 run = 'layout floating'
 
 [[on-window-detected]]
@@ -52,7 +52,7 @@ if.app-name-regex-substring = 'helium|notion'
 run = 'move-node-to-workspace 1'
 
 [[on-window-detected]]
-if.app-name-regex-substring = 't3 code|ghostty'
+if.app-name-regex-substring = 'codex|ghostty'
 run = 'move-node-to-workspace 2'
 
 [[on-window-detected]]

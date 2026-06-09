@@ -42,6 +42,16 @@
       force: true
       path: cfg/home/agents/skills
 
+    # codex
+    ~/.codex/AGENTS.md:
+      create: true
+      force: true
+      path: cfg/home/agents/AGENT.md
+    ~/.codex/skills:
+      create: true
+      glob: true
+      path: cfg/home/agents/skills/*
+
     # claude
     ~/.claude/settings.json:
       force: true

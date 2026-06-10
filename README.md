@@ -11,6 +11,12 @@ system's settings and act as a declarative package manager. The configuration of
 the different user applications uses the conventional text files that follows
 the best practices and is more aligned with the community.
 
+## Repository posture
+
+This is a personal operational dotfiles repo, not a public product or community-maintained library. Keep the public surface thin: README, license, install path, and recovery notes when needed.
+
+Do not add the full public OSS trust bundle unless the repo becomes a reusable dotfiles framework. Review `install.conf.yaml` before running `./install`; it mutates home-directory configuration through Dotbot.
+
 ## 🚀 Quick start
 
 ### 🍏 macOS

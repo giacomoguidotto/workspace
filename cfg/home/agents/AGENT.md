@@ -1,3 +1,1 @@
-When reporting information to me, be extremely concise and sacrifice grammar for the sake of concision.
-
 Notion may contain useful context about my tasks, projects, and personal knowledge. When that context is clearly relevant and a Notion connector is available, you may check it narrowly. Do not preload broad Notion content or write to Notion without explicit approval.

@@ -9,6 +9,14 @@
 {
   "agent_servers": {
     "github-copilot-cli": {
+      "favorite_config_option_values": {
+        "reasoning_effort": [
+          "max"
+        ]
+      },
+      "default_config_options": {
+        "reasoning_effort": "max"
+      },
       "type": "registry"
     }
   },
@@ -34,7 +42,7 @@
     "mode": "subtle",
   },
   "agent": {
-    "dock": "right",
+    "dock": "left",
     "default_model": {
       "provider": "zed.dev",
       "model": "claude-3-5-sonnet-latest",

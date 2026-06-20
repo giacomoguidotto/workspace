@@ -57,15 +57,15 @@
       force: true
       path: cfg/home/claude/settings.json
 
-    ~/Library/Application Support/Cursor/User/settings.json:
-      if: "[ `uname` = Darwin ]"
-      force: true
-      path: cfg/apps/cursor/settings.json
+    # ~/Library/Application Support/Cursor/User/settings.json:
+    #   if: "[ `uname` = Darwin ]"
+    #   force: true
+    #   path: cfg/apps/cursor/settings.json
 
-    ~/Library/Application Support/Cursor/User/keybindings.json:
-      if: "[ `uname` = Darwin ]"
-      force: true
-      path: cfg/apps/cursor/keybindings.json
+    # ~/Library/Application Support/Cursor/User/keybindings.json:
+    #   if: "[ `uname` = Darwin ]"
+    #   force: true
+    #   path: cfg/apps/cursor/keybindings.json
 
     ~/.config/nix-darwin:
       if: '[ -z "${TERMUX_VERSION-}" ]'

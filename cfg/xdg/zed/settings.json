@@ -14,7 +14,6 @@
       },
       "default_config_options": {
         "allow_all": "on",
-        "reasoning_effort": "max",
         "model": "claude-opus-4.8",
       },
       "type": "registry",

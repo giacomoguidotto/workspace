@@ -1,0 +1,290 @@
+vm: aerospace
+profile: codex
+pathPrefix: ~/dev
+
+defaults:
+  terminal: ghostty
+  browser: helium
+  editor: zed
+
+windowManagers:
+  aerospace:
+    parkingWorkspace: unrelated
+
+profiles:
+  codex: {}
+
+projects:
+  dotfiles:
+    name: Workspace
+    aliases: ["workspace", "cfg", "aerospace", "raycast"]
+    path: life/workspace
+    apps:
+      browser:
+        tabs:
+          - https://github.com/GiacomoGuidotto/workspace
+      terminal: {}
+      editor: {}
+
+  pmp:
+    name: Personal Mastery Program
+    aliases: ["personal-mastery-program", "mastery"]
+    path: uni/personal-mastery-program
+    apps:
+      browser:
+        tabs:
+          - https://github.com/giacomoguidotto/personal-mastery-program
+      terminal: {}
+      editor: {}
+
+  anypinn:
+    name: AnyPinn
+    path: uni/anypinn
+    apps:
+      browser:
+        tabs:
+          - https://github.com/giacomoguidotto/anypinn
+      terminal: {}
+      editor: {}
+
+  ea-poc:
+    name: EA PoC
+    aliases: ["ea"]
+    path: life/ea-poc
+    apps:
+      browser:
+        tabs:
+          - https://github.com/giacomoguidotto/ea-poc
+      terminal: {}
+      editor: {}
+
+  tempo:
+    name: Tempo
+    path: life/tempo
+    apps:
+      browser:
+        tabs:
+          - https://github.com/giacomoguidotto/tempo
+          - https://expo.dev/accounts/giacomoguidotto/projects/tempo
+      terminal:
+        cmds: ["lz", "bun run dev"]
+      editor: {}
+
+  blueprint:
+    name: Blueprint
+    path: life/blueprint
+    apps:
+      browser:
+        tabs:
+          - https://github.com/giacomoguidotto/blueprint
+      terminal: {}
+      editor: {}
+
+  ginevrarenier:
+    name: Ginevra Renier
+    aliases: ["ginevra"]
+    path: life/ginevrarenier
+    apps:
+      browser:
+        tabs:
+          - https://github.com/giacomoguidotto/ginevrarenier
+      terminal: {}
+      editor: {}
+
+  scry:
+    name: Scry
+    path: life/scry
+    apps:
+      browser:
+        tabs:
+          - https://github.com/giacomoguidotto/scry
+      terminal: {}
+      editor: {}
+
+  infra:
+    name: Infra
+    path: life/infra
+    apps:
+      browser:
+        tabs:
+          - https://github.com/giacomoguidotto/infra
+      terminal: {}
+      editor: {}
+
+  resume:
+    name: Resume
+    path: life/resume
+    apps:
+      browser:
+        tabs:
+          - https://github.com/giacomoguidotto/resume
+      terminal: {}
+      editor: {}
+
+  lore:
+    name: Lore
+    path: life/lore
+    apps:
+      browser:
+        tabs:
+          - https://github.com/giacomoguidotto/lore
+      terminal: {}
+      editor: {}
+
+  orray:
+    name: Orray
+    path: life/orray
+    apps:
+      browser:
+        tabs:
+          - https://github.com/orray-proj/orray
+      terminal: {}
+      editor: {}
+
+  orray-poc:
+    name: Orray PoC
+    aliases: ["orrery-poc"]
+    path: life/orray-poc
+    apps:
+      browser:
+        tabs:
+          - https://github.com/orrery-proj/orrery-poc
+      terminal: {}
+      editor: {}
+
+  work:
+    name: Work
+    aliases: ["danfoss", "alsense"]
+    path: work
+    apps:
+      browser:
+        tabs:
+          - https://github.com/giacomoguidotto/work
+      terminal: {}
+      editor: {}
+
+  connector:
+    name: Connector
+    aliases: ["sparkplug"]
+    path: work/connector
+    apps:
+      browser:
+        tabs:
+          - https://github.com/giacomoguidotto/work
+      terminal: {}
+      editor: {}
+
+  coolselector:
+    name: Coolselector MVP
+    aliases: ["coolselector3-mvp", "coolselector3"]
+    path: work/coolselector3-mvp
+    apps:
+      browser:
+        tabs:
+          - https://github.com/giacomoguidotto/work
+      terminal: {}
+      editor: {}
+
+  datamodel:
+    name: Datamodel
+    aliases: ["standard-data", "ontology"]
+    path: work/datamodel
+    apps:
+      browser:
+        tabs:
+          - https://github.com/giacomoguidotto/work
+      terminal: {}
+      editor: {}
+
+  energy-api:
+    name: Energy API
+    path: work/energy-api
+    apps:
+      browser:
+        tabs:
+          - https://github.com/giacomoguidotto/work
+      terminal: {}
+      editor: {}
+
+  entity-api:
+    name: Entity API
+    path: work/entity-api
+    apps:
+      browser:
+        tabs:
+          - https://github.com/giacomoguidotto/work
+      terminal: {}
+      editor: {}
+
+  web:
+    name: Web
+    path: work/web
+    apps:
+      browser:
+        tabs:
+          - https://github.com/giacomoguidotto/work
+      terminal: {}
+      editor: {}
+
+  publisher:
+    name: Publisher
+    path: work/publisher
+    apps:
+      browser:
+        tabs:
+          - https://github.com/giacomoguidotto/work
+      terminal: {}
+      editor: {}
+
+  draw-api:
+    name: Draw API
+    path: work/draw-api
+    apps:
+      browser:
+        tabs:
+          - https://github.com/giacomoguidotto/work
+      terminal: {}
+      editor: {}
+
+  mageai:
+    name: Mage AI
+    aliases: ["mage"]
+    path: work/mageai
+    apps:
+      browser:
+        tabs:
+          - https://github.com/giacomoguidotto/work
+      terminal: {}
+      editor: {}
+
+  deployment:
+    name: Deployment
+    path: work/deployment
+    apps:
+      browser:
+        tabs:
+          - https://github.com/giacomoguidotto/work
+      terminal: {}
+      editor: {}
+
+  shared-go:
+    name: Shared Go
+    aliases: ["shared.go"]
+    path: work/shared.go
+    apps:
+      browser:
+        tabs:
+          - https://github.com/giacomoguidotto/work
+      terminal: {}
+      editor: {}
+
+  ui-packages:
+    name: UI Packages
+    aliases: ["ui.packages"]
+    path: work/ui.packages
+    apps:
+      browser:
+        tabs:
+          - https://github.com/giacomoguidotto/work
+      terminal: {}
+      editor: {}

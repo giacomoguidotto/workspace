@@ -47,26 +47,6 @@ automatically-unhide-macos-hidden-apps = false
 if.app-name-regex-substring = 'finder|spotify|music|discord|facetime|shottr'
 run = 'layout floating'
 
-[[on-window-detected]]
-if.app-name-regex-substring = 'helium|notion'
-run = 'move-node-to-workspace 1'
-
-[[on-window-detected]]
-if.app-name-regex-substring = 'codex|ghostty'
-run = 'move-node-to-workspace 2'
-
-[[on-window-detected]]
-if.app-name-regex-substring = 'zed'
-run = 'move-node-to-workspace 3'
-
-[[on-window-detected]]
-if.app-name-regex-substring = 'teams|outlook'
-run = 'move-node-to-workspace 4'
-
-[[on-window-detected]]
-if.app-name-regex-substring = 'facetime'
-run = 'move-node-to-workspace 5'
-
 # Possible values: (qwerty|dvorak)
 # See https://nikitabobko.github.io/AeroSpace/guide#key-mapping
 [key-mapping]

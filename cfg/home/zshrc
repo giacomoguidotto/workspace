@@ -139,3 +139,6 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 pi() {
   op run --env-file="$HOME/.config/pi/secrets.env" -- command pi "$@"
 }
+
+# opencode
+export PATH=/Users/giacomo/.opencode/bin:$PATH

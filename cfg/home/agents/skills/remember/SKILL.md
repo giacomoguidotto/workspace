@@ -35,13 +35,13 @@ Completion criterion: every proposed Notion body reads as durable knowledge, not
 
 ### 3. Draft Exact Writes
 
-Create a dark HTML approval draft using [HTML-DRAFT.md](HTML-DRAFT.md).
+Create a Notion-like HTML approval draft using [HTML-DRAFT.md](HTML-DRAFT.md).
 
 The draft must include:
 
 - workspace read: searches, pages, databases, and examples inspected
-- proposed writes: target, action, properties, relations, placement, and why
-- body preview: exact source-free Notion body to write
+- proposed results: Notion page previews for each create or update
+- body preview: exact source-free final Notion body, with inline diffs for updates
 - skipped writes: considered targets or conventions not selected
 - questions: only blockers that prevent a correct write
 

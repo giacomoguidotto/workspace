@@ -13,6 +13,7 @@
         "model": ["claude-opus-4.8", "gpt-5.5"],
       },
       "default_config_options": {
+        "reasoning_effort": "xhigh",
         "allow_all": "on",
         "model": "claude-opus-4.8",
       },

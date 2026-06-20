@@ -16,6 +16,20 @@ alias ......="cd ../../../../.."
 alias bunr="bun run"
 alias c="code"
 alias cc="claude"
+cod() {
+  local career_ops="$HOME/dev/life/career-ops"
+  local dashboard="$career_ops/dashboard/career-dashboard"
+
+  if [[ ! -x "$dashboard" ]]; then
+    if command -v mise > /dev/null 2>&1; then
+      (cd "$career_ops" && mise run dashboard) || return
+    else
+      (cd "$career_ops/dashboard" && go build -o career-dashboard .) || return
+    fi
+  fi
+
+  "$dashboard" --path "$career_ops" "$@"
+}
 alias cl="clear"
 alias d="colima start"
 alias ds="colima stop"

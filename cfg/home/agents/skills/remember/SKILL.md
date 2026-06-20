@@ -1,0 +1,85 @@
+---
+name: remember
+description: Draft and apply Notion Knowledge Bank updates from completed conversations or agent sessions. Use when the user says /remember, /update-knowledge, asks to save or record session knowledge in Notion, or wants a conversation remembered in the bank.
+---
+
+# Remember
+
+## Invariant
+
+Every run produces an HTML approval draft before any Notion write. There is no inline-chat approval shortcut, even for tiny updates.
+
+## Loop
+
+### 1. Map Live Notion
+
+Read live Notion before choosing a target.
+
+- Search broad parent areas, likely databases, sibling pages, repo/project aliases, and relevant conventions.
+- Search exact names, URLs, repository slugs, and likely page titles.
+- Fetch the likely target and nearby examples before proposing fields or body shape.
+- Prefer live Notion structure over repo assumptions or stale local artifacts.
+
+Completion criterion: the proposed target, parent/child placement, property schema, and nearby page pattern are all grounded in live Notion reads, or the draft clearly states that live verification was unavailable.
+
+### 2. Distill Durable Knowledge
+
+Extract only what belongs in the Knowledge Bank.
+
+- Keep progress, decisions, rationale, open tasks, blockers, follow-ups, repo links, issue/PR links, commits, and durable user preferences.
+- Exclude transcript framing, agent provenance, temporary command noise, and facts that are not meant to survive the session.
+- If a convention applies beyond the immediate project, draft the higher-level update separately from the project-specific update.
+- Keep final Notion prose source-free unless provenance is itself useful knowledge.
+
+Completion criterion: every proposed Notion body reads as durable knowledge, not as a session log.
+
+### 3. Draft Exact Writes
+
+Create a dark HTML approval draft using [HTML-DRAFT.md](HTML-DRAFT.md).
+
+The draft must include:
+
+- workspace read: searches, pages, databases, and examples inspected
+- proposed writes: target, action, properties, relations, placement, and why
+- body preview: exact source-free Notion body to write
+- skipped writes: considered targets or conventions not selected
+- questions: only blockers that prevent a correct write
+
+Write the draft to the OS temp directory, open it for Giacomo, and report the absolute path in chat.
+
+Completion criterion: Giacomo can approve or reject the exact Notion writes from the HTML file without needing hidden context from the conversation.
+
+### 4. Ask For Fresh Approval
+
+Ask: "Should I apply these exact Notion writes now?"
+
+Only explicit approval after the latest draft permits writing. "Looks good", clarifying answers, or placement discussion are not approval. If the conversation changes the draft, regenerate the HTML file and ask again.
+
+Completion criterion: approval is explicit, fresh, and applies to the latest exact draft.
+
+### 5. Apply And Verify
+
+Apply only the approved writes.
+
+- Use the live schema and exact properties from the approved draft.
+- Preserve child pages, databases, and unrelated content unless the draft explicitly says otherwise.
+- Read back every updated Notion item.
+- Report what changed and what remains unresolved.
+
+Completion criterion: every approved write has been read back from Notion, or any failed write is reported with the exact blocker.
+
+## Placement Rules
+
+- Keep parent pages short.
+- Put dense backlog, references, reflections, lessons, quotes, evidence, and long decision context in child pages under the relevant parent.
+- Prefer the smallest coherent set of writes over broad context dumps.
+- Choose one canonical owner for each fact, chapter, or lesson; other pages should link to that owner.
+- Never invent a page or database when an existing owner can be strengthened.
+
+## Safety Rules
+
+- Notion is the source of truth.
+- Never invent facts to fit a field.
+- Never write, edit, append, relate, archive, move, rename, or delete anything in Notion before explicit approval of the latest exact draft.
+- Treat Notion writes as hard to version and potentially destructive.
+- If Notion access is unavailable, produce only a draft and label it unverified.

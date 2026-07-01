@@ -1,18 +1,18 @@
 # HTML Approval Draft
 
-The approval draft is a single Notion-like HTML file in the OS temp directory. It is an approval artifact, not a repo artifact.
+The approval draft is a single HTML file in the OS temp directory that mimics the KB provider's own page view. It is an approval artifact, not a repo artifact. The shipped styling targets Notion by default; adapt the palette to another provider when the binding names one.
 
 Resolve the temp directory from `$TMPDIR`, falling back to `/tmp` on Unix or `%TEMP%` on Windows. Write to:
 
 ```text
-<tmpdir>/notion-knowledge-draft-<timestamp>.html
+<tmpdir>/kb-knowledge-draft-<timestamp>.html
 ```
 
-Open the file for Giacomo and report the absolute path in chat.
+Open the file for the user and report the absolute path in chat.
 
 ## Design Goal
 
-Make the draft feel like a deep Notion preview of the final result, not a generic report.
+Make the draft feel like a deep preview of the final result inside the KB provider, not a generic report.
 
 - Use a Notion-dark palette, Notion-like spacing, page typography, property rows, toggles, callouts, and database/table previews.
 - Render each proposed write as a Notion page preview.
@@ -373,6 +373,6 @@ List candidate writes that were considered and skipped, with the reason. Keep th
 
 ### Questions
 
-Ask only for blockers that prevent a correct write. If there are no blockers, ask: "Should I apply these exact Notion writes now?"
+Ask only for blockers that prevent a correct write. If there are no blockers, ask: "Should I apply these exact KB writes now?"
 
-Approval must be fresh and explicit after the latest draft. If Giacomo asks a follow-up, corrects placement, or points to a different convention after approval, regenerate the draft and ask again before writing to Notion.
+Approval must be fresh and explicit after the latest draft. If the user asks a follow-up, corrects placement, or points to a different convention after approval, regenerate the draft and ask again before writing to the KB.

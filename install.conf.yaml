@@ -47,6 +47,12 @@
       create: true
       force: true
       path: cfg/home/agents/AGENT.md
+
+    # opencode
+    ~/.config/opencode/AGENTS.md:
+      create: true
+      force: true
+      path: cfg/home/agents/opencode/AGENTS.md
     ~/.codex/skills:
       create: true
       glob: true

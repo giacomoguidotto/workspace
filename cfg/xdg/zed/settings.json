@@ -8,6 +8,9 @@
 // from the command palette or from `Zed` application menu.
 {
   "agent_servers": {
+    "codex-acp": {
+      "type": "registry",
+    },
     "github-copilot-cli": {
       "favorite_config_option_values": {
         "model": ["claude-opus-4.8", "gpt-5.5"],
@@ -44,8 +47,10 @@
   "agent": {
     "dock": "left",
     "default_model": {
-      "provider": "zed.dev",
-      "model": "claude-3-5-sonnet-latest",
+      "effort": "medium",
+      "enable_thinking": true,
+      "provider": "openai-subscribed",
+      "model": "gpt-5.5",
     },
   },
 

@@ -1,6 +1,6 @@
 # HTML Approval Draft
 
-The approval draft is a single HTML file in the OS temp directory that mimics the KB provider's own page view. It is an approval artifact, not a repo artifact. The shipped styling targets Notion by default; adapt the palette to another provider when the binding names one.
+The approval draft is a single HTML file in the OS temp directory that mimics the KB provider's own page view. It is an approval artifact, not a repo artifact. The shipped styling is a dark, Notion-style palette; apply the `draft-style` binding instead when it is set.
 
 Resolve the temp directory from `$TMPDIR`, falling back to `/tmp` on Unix or `%TEMP%` on Windows. Write to:
 

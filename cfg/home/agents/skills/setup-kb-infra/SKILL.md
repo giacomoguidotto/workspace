@@ -39,17 +39,17 @@ report before changing anything:
 - Version: read the current spec version from the git tags (`git describe --tags`);
   `vX.Y.Z` tags are the source of truth. Compare it against the `version` recorded
   in `local/installed.yml` to see how far the installed setup has fallen behind.
-- Desired: the endpoint and sink vocabulary in
-  [_preamble.md](../../docs/automations/_preamble.md), the endpoints and sinks each
-  **enabled** automation declares, the skills under `skills/`, the automations under
-  `docs/automations/`, and one cadence per enabled automation.
+- Desired: the endpoint, sink, and source vocabulary in
+  [_preamble.md](../../docs/automations/_preamble.md), the endpoints, sinks, and
+  sources each **enabled** automation declares, the skills under `skills/`, the
+  automations under `docs/automations/`, and one cadence per enabled automation.
 - Actual: `local/bindings.yml` (a key present with a blank or placeholder value is
   **not** a binding), `local/installed.yml`, the snapshotted prompts under
   `local/automations/`, and the installed skill copies.
-- Drive the endpoint and sink checks from the **desired** set — the endpoints and
-  sinks each enabled automation declares — not from whatever keys happen to be in
-  `bindings.yml`. For each declared endpoint, probe that it resolves to a concrete KB
-  owner; a present key is not proof of a binding.
+- Drive the endpoint, sink, and source checks from the **desired** set — the
+  endpoints, sinks, and sources each enabled automation declares — not from whatever
+  keys happen to be in `bindings.yml`. For each declared endpoint, probe that it
+  resolves to a concrete KB owner; a present key is not proof of a binding.
 - Drift to surface, by category:
   - the spec version has advanced past the installed version;
   - an endpoint an enabled automation declares does not resolve to a concrete KB
@@ -58,6 +58,9 @@ report before changing anything:
     resolves live. Verify by resolution, not by key presence;
   - a sink an enabled automation targets is unbound, disabled-yet-needed, or
     unreachable;
+  - a source an enabled automation declares is unbound or unreachable; a best-effort
+    source (for example a `<social-profile-source>` platform) may be intentionally
+    blank, which is a skip, not a gap;
   - bindings whose endpoint or sink is no longer in the spec (retired);
   - skills whose source differs from the installed copy (stale install) or is not
     installed;
@@ -107,15 +110,18 @@ Completion criterion: every endpoint an enabled automation needs resolves to a K
 owner, or the user has explicitly deferred it; no needed endpoint is left as a
 self-authored "unbound" note, and retired bindings are resolved.
 
-### 4. Reconcile the Sink Bindings
+### 4. Reconcile the Sink and Source Bindings
 
-Read the sink vocabulary from the preamble. For each sink an enabled automation
-targets, confirm its link and local clone path, collecting only what the plan
-flagged as missing, disabled-yet-needed, or unreachable. Record them in
-`local/bindings.yml`.
+Read the sink and source vocabulary from the preamble. For each sink an enabled
+automation targets, confirm its link and local clone path, collecting only what the
+plan flagged as missing, disabled-yet-needed, or unreachable. For each source an
+enabled automation declares, collect its binding the same way — a `<transcript-source>`
+is a list of local locations; a `<social-profile-source>` is one public profile URL per
+platform (currently X and LinkedIn). A best-effort source platform may be left blank as
+an explicit skip, not a gap. Record them in `local/bindings.yml`.
 
-Completion criterion: every sink an enabled automation needs has a binding, or is
-marked disabled.
+Completion criterion: every sink an enabled automation needs has a binding or is
+marked disabled, and every declared source is bound or explicitly left blank.
 
 ### 5. Reconcile the Installed Skills
 
@@ -134,14 +140,34 @@ draft-style choice is recorded.
 
 ### 6. Reconcile the Automations
 
-For each enabled automation, compose the paste-ready prompt from three parts: the
-preamble, the automation body, and the resolved bindings. **Compose into a new
-artifact; never edit the source automation file or the preamble under `docs/` —
-those are read-only, reference endpoints by role, and must stay free of resolved
-bindings or any personal value.** The composed prompt is the only place resolved
-bindings appear; write it only to `local/automations/<name>.md` and/or the harness,
-and start it with a generated-file banner that names its source
+For each enabled automation, compose a lean, **self-contained** paste-ready prompt —
+it is the running agent's entire world, since the run executes in the sink checkout
+with the spec not present (see
+[ADR 0005](../../docs/adr/0005-materialized-automation-is-self-contained.md)).
+**Compose into a new artifact; never edit the source automation file or the preamble
+under `docs/` — those are read-only, reference surfaces by role, and must stay free of
+resolved bindings or any personal value.** The composed prompt is the only place
+resolved bindings appear; write it only to `local/automations/<name>.md` and/or the
+harness, and start it with a generated-file banner that names its source
 (`docs/automations/<name>.md`) and marks it do-not-edit.
+
+Compose these parts in order, and **only** these — never the full endpoint/sink
+catalog, the provider block, the cadence, or blank overrides:
+
+1. The banner, then `# <Name>` and a one-line intro. When the automation's primary
+   sink resolves to a repo clone, name that clone as the working directory and state
+   the spec is not checked out there; when the sink is a tool or the KB (no clone),
+   state only that the spec is not checked out and everything needed is in the prompt.
+2. `## Operating rules` — the preamble's Operating Rules, verbatim.
+3. `## Context surfaces` — one line per endpoint the automation **declares**, joining
+   its role description from the preamble vocabulary with its resolved hint from
+   `local/bindings.yml`. Omit the section when the automation declares no endpoints.
+4. `## Sink` / `## Sources` — one resolved line per declared sink and source: the role
+   description plus the clone path and repo, or the tool handle. Omit when none.
+5. Any convention the automation declares (for example Knowledge Harvest's follow-up
+   marker policy) inlined as its own section, resolved from
+   `docs/knowledge-bank-conventions.md` — never left as a path for the run to open.
+6. The automation body from the source's `## Prompt` block, appended verbatim.
 
 Confirm the cadence binding. Detect the harness: if it can create a scheduled
 automation from an agent, create or update it; otherwise output the paste-ready

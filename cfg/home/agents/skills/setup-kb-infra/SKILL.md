@@ -39,10 +39,11 @@ report before changing anything:
 - Version: read the current spec version from the git tags (`git describe --tags`);
   `vX.Y.Z` tags are the source of truth. Compare it against the `version` recorded
   in `local/installed.yml` to see how far the installed setup has fallen behind.
-- Desired: the endpoint, sink, and source vocabulary in
+- Desired: the endpoint, sink, sink-capability, and source vocabulary in
   [_preamble.md](../../docs/automations/_preamble.md), the endpoints, sinks, and
-  sources each **enabled** automation declares, the skills under `skills/`, the
-  automations under `docs/automations/`, and one cadence per enabled automation.
+  sink capabilities each **enabled** automation declares, the skills under
+  `skills/`, the automations under `docs/automations/`, and one cadence per enabled
+  automation.
 - Actual: `local/bindings.yml` (a key present with a blank or placeholder value is
   **not** a binding), `local/installed.yml`, the snapshotted prompts under
   `local/automations/`, and the installed skill copies.
@@ -58,6 +59,8 @@ report before changing anything:
     resolves live. Verify by resolution, not by key presence;
   - a sink an enabled automation targets is unbound, disabled-yet-needed, or
     unreachable;
+  - a sink capability an enabled automation declares is absent, blank, or does
+    not resolve to a concrete executable command or native workflow instruction;
   - a source an enabled automation declares is unbound or unreachable; a best-effort
     source (for example a `<social-profile-source>` platform) may be intentionally
     blank, which is a skip, not a gap;
@@ -110,7 +113,7 @@ Completion criterion: every endpoint an enabled automation needs resolves to a K
 owner, or the user has explicitly deferred it; no needed endpoint is left as a
 self-authored "unbound" note, and retired bindings are resolved.
 
-### 4. Reconcile the Sink and Source Bindings
+### 4. Reconcile the Sink, Capability, and Source Bindings
 
 Read the sink and source vocabulary from the preamble. For each sink an enabled
 automation targets, confirm its link and local clone path, collecting only what the
@@ -120,8 +123,17 @@ is a list of local locations; a `<social-profile-source>` is one public profile 
 platform (currently X and LinkedIn). A best-effort source platform may be left blank as
 an explicit skip, not a gap. Record them in `local/bindings.yml`.
 
+For each sink capability an enabled automation declares, resolve the role to the
+bound sink implementation's executable command or native workflow instruction.
+Store it under that sink's `capabilities` map in `local/bindings.yml`. A generic
+automation must never hardcode one implementation's command in committed docs;
+the materialized capability line is where that concrete value belongs. A required
+blank capability is a hard gap: define it with the user, disable the dependent
+automation, or stop rather than inventing an operation.
+
 Completion criterion: every sink an enabled automation needs has a binding or is
-marked disabled, and every declared source is bound or explicitly left blank.
+marked disabled, every declared sink capability resolves to a concrete operation,
+and every declared source is bound or explicitly left blank.
 
 ### 5. Reconcile the Installed Skills
 
@@ -164,10 +176,14 @@ catalog, the provider block, the cadence, or blank overrides:
    `local/bindings.yml`. Omit the section when the automation declares no endpoints.
 4. `## Sink` / `## Sources` — one resolved line per declared sink and source: the role
    description plus the clone path and repo, or the tool handle. Omit when none.
-5. Any convention the automation declares (for example Knowledge Harvest's follow-up
+5. `## Sink capabilities` — one resolved line per capability the automation
+   declares, joining its role description from the preamble with the concrete
+   command or workflow instruction under the bound sink's `capabilities` map.
+   Omit when none are declared. Never inject undeclared capabilities.
+6. Any convention the automation declares (for example Knowledge Harvest's follow-up
    marker policy) inlined as its own section, resolved from
    `docs/knowledge-bank-conventions.md` — never left as a path for the run to open.
-6. The automation body from the source's `## Prompt` block, appended verbatim.
+7. The automation body from the source's `## Prompt` block, appended verbatim.
 
 Confirm the cadence binding. Detect the harness: if it can create a scheduled
 automation from an agent, create or update it; otherwise output the paste-ready
@@ -206,7 +222,8 @@ reconcile changed, and the exact next manual action, if any.
 
 ## Rules
 
-- Write bindings only to gitignored `local/`. Never commit a personal value.
+- Write bindings only to gitignored `local/`. Never commit a personal value or a
+  concrete sink-capability command.
 - Never write a personal value into a committed spec file.
 - The spec source is read-only. Setup reads `docs/` and `skills/` to compose prompts
   and never edits them; resolved bindings and other personal values live only in the

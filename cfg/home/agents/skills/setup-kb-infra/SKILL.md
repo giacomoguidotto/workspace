@@ -39,10 +39,11 @@ report before changing anything:
 - Version: read the current spec version from the git tags (`git describe --tags`);
   `vX.Y.Z` tags are the source of truth. Compare it against the `version` recorded
   in `local/installed.yml` to see how far the installed setup has fallen behind.
-- Desired: the endpoint, sink, sink-capability, and source vocabulary in
+- Desired: the endpoint, sink, source, sink-capability, and source-capability
+  vocabulary in
   [_preamble.md](../../docs/automations/_preamble.md), the endpoints, sinks, and
-  sink capabilities each **enabled** automation declares, the skills under
-  `skills/`, the automations and provider-agnostic execution profiles under
+  sources plus their capabilities each **enabled** automation declares, the skills
+  under `skills/`, the automations and provider-agnostic execution profiles under
   `docs/automations/`, and one cadence plus one concrete local model/reasoning
   selection per enabled automation.
 - Actual: `local/bindings.yml` (a key present with a blank or placeholder value is
@@ -66,12 +67,15 @@ report before changing anything:
   - a source an enabled automation declares is unbound or unreachable; a best-effort
     source (for example a `<social-profile-source>` platform) may be intentionally
     blank, which is a skip, not a gap;
+  - a source capability an enabled automation declares is absent, blank, or does not
+    resolve to a concrete read command or native workflow instruction;
   - bindings whose endpoint or sink is no longer in the spec (retired);
   - skills whose source differs from the installed copy (stale install) or is not
     installed;
   - automations new to the spec, or whose fresh compose differs from the snapshot in
     `local/automations/`, or removed from the spec;
-  - cadences missing for an enabled automation.
+  - cadences missing for an enabled automation, including a cadence that an
+    automation declares as required prompt context;
   - a concrete model or reasoning effort missing for an enabled automation,
     unsupported by the current harness, or different across the local desired state,
     installed-state record, and live harness automation;
@@ -121,7 +125,7 @@ Completion criterion: every endpoint an enabled automation needs resolves to a K
 owner, or the user has explicitly deferred it; no needed endpoint is left as a
 self-authored "unbound" note, and retired bindings are resolved.
 
-### 4. Reconcile the Sink, Capability, and Source Bindings
+### 4. Reconcile the Sink, Source, and Capability Bindings
 
 Read the sink and source vocabulary from the preamble. For each sink an enabled
 automation targets, confirm its link and local clone path, collecting only what the
@@ -131,17 +135,20 @@ is a list of local locations; a `<social-profile-source>` is one public profile 
 platform (currently X and LinkedIn). A best-effort source platform may be left blank as
 an explicit skip, not a gap. Record them in `local/bindings.yml`.
 
-For each sink capability an enabled automation declares, resolve the role to the
-bound sink implementation's executable command or native workflow instruction.
-Store it under that sink's `capabilities` map in `local/bindings.yml`. A generic
-automation must never hardcode one implementation's command in committed docs;
-the materialized capability line is where that concrete value belongs. A required
-blank capability is a hard gap: define it with the user, disable the dependent
-automation, or stop rather than inventing an operation.
+For each sink or source capability an enabled automation declares, resolve the role
+to the bound implementation's executable command or native workflow instruction.
+Store it under that sink or source's `capabilities` map in `local/bindings.yml`. A
+generic automation must never hardcode one implementation's command in committed
+docs; the materialized capability line is where that concrete value belongs. A
+required blank capability is a hard gap: define it with the user, disable the
+dependent automation, or stop rather than inventing an operation. Source capability
+instructions must remain read-only even when the same external system is also bound
+as a writable sink.
 
 Completion criterion: every sink an enabled automation needs has a binding or is
 marked disabled, every declared sink capability resolves to a concrete operation,
-and every declared source is bound or explicitly left blank.
+every declared source is bound or explicitly left blank, and every declared source
+capability resolves to a concrete read operation.
 
 ### 5. Reconcile the Runtime Model Bindings
 
@@ -197,7 +204,7 @@ harness, and start it with a generated-file banner that names its source
 (`docs/automations/<name>.md`) and marks it do-not-edit.
 
 Compose these parts in order, and **only** these — never the full endpoint/sink
-catalog, the provider block, the cadence, or blank overrides:
+catalog, the provider block, undeclared cadence context, or blank overrides:
 
 1. The banner, then `# <Name>` and a one-line intro. When the automation's primary
    sink resolves to a repo clone, name that clone as the working directory and state
@@ -213,10 +220,19 @@ catalog, the provider block, the cadence, or blank overrides:
    declares, joining its role description from the preamble with the concrete
    command or workflow instruction under the bound sink's `capabilities` map.
    Omit when none are declared. Never inject undeclared capabilities.
-6. Any convention the automation declares (for example Knowledge Harvest's follow-up
+6. `## Source capabilities` — one resolved line per read capability the automation
+   declares under its owning source, joining its role description from the preamble
+   with the concrete command or native workflow instruction under that bound
+   source's `capabilities` map. Omit when none are declared. Never inject undeclared
+   capabilities, and never turn a source capability into write authority.
+7. `## Coverage cadence` — only when the automation declares `Coverage cadence:
+   required`, emit its human-readable recurrence and timezone from the cadence
+   binding, and state that the current run owns the window through the next scheduled
+   run. Omit it otherwise; do not inject cadence merely because one exists.
+8. Any convention the automation declares (for example Knowledge Harvest's follow-up
    marker policy) inlined as its own section, resolved from
    `docs/knowledge-bank-conventions.md` — never left as a path for the run to open.
-7. The automation body from the source's `## Prompt` block, appended verbatim.
+9. The automation body from the source's `## Prompt` block, appended verbatim.
 
 Confirm the cadence, model, and reasoning bindings. Model selection is harness
 metadata: never inject the execution profile, concrete model, or reasoning effort
@@ -259,7 +275,7 @@ reconcile changed, and the exact next manual action, if any.
 ## Rules
 
 - Write bindings only to gitignored `local/`. Never commit a personal value or a
-  concrete sink-capability command.
+  concrete sink- or source-capability command.
 - Never write a personal value into a committed spec file.
 - Never write a provider-specific model identifier into the committed spec; committed
   automations declare provider-agnostic execution profiles only.

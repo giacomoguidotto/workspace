@@ -42,11 +42,13 @@ report before changing anything:
 - Desired: the endpoint, sink, sink-capability, and source vocabulary in
   [_preamble.md](../../docs/automations/_preamble.md), the endpoints, sinks, and
   sink capabilities each **enabled** automation declares, the skills under
-  `skills/`, the automations under `docs/automations/`, and one cadence per enabled
-  automation.
+  `skills/`, the automations and provider-agnostic execution profiles under
+  `docs/automations/`, and one cadence plus one concrete local model/reasoning
+  selection per enabled automation.
 - Actual: `local/bindings.yml` (a key present with a blank or placeholder value is
   **not** a binding), `local/installed.yml`, the snapshotted prompts under
-  `local/automations/`, and the installed skill copies.
+  `local/automations/`, the live harness automation configuration, and the installed
+  skill copies.
 - Drive the endpoint, sink, and source checks from the **desired** set — the
   endpoints, sinks, and sources each enabled automation declares — not from whatever
   keys happen to be in `bindings.yml`. For each declared endpoint, probe that it
@@ -70,6 +72,12 @@ report before changing anything:
   - automations new to the spec, or whose fresh compose differs from the snapshot in
     `local/automations/`, or removed from the spec;
   - cadences missing for an enabled automation.
+  - a concrete model or reasoning effort missing for an enabled automation,
+    unsupported by the current harness, or different across the local desired state,
+    installed-state record, and live harness automation;
+  - a newer supported model mapping that better matches an automation's declared
+    execution profile; report this as an optimization proposal, not a silent upgrade
+    of an otherwise valid explicit local choice.
 
 In `check` mode, report this plan and stop.
 
@@ -135,7 +143,32 @@ Completion criterion: every sink an enabled automation needs has a binding or is
 marked disabled, every declared sink capability resolves to a concrete operation,
 and every declared source is bound or explicitly left blank.
 
-### 5. Reconcile the Installed Skills
+### 5. Reconcile the Runtime Model Bindings
+
+Read each enabled automation's provider-agnostic `Execution profile` from its source
+under `docs/automations/`. Inspect the harness's currently supported models and
+reasoning/delegation settings, then propose a concrete mapping in the plan:
+
+- `frontier` selects the strongest available model for ambiguous, high-value work;
+- `balanced` selects a strong everyday model with a better cost/capability tradeoff;
+- `efficient` selects the fastest low-cost model that can reliably satisfy a narrow,
+  repeatable contract;
+- `parallel` selects a frontier model plus the harness's explicit multi-agent or
+  delegation mode. If the harness has no such mode, report the degraded mapping and
+  ask before substituting a single-agent setting.
+
+Record the accepted concrete `model` and `reasoning_effort` for every enabled
+automation under `models` in `local/bindings.yml`. A recorded, supported concrete
+selection is the user's local choice: do not replace it merely because a newer model
+exists. Surface a newer profile-aligned mapping in the plan and change it only when
+the user accepts that optimization or explicitly asks for current recommendations.
+Never commit provider-specific model identifiers.
+
+Completion criterion: every enabled automation has an accepted model and reasoning
+selection supported by the local harness, or the exact unsupported profile is
+reported as a blocker.
+
+### 6. Reconcile the Installed Skills
 
 Copy `lookup`, `capture`, and `setup-kb-infra` into the harness skill directory,
 re-copying only those whose source differs from the installed copy. Prefer
@@ -150,7 +183,7 @@ recorded.
 Completion criterion: each skill's installed copy matches its source, and the
 draft-style choice is recorded.
 
-### 6. Reconcile the Automations
+### 7. Reconcile the Automations
 
 For each enabled automation, compose a lean, **self-contained** paste-ready prompt —
 it is the running agent's entire world, since the run executes in the sink checkout
@@ -185,20 +218,23 @@ catalog, the provider block, the cadence, or blank overrides:
    `docs/knowledge-bank-conventions.md` — never left as a path for the run to open.
 7. The automation body from the source's `## Prompt` block, appended verbatim.
 
-Confirm the cadence binding. Detect the harness: if it can create a scheduled
-automation from an agent, create or update it; otherwise output the paste-ready
-prompt and name where it goes. Recreate only automations the plan flagged as new,
-changed, or cadence-drifted, and offer to retire automations removed from the spec.
+Confirm the cadence, model, and reasoning bindings. Model selection is harness
+metadata: never inject the execution profile, concrete model, or reasoning effort
+into the composed prompt. Detect the harness: if it can create a scheduled automation
+from an agent, create or update it; otherwise output the paste-ready prompt and name
+where it goes. Update only automations the plan flagged as new, prompt-changed,
+cadence-drifted, or model-drifted, and offer to retire automations removed from the
+spec.
 After applying, snapshot each installed automation's composed prompt to
 `local/automations/<name>.md` and update `local/installed.yml` with the current spec
-version, timestamp, and per-automation cadence and hash, so the next run can compute
-drift.
+version, timestamp, and per-automation cadence, concrete model, reasoning effort,
+and hash, so the next run can compute drift.
 
 Completion criterion: every enabled automation is created, updated, or handed over
-as a paste-ready prompt with its target and cadence, and `local/installed.yml` plus
-the `local/automations/` snapshots are current.
+as a paste-ready prompt with its target, cadence, model, and reasoning effort, and
+`local/installed.yml` plus the `local/automations/` snapshots are current.
 
-### 7. Report
+### 8. Report
 
 Report the plan applied: what changed, every binding recorded or removed, every
 skill re-copied, every automation created, updated, retired, or handed over, and
@@ -213,10 +249,10 @@ reconcile changed, and the exact next manual action, if any.
   with `git describe --tags`. `scripts/bump-version.sh` advances it from conventional
   commits.
 - Record the installed state in gitignored `local/installed.yml` (spec version,
-  timestamp, and per-automation cadence and content hash) with the composed prompts
-  snapshotted under `local/automations/`, per the preamble State Model. Use it only
-  to compute drift; never store copied KB facts, answered grill questions, or
-  anything beyond the version, cursors, and installed prompts themselves.
+  timestamp, and per-automation cadence, concrete model, reasoning effort, and
+  content hash) with the composed prompts snapshotted under `local/automations/`, per
+  the preamble State Model. Use it only to compute drift; never store copied KB facts,
+  answered grill questions, or anything beyond replaceable materialization state.
 - Deleting the record must not make the next run less correct — only slower, by
   forcing a full re-materialize.
 
@@ -225,6 +261,8 @@ reconcile changed, and the exact next manual action, if any.
 - Write bindings only to gitignored `local/`. Never commit a personal value or a
   concrete sink-capability command.
 - Never write a personal value into a committed spec file.
+- Never write a provider-specific model identifier into the committed spec; committed
+  automations declare provider-agnostic execution profiles only.
 - The spec source is read-only. Setup reads `docs/` and `skills/` to compose prompts
   and never edits them; resolved bindings and other personal values live only in the
   materialized prompt (`local/automations/` and the harness), never in the source.

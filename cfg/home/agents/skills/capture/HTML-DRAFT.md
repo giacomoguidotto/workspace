@@ -307,6 +307,7 @@ Use inline CSS. Do not depend on Tailwind, remote fonts, scripts, or external as
         <section id="revision-evidence">...</section>
         <details id="source-assertions"><summary>Source assertion coverage</summary>...</details>
         <details id="quality-gate" open><summary>Semantic Quality Gate</summary>...</details>
+        <details id="executable-validation" open><summary>Executable transition validation</summary>...</details>
         <section id="blockers">...</section>
         <details id="read-back-plan"><summary>Read-back verification plan</summary>...</details>
         <details id="workspace-read"><summary>Workspace read</summary>...</details>
@@ -319,9 +320,11 @@ Use inline CSS. Do not depend on Tailwind, remote fonts, scripts, or external as
 ```
 
 Set `approval_status` to `Ready for approval - not written to KB` only when the
-quality gate has no blocking result. Otherwise use `Blocked - not approvable` and
-the `blocked` pill class. Use `draft_id` to make later approval refer to this exact
-artifact; do not reuse it after any content or gate result changes.
+quality gate has no blocking result and every proposed mutation has a complete
+bundled-validator report with no `Block` disposition. Otherwise use `Blocked - not
+approvable` and the `blocked` pill class. Use `draft_id` to make later approval
+refer to this exact artifact; do not reuse it after any content or gate result
+changes.
 
 ## Required Sections
 

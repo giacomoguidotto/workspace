@@ -75,6 +75,13 @@ merging concepts. Never use relative time without an absolute anchor. Distinguis
 
 Read the live KB through its provider connector before choosing a target.
 
+When a compiled Drift Audit manifest and findings are available, use them only as
+read-only discovery evidence. Verify their schema and Kind-registry version, use
+stable identities and findings to seed owner and relation searches, and surface
+partial access or concurrent drift. An audit baseline never replaces the required
+live reads: re-read every affected target, competing owner, revision, and relation
+needed by the proposed mutation.
+
 - Search broad parent areas, likely databases, sibling pages, repo/project
   aliases, relevant conventions, and possible competing owners.
 - Search exact names, URLs, repository slugs, stable page IDs, and likely titles.
@@ -184,8 +191,32 @@ blocking risk. A blocking `Flag` or
 or evidence and must not ask for approval to apply it. Other flags remain visible
 for informed approval; approval never converts a failed check into a pass.
 
+Create one provider-neutral Capture transition JSON record for every proposed
+mutation. From the installed Capture skill directory, run the bundled validator:
+
+```sh
+python3 scripts/validate-capture-transition.py <record.json>
+```
+
+When a compiled audit baseline informed discovery, bind it to the validation run:
+
+```sh
+python3 scripts/validate-capture-transition.py <record.json> \
+  --audit-manifest <manifest.json> \
+  --audit-findings <findings.json>
+```
+
+The audit inputs must be the matching output pair from one read-only compilation.
+The validator verifies their content hash, schema and Kind-registry versions,
+target coverage, full-access recheck, and concurrent-drift state. Treat an exit status of `2`, a
+`Block` disposition, a missing runtime contract, or an unavailable validator as a
+blocking deterministic failure. A `Flag` disposition remains visible for semantic
+review but does not itself grant write authority. Include each complete JSON report
+in the Approval Draft; never rewrite a validator result by hand.
+
 Completion criterion: each proposed mutation has evidence-bearing results for all
-required checks, with blocking and non-blocking findings distinguished.
+required checks, its executable report is present, and blocking and non-blocking
+findings are distinguished.
 
 ### 5. Draft Exact Writes
 
@@ -208,7 +239,8 @@ It must include:
   derivation, affected owner, revision identities, semantic change relations,
   exact diff, and evidence destination;
 - Semantic Quality Gate: all required checks, status, checked scope, evidence,
-  and whether a finding blocks the write;
+  whether a finding blocks the write, and the complete bundled-validator report
+  for each transition record;
 - skipped writes and no-ops: considered targets or conventions not selected;
 - read-back plan: exact properties, relations, content, deletion results, and
   revision identity that will be compared after applying;

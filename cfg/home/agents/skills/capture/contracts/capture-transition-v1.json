@@ -1,0 +1,56 @@
+{
+  "capture_record_version": 1,
+  "kind_registry_version": 1,
+  "kinds": [
+    "state",
+    "direction",
+    "decision",
+    "rule",
+    "preference",
+    "procedure",
+    "event",
+    "evidence",
+    "open-item",
+    "schema",
+    "example",
+    "citation"
+  ],
+  "ownership": ["Canonical", "Adapter", "Unresolved"],
+  "maturity": ["Raw", "Developing", "Stable"],
+  "operations": ["create", "update", "replace-section", "delete"],
+  "revision_relations": ["supersedes", "revises", "invalidates"],
+  "normative_forces": ["must", "should", "may"],
+  "assertion_required_fields": {
+    "state": ["observed_at"],
+    "decision": ["choice"],
+    "rule": ["scope", "normative_force"],
+    "preference": ["subject"],
+    "procedure": ["observable_outcome"],
+    "event": ["event_at"],
+    "evidence": ["source_refs"],
+    "open-item": ["question"],
+    "schema": ["fields"],
+    "example": ["governing_ref"],
+    "citation": ["source_refs"]
+  },
+  "result_statuses": ["Pass", "Flag", "Not checked", "Not applicable"],
+  "semantic_checks": {
+    "ownership": ["unresolved-ownership"],
+    "coverage": ["material-omission"],
+    "preservation": ["material-omission"],
+    "faithfulness": ["unsupported-assertion"],
+    "kind-and-semantic-force": ["wrong-semantic-force"],
+    "duplication-and-contradiction": [
+      "possible-duplication",
+      "contradiction"
+    ],
+    "deletion-safety": ["unsafe-deletion"]
+  },
+  "blocking_issues": [
+    "unresolved-ownership",
+    "contradiction",
+    "material-omission",
+    "unsupported-assertion",
+    "unsafe-deletion"
+  ]
+}

@@ -8,81 +8,207 @@ description: Capture completed conversations or agent sessions into the Knowledg
 ## Invariant
 
 Every run produces an HTML approval draft before any KB write. There is no
-inline-chat approval shortcut, even for tiny updates.
+inline-chat approval shortcut, even for tiny updates. Human approval authorizes
+an exact write; it is not evidence that the write is semantically correct.
+
+The Knowledge Bank is the source of truth. Apply its live provider through the
+available connector without hardcoding provider-specific fields or operations.
+The semantic-authoring contract in `kb-infra` is normative; this workflow applies
+its Type, Ownership, Maturity, Kind, Revision Evidence, reconciliation, and
+Semantic Quality Gate rules end to end.
 
 ## Loop
 
-### 1. Map Live KB
+### 1. Map The Live KB
 
 Read the live KB through its provider connector before choosing a target.
 
 - Search broad parent areas, likely databases, sibling pages, repo/project
-  aliases, and relevant conventions.
-- Search exact names, URLs, repository slugs, and likely page titles.
-- Fetch the likely target and nearby examples before proposing fields or body
-  shape.
+  aliases, relevant conventions, and possible competing owners.
+- Search exact names, URLs, repository slugs, stable page IDs, and likely titles.
+- Fetch each likely owner, the complete affected sections, linked owners, inbound
+  relations needed for deletion safety, and nearby examples before proposing
+  fields or body shape.
+- Discover how the provider represents Type, Ownership, Maturity, Kind, stable
+  page identity, revisions, relations, and deletion recovery. Do not invent a
+  field when the live schema uses another representation.
 - Prefer live KB structure over repo assumptions or stale local artifacts.
 
-Completion criterion: the proposed target, placement, property schema, and
-nearby page pattern are grounded in live KB reads, or the draft states that live
-verification was unavailable.
+If a complete affected section, a possible competing owner, or required relation
+cannot be read, record the gap as `Not checked`. When that gap could hide an
+ownership, contradiction, omission, unsupported-assertion, or deletion risk, it
+blocks the write.
 
-### 2. Distill Durable Knowledge
+Completion criterion: the proposed owner, placement, property schema, affected
+content, linked owners, and Revision Evidence mechanism are grounded in live KB
+reads. Otherwise the run may produce an unverified draft, but it cannot offer or
+apply the write.
 
-Extract only what belongs in the Knowledge Bank.
+### 2. Turn Intake Into Semantic Candidates
 
-- Keep progress, decisions, rationale, open tasks, blockers, follow-ups, repo
-  links, issue/PR links, commits, and durable user preferences.
-- Exclude transcript framing, agent provenance, temporary command noise, and
-  facts not meant to survive the session.
-- If a convention applies beyond the immediate project, draft the higher-level
-  update separately from the project-specific update.
-- Keep final KB prose source-free unless provenance is itself useful knowledge.
+Treat every incoming assertion as `Raw` before editorial processing. Build a
+source-assertion ledger and keep it in the approval artifact, not in the final KB
+prose unless provenance changes how the knowledge should be interpreted.
 
-Completion criterion: every proposed KB body reads as durable knowledge, not as a
-session log.
+For every assertion:
 
-### 3. Draft Exact Writes
+1. Preserve the subject, meaning, scope, qualifiers, uncertainty, temporal
+   meaning, rationale, and supporting evidence.
+2. Classify it with a stable Kind ID from the versioned registry. Use explicit
+   Kind metadata or a registered provider mapping; never infer Kind from an
+   arbitrary heading.
+3. Identify the candidate canonical owner and any Adapter that should link to it.
+4. Mark the proposed disposition as preserve, merge, replace, append, delete,
+   reject, or omit, with a reason.
+5. Propose the post-approval Maturity and record the evidence for that decision:
+   - `Stable` only when the assertion is reconciled, sufficiently supported, and
+     safe to reuse after approval;
+   - `Developing` when it is reconciled and useful but explicitly unsettled or
+     expected to change;
+   - retained `Raw` only when the draft names its owner, provenance, retention
+     reason, and next review or distillation action.
+
+Exclude transcript framing, temporary command noise, and unsupported claims.
+Keep durable progress, decisions, rationale, open items, blockers, follow-ups,
+links, and preferences only when they pass reconciliation. If a convention applies
+beyond the immediate project, treat the higher-level meaning as a separate
+candidate with its own owner instead of copying it into both places.
+
+Completion criterion: every source assertion maps to a proposed disposition,
+Kind, Maturity, owner, provenance, and evidence, including rejected or omitted
+assertions.
+
+### 3. Reconcile Canonical Meaning
+
+Reconcile the Active Canonical View instead of appending a session summary.
+
+- Compare each candidate with the complete affected section and linked owners.
+- Establish one canonical owner per meaning. An Adapter links to that owner and
+  never silently becomes a second owner. `Unresolved` Ownership blocks the write.
+- Preserve, merge, replace, or delete every affected meaning deliberately.
+- Rewrite the smallest coherent section that expresses the resulting meaning.
+- Append only a genuine chronological Event or a new peer in an existing set.
+- Remove superseded wording in the same proposed write.
+- Keep one dominant Kind per section and the least complex presentation that
+  preserves the relationships among assertions.
+- Preserve Revision Evidence for every mutation: source, actor, `captured_at`,
+  affected owner, prior and proposed revision identity, exact diff, and any
+  `supersedes`, `revises`, or `invalidates` relation. A changed State also retains
+  its distinct `observed_at`.
+- Before deleting a block or page, account for unique durable content, inbound
+  links, replacement owners, and the recovery path.
+
+Completion criterion: the proposal is the smallest non-duplicative change that
+preserves current meaning and recoverable history; append-only accretion is used
+only when its semantics require it.
+
+### 4. Run The Semantic Quality Gate
+
+Run the gate before presenting anything as approvable. Separate deterministic
+checks from semantic judgments. Every result must be `Pass`, `Flag`,
+`Not checked`, or `Not applicable` and name both the checked scope and concrete
+evidence; a bare status is invalid.
+
+At minimum, report:
+
+- Ownership: owner checked, competing owners considered, and Adapter links named.
+- Coverage: every source assertion mapped to preserved, changed, omitted, or
+  rejected content.
+- Preservation: qualifiers, uncertainty, time, rationale, and unique durable
+  content accounted for.
+- Faithfulness: every proposed claim traced to its source without unsupported
+  strengthening.
+- Duplication and contradiction: affected sections and linked owners compared.
+- Kind and semantic force: stable Kind ID and Kind-specific constraints checked.
+- Time and provenance: temporal anchors and complete Revision Evidence present.
+- Deletion safety: unique content, inbound links, replacement owner, and recovery
+  path checked for each deletion.
+
+Any unresolved Ownership, contradiction, material omission, unsupported
+assertion, or unsafe deletion is a blocking risk. A blocking `Flag` or
+`Not checked` result stops the write: the draft must identify the missing decision
+or evidence and must not ask for approval to apply it. Other flags remain visible
+for informed approval; approval never converts a failed check into a pass.
+
+Completion criterion: each proposed mutation has evidence-bearing results for all
+required checks, with blocking and non-blocking findings distinguished.
+
+### 5. Draft Exact Writes
 
 Create a provider-like HTML approval draft using [HTML-DRAFT.md](HTML-DRAFT.md).
+The draft is an approval artifact, not a second knowledge record.
 
-The draft must include:
+It must include:
 
-- workspace read: searches, pages, databases, and examples inspected
-- proposed results: page previews for each create or update
-- body preview: exact source-free final body, with inline diffs for updates
-- skipped writes: considered targets or conventions not selected
-- questions: only blockers that prevent a correct write
+- workspace read: searches, pages, databases, revisions, relations, and examples
+  inspected, including inaccessible or partial reads;
+- source-assertion ledger: exact intake-to-result coverage, including omissions
+  and rejections;
+- proposed results: exact provider-visible actions in application order, with
+  target stable IDs, placement, properties, relations, and final content;
+- exact before and after content for every update, enough unchanged context to
+  locate it, and an explicit deletion ledger;
+- semantic decisions: Ownership, stable Kind ID, current and proposed Maturity,
+  and evidence for each decision;
+- Revision Evidence: source, actor, capture time, affected owner, revision
+  identities, semantic change relations, exact diff, and evidence destination;
+- Semantic Quality Gate: all required checks, status, checked scope, evidence,
+  and whether a finding blocks the write;
+- skipped writes and no-ops: considered targets or conventions not selected;
+- read-back plan: exact properties, relations, content, deletion results, and
+  revision identity that will be compared after applying;
+- questions: only blockers that prevent a correct write.
+
+The before and after views are the approval boundary. Do not hide content behind
+summaries, ellipses, placeholders, or implementation notes. Render the exact
+provider representation that will exist after approval, including explicit Kind
+or registered mapping and Maturity representation.
 
 Write the draft to the OS temp directory, open it for the user, and report the
-absolute path in chat.
+absolute path in chat. If any blocking risk remains, label the draft blocked and
+ask only the question needed to resolve it. Otherwise ask exactly: "Should I apply
+these exact KB writes now?"
 
-Completion criterion: the user can approve or reject the exact KB writes from the
-HTML file without needing hidden context from the conversation.
+Completion criterion: the user can evaluate the semantic decisions and approve or
+reject the exact KB mutations from the HTML file without hidden conversation
+context.
 
-### 4. Ask For Fresh Approval
+### 6. Ask For Fresh Approval
 
-Ask: "Should I apply these exact KB writes now?"
+Only an unambiguous affirmative answer to "Should I apply these exact KB writes
+now?" or an equally explicit instruction to apply the latest named draft authorizes
+writing. "Looks good", clarifying answers, placement discussion, or approval of an
+earlier draft do not.
 
-Only explicit approval after the latest draft permits writing. "Looks good",
-clarifying answers, or placement discussion are not approval. If the conversation
-changes the draft, regenerate the HTML file and ask again.
+If the conversation changes any target, content, property, relation, action,
+deletion, order, semantic decision, Revision Evidence, or quality-gate result,
+regenerate the HTML file and ask again. A blocked draft cannot be approved for
+application.
 
 Completion criterion: approval is explicit, fresh, and applies to the latest
-exact draft.
+unblocked exact draft.
 
-### 5. Apply And Verify
+### 7. Apply Exactly And Read Back
 
-Apply only the approved writes.
+Immediately before writing, re-read every target's current revision and the
+relations needed for deletion safety. If anything differs from the approved
+before-state, stop, reconcile again, regenerate the draft, and obtain fresh
+approval.
 
-- Use the live schema and exact properties from the approved draft.
-- Preserve child pages, databases, and unrelated content unless the draft
-  explicitly says otherwise.
-- Read back every updated KB item.
-- Report what changed and what remains unresolved.
+Apply only the approved actions, in the approved order, through the bound provider
+connector. Use the exact properties, relations, content, and deletions shown in the
+draft, and retain the approved Revision Evidence. Do not substitute a nearby
+provider operation; if an exact action is unavailable, stop and report it.
 
-Completion criterion: every approved write has been read back from the KB, or any
-failed write is reported with the exact blocker.
+After applying, read back every affected item and revision from the KB. Compare the
+result with the approved after-state: stable identity, parent, properties,
+relations, full content, deletion outcome, and Revision Evidence. Report exact
+matches, mismatches, and partial failures. Never silently repair a mismatch;
+another mutation requires a new exact draft and fresh approval.
+
+Completion criterion: every approved mutation either matches its read-back exactly
+or is reported with the precise mismatch or provider blocker. No unapproved
+corrective write occurs.
 
 ## Placement Rules
 
@@ -90,17 +216,17 @@ failed write is reported with the exact blocker.
 - Put dense backlog, references, reflections, lessons, quotes, evidence, and long
   decision context in child pages under the relevant parent.
 - Prefer the smallest coherent set of writes over broad context dumps.
-- Choose one canonical owner for each fact, chapter, or lesson; other pages link
-  to that owner.
+- Choose one canonical owner for each meaning; other pages link to that owner.
 - Never invent a page or database when an existing owner can be strengthened.
 
 ## Safety Rules
 
-The Invariant above is the single gate: nothing is written, edited, appended,
-related, moved, renamed, archived, or deleted in the KB before explicit approval
-of the latest exact draft.
+The Invariant above is the single authorization gate: nothing is written, edited,
+appended, related, moved, renamed, archived, or deleted in the KB before explicit
+approval of the latest unblocked exact draft.
 
-- The KB is the source of truth.
-- Never invent facts to fit a field.
+- Never invent facts, provider fields, relations, revision support, or evidence.
 - Treat KB writes as hard to version and potentially destructive.
-- If KB access is unavailable, produce only a draft and label it unverified.
+- Keep provider-specific bindings and personal values out of the committed skill.
+- If live KB access is unavailable, produce only a blocked, unverified draft.
+- Do not use a live KB write to develop, test, or validate this workflow.

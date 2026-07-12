@@ -17,6 +17,58 @@ The semantic-authoring contract in `kb-infra` is normative; this workflow applie
 its Type, Ownership, Maturity, Kind, Revision Evidence, reconciliation, and
 Semantic Quality Gate rules end to end.
 
+## Runtime Semantic Reference
+
+Apply these materialized rules without assuming the `kb-infra` checkout is
+available at run time:
+
+1. Keep one canonical owner per meaning; link or reconcile instead of copying.
+2. Prefer the shortest wording that preserves meaning, scope, qualifiers, time,
+   uncertainty, rationale, and evidence.
+3. Make semantics explicit enough for an agent to parse and natural enough for a
+   person to browse.
+4. Keep Type, Ownership, Maturity, and Kind independent. Type is provider- or
+   domain-defined. Ownership is `Canonical`, `Adapter`, or the blocking migration
+   state `Unresolved`. Maturity is `Raw`, `Developing`, or `Stable`.
+
+Use version 1 of this Kind registry. The ID is stable; the display heading may use
+the preferred heading or a registered alias.
+
+| ID | Kind | Required semantic force |
+| --- | --- | --- |
+| `state` | State | A verified current condition. Use an explicit subject and current-condition verb; retain `observed_at` and show `as of` when volatility changes interpretation. |
+| `direction` | Direction | An aim or exploration, not a settled choice. Use language such as `aims to`, `is intended to`, or `is exploring`. |
+| `decision` | Decision | A selected option or commitment. State the choice before rationale and alternatives. |
+| `rule` | Rule | A scoped norm. `must` has no exception, `should` is the default with justified exceptions, and `may` grants permission. |
+| `preference` | Preference | What a named subject favors or avoids, including strength when material. |
+| `procedure` | Procedure | Ordered actions with an observable outcome. Use imperative steps. |
+| `event` | Event | Something that happened. Use past tense and an absolute date when known. |
+| `evidence` | Evidence | Material supporting or qualifying a claim, with provenance. |
+| `open-item` | Open item | An unresolved question or outcome requiring follow-up. Phrase it directly. |
+| `schema` | Schema | A reusable shape, field contract, or controlled vocabulary. |
+| `example` | Example | A concrete illustration that does not itself define the rule. |
+| `citation` | Citation | An external source reference with enough identity to retrieve it. |
+
+Keep one canonical subject per page, one dominant Kind per section, and one primary
+claim, instruction, or question per knowledge unit. Put a one-sentence description
+first, current or actionable content before supporting history and evidence, and
+Open items and Citations last. Claim-to-qualifier, rationale, and evidence adjacency
+overrides that order. Do not create universal page profiles, empty sections, or
+decorative structure.
+
+Choose the least complex presentation that preserves semantic relationships:
+short prose for one assertion or tightly coupled explanation; parallel bullets for
+two or more unordered peers; numbers for ordered or ranked items; labelled entries
+for term-definition pairs; and tables only for repeated comparable records. Keep
+examples separate from their governing rule and number external Citations when
+inline correspondence would otherwise be unclear.
+
+Use one canonical term per concept, with aliases stored at its owner for retrieval.
+Expand uncommon abbreviations and flag uncertain equivalence instead of silently
+merging concepts. Never use relative time without an absolute anchor. Distinguish
+`observed_at`, `event_at`, optional `valid_from` or `valid_until`, and apply-time
+`captured_at`; never substitute one for another.
+
 ## Loop
 
 ### 1. Map The Live KB
@@ -91,8 +143,9 @@ Reconcile the Active Canonical View instead of appending a session summary.
 - Remove superseded wording in the same proposed write.
 - Keep one dominant Kind per section and the least complex presentation that
   preserves the relationships among assertions.
-- Preserve Revision Evidence for every mutation: source, actor, `captured_at`,
-  affected owner, prior and proposed revision identity, exact diff, and any
+- Preserve Revision Evidence for every mutation: source, actor, the provider field
+  or deterministic operation that will assign `captured_at` when the accepted
+  mutation is applied, affected owner, prior and proposed revision identity, exact diff, and any
   `supersedes`, `revises`, or `invalidates` relation. A changed State also retains
   its distinct `observed_at`.
 - Before deleting a block or page, account for unique durable content, inbound
@@ -124,8 +177,9 @@ At minimum, report:
 - Deletion safety: unique content, inbound links, replacement owner, and recovery
   path checked for each deletion.
 
-Any unresolved Ownership, contradiction, material omission, unsupported
-assertion, or unsafe deletion is a blocking risk. A blocking `Flag` or
+Any unresolved Ownership, contradiction, material omission, unsupported assertion
+retained or introduced in the proposed after-state, or unsafe deletion is a
+blocking risk. A blocking `Flag` or
 `Not checked` result stops the write: the draft must identify the missing decision
 or evidence and must not ask for approval to apply it. Other flags remain visible
 for informed approval; approval never converts a failed check into a pass.
@@ -150,8 +204,9 @@ It must include:
   locate it, and an explicit deletion ledger;
 - semantic decisions: Ownership, stable Kind ID, current and proposed Maturity,
   and evidence for each decision;
-- Revision Evidence: source, actor, capture time, affected owner, revision
-  identities, semantic change relations, exact diff, and evidence destination;
+- Revision Evidence: source, actor, exact `captured_at` field or apply-time
+  derivation, affected owner, revision identities, semantic change relations,
+  exact diff, and evidence destination;
 - Semantic Quality Gate: all required checks, status, checked scope, evidence,
   and whether a finding blocks the write;
 - skipped writes and no-ops: considered targets or conventions not selected;

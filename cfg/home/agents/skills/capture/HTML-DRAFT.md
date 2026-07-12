@@ -437,11 +437,15 @@ post-approval state.
 
 ### Revision Evidence
 
-For every mutation, show the source, actor, `captured_at`, affected owner, prior
-revision identity, proposed or expected revision identity, and exact diff. Include
+For every mutation, show the source, actor, the exact provider field or deterministic
+operation that will assign `captured_at` when the accepted mutation is applied,
+the affected owner, prior revision identity, proposed or expected revision
+identity, and exact diff. Include
 `observed_at` for every changed State and any `event_at`, `valid_from`, or
 `valid_until` that changes interpretation. Name each `supersedes`, `revises`, or
 `invalidates` relation and the provider location that will retain the evidence.
+Do not fabricate a pre-approval `captured_at` value or reuse the draft timestamp.
+Read-back must report and verify the resulting value assigned at apply time.
 
 The temporary HTML file is not durable provenance by itself. If the provider has
 no verified way to retain and link the required Revision Evidence after approval,
@@ -471,8 +475,11 @@ Each row must include:
 - blocking: yes or no, with reason.
 
 A bare status is invalid. Approval is not evidence. Unresolved Ownership,
-contradiction, material omission, unsupported assertion, or unsafe deletion must
-be blocking whether its status is `Flag` or `Not checked`.
+contradiction, material omission, an unsupported assertion retained or introduced
+in the proposed after-state, or unsafe deletion must be blocking whether its status
+is `Flag` or `Not checked`. An unsupported candidate that is explicitly rejected or
+omitted may pass Coverage and Faithfulness when the ledger proves it cannot enter
+the approved result.
 
 ### Blockers
 

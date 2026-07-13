@@ -1,6 +1,6 @@
 ---
 name: setup-matt-pocock-skills
-description: Configure this repo for the engineering skills — establish canonical agent instructions, issue tracker, triage label vocabulary, domain docs, and decision-safety hooks. Run once before first use of the other engineering skills.
+description: Configure this repo for the engineering skills — set up its issue tracker, triage label vocabulary, and domain doc layout. Run once before first use of the other engineering skills.
 disable-model-invocation: true
 ---
 
@@ -8,11 +8,9 @@ disable-model-invocation: true
 
 Scaffold the per-repo configuration that the engineering skills assume:
 
-- **Agent instructions** — `AGENTS.md` is canonical and root `CLAUDE.md` imports it
 - **Issue tracker** — where issues live (GitHub by default; local markdown is also supported out of the box)
 - **Triage labels** — the strings used for the five canonical triage roles
 - **Domain docs** — where `CONTEXT.md` and ADRs live, and the consumer rules for reading them
-- **Decision safety** — when to run domain reconnaissance and how Project Labs hand evidence to PMP
 
 This is a prompt-driven skill, not a deterministic script. Explore, present what you found, confirm with the user, then write.
 
@@ -23,7 +21,7 @@ This is a prompt-driven skill, not a deterministic script. Explore, present what
 Look at the current repo to understand its starting state. Read whatever exists; don't assume:
 
 - `git remote -v` and `.git/config` — is this a GitHub repo? Which one?
-- `AGENTS.md` and `CLAUDE.md` at the repo root — which content must be consolidated into canonical `AGENTS.md`?
+- `AGENTS.md` and `CLAUDE.md` at the repo root — does either exist? Is there already an `## Agent skills` section in either?
 - `CONTEXT.md` and `CONTEXT-MAP.md` at the repo root
 - `docs/adr/` and any `src/*/docs/adr/` directories
 - `docs/agents/` — does this skill's prior output already exist?
@@ -79,27 +77,22 @@ Confirm the layout:
 
 Show the user a draft of:
 
-- The canonical root `AGENTS.md`, including the `## Agent skills` and decision-safety blocks
-- The root `CLAUDE.md` compatibility import
+- The `## Agent skills` block to add to whichever of `CLAUDE.md` / `AGENTS.md` is being edited (see step 4 for selection rules)
 - The contents of `docs/agents/issue-tracker.md`, `docs/agents/triage-labels.md`, `docs/agents/domain.md`
 
 Let them edit before writing.
 
 ### 4. Write
 
-Read and apply every rule in [agent-instructions.md](./agent-instructions.md).
+**Pick the file to edit:**
 
-**Canonicalize the root instructions:**
+- If `CLAUDE.md` exists, edit it.
+- Else if `AGENTS.md` exists, edit it.
+- If neither exists, ask the user which one to create — don't pick for them.
 
-- If only `CLAUDE.md` exists, move its durable instructions into a new `AGENTS.md`.
-- If both exist, merge unique root-level instructions into `AGENTS.md` without overwriting user guidance.
-- If neither exists, create `AGENTS.md`.
-- Make root `CLAUDE.md` contain exactly `@AGENTS.md`.
-- Leave nested `AGENTS.md` and `CLAUDE.md` files in place as scoped overrides.
+Never create `AGENTS.md` when `CLAUDE.md` already exists (or vice versa) — always edit the one that's already there.
 
-If an `## Agent skills` block already exists in `AGENTS.md`, update its contents in-place rather than appending a duplicate. Don't overwrite user edits to the surrounding sections.
-
-Add or update the `## Domain decisions and PMP handoff` block from `agent-instructions.md` in `AGENTS.md`. Keep its runtime condition: ordinary project work does not contact PMP unless a project issue links a PMP Learning Cycle.
+If an `## Agent skills` block already exists in the chosen file, update its contents in-place rather than appending a duplicate. Don't overwrite user edits to the surrounding sections.
 
 The block:
 

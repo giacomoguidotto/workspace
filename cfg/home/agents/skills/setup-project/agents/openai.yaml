@@ -1,0 +1,7 @@
+interface:
+  display_name: "Setup Project"
+  short_description: "Apply shared project and agent conventions"
+  default_prompt: "Use $setup-project to configure this repository with my shared engineering and agent conventions."
+
+policy:
+  allow_implicit_invocation: false

@@ -1,15 +1,15 @@
-# Agent Instruction Convention
+# Project Overlay
 
-Apply these rules to root instruction files. They are fixed conventions, not setup questions.
+These are fixed conventions, not setup questions.
 
-## Canonical files
+## Canonical instruction files
 
 - `AGENTS.md` is the root source of truth for agent behavior.
 - Root `CLAUDE.md` contains exactly `@AGENTS.md`.
-- Migrate unique durable content from an existing root `CLAUDE.md` into `AGENTS.md` before replacing it.
+- Migrate unique durable content from root `CLAUDE.md` into `AGENTS.md` before replacing it.
 - Preserve nested instruction files as scoped overrides.
 
-## Decision safety and PMP handoff
+## Agent block
 
 Add this block to root `AGENTS.md`:
 
@@ -22,4 +22,4 @@ Add this block to root `AGENTS.md`:
 - If the cross-repo write is unavailable, return the exact handoff comment and mark the handoff blocked; the cycle is not ready for assessment yet.
 ```
 
-The last rule is conditional. Projects without a linked PMP Learning Cycle remain entirely project-local.
+The PMP rule is conditional. Projects without a linked Learning Cycle remain project-local.

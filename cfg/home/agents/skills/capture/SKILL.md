@@ -37,6 +37,12 @@ Keep one subject per page, one dominant Kind per section, and no empty or decora
 sections. State the current or actionable meaning before history. Keep qualifiers,
 rationale, and evidence beside the claim they affect.
 
+Treat structured-table rows as records when their schema and fields carry the full
+meaning. Preserve their cell-like shape: do not add page semantic metadata to Notes
+or a blank body, and do not treat a repeated title as duplicate meaning when the
+table and hierarchy already disambiguate it. Apply page semantics only when a row's
+body owns independent durable knowledge.
+
 ## Loop
 
 ### 1. Read The Live KB
@@ -77,8 +83,10 @@ meaning and recoverable history.
 
 ### 3. Draft Exact Writes
 
-Create the HTML artifact described in [HTML-DRAFT.md](HTML-DRAFT.md). Put writes in
-application order and show, for each one:
+Create the HTML artifact described in [HTML-DRAFT.md](HTML-DRAFT.md). Render primary
+KB mutations first in application order. Put bound Revision Evidence row writes in
+a compact final section; they remain mandatory and execute after all primary
+mutations. For each primary write show:
 
 - action, human-readable target, and placement;
 - exact current and proposed properties or relations;
@@ -108,10 +116,10 @@ write changes, regenerate the draft and ask again.
 Immediately before writing, re-read every target and relation that determined the
 approved before-state. Drift invalidates approval.
 
-Apply the approved operations in order through the provider connector. Make no
-opportunistic or corrective write. Read back every affected item and compare its
-identity, parent, properties, relations, content, deletion result, and revision
-evidence with the approved result.
+Apply the approved primary operations in order through the provider connector, then
+append the approved Revision Evidence rows. Make no opportunistic or corrective
+write. Read back every affected item and compare its identity, parent, properties,
+relations, content, deletion result, and revision evidence with the approved result.
 
 Report exact matches, failures, and partial results. A repair requires another draft
 and fresh approval.

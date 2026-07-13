@@ -26,8 +26,10 @@ user compare serialized objects to understand a write.
 
 ## Required Content
 
-Start with the draft ID, status, and number of writes. Then render writes in exact
-application order. For each write show:
+Start with the draft ID, status, and number of writes. Render primary KB mutations
+first in exact application order. Put Revision Evidence row writes last in a compact,
+lower-prominence section; this is also their apply order. For each primary write
+show:
 
 - action, target name, and location;
 - a one-sentence outcome;
@@ -42,6 +44,10 @@ application order. For each write show:
 Group identical changes for readability only when every target and application
 position remains explicit. List no-ops and rejected candidates briefly under
 `Skipped`.
+
+For grouped Revision Evidence rows, retain the exact affected target, diff,
+prior/result revision source, rollback, and read-back fields without repeating
+shared ledger boilerplate.
 
 End with `Risks and gaps`. Unresolved ownership, contradiction, unsupported content,
 material omission, or unsafe deletion makes the draft `Blocked`. A blocked draft

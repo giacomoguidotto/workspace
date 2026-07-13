@@ -223,42 +223,41 @@ findings are distinguished.
 Create a provider-like HTML approval draft using [HTML-DRAFT.md](HTML-DRAFT.md).
 The draft is an approval artifact, not a second knowledge record.
 
-It must include:
+Use two layers with one approval meaning:
 
-- workspace read: searches, pages, databases, revisions, relations, and examples
-  inspected, including inaccessible or partial reads;
-- source-assertion ledger: exact intake-to-result coverage, including omissions
-  and rejections;
-- proposed results: exact provider-visible actions in application order, with
-  target stable IDs, placement, properties, relations, and final content;
-- exact before and after content for every update, enough unchanged context to
-  locate it, and an explicit deletion ledger;
-- semantic decisions: Ownership, stable Kind ID, current and proposed Maturity,
-  and evidence for each decision;
-- Revision Evidence: source, actor, exact `captured_at` field or apply-time
-  derivation, affected owner, revision identities, semantic change relations,
-  exact diff, and evidence destination;
-- Semantic Quality Gate: all required checks, status, checked scope, evidence,
-  whether a finding blocks the write, and the complete bundled-validator report
-  for each transition record;
-- skipped writes and no-ops: considered targets or conventions not selected;
-- read-back plan: exact properties, relations, content, deletion results, and
-  revision identity that will be compared after applying;
-- questions: only blockers that prevent a correct write.
+1. The **review layer** is the primary interface. It states what changes, where,
+   and with what semantic effect in ordinary language; renders changed fields as
+   provider-like tables; shows the complete final page or section; and makes every
+   deletion explicit. A reviewer can enumerate every mutation without reading
+   serialized provider state or decoding provider IDs.
+2. The **exact evidence layer** retains complete provider inputs, before/after
+   states, stable IDs, transition JSON, and validator reports in collapsed
+   technical-evidence toggles. It proves the review layer without becoming the
+   interface the human must diff.
 
-The before and after views are the approval boundary. Do not hide content behind
-summaries, ellipses, placeholders, or implementation notes. Render the exact
-provider representation that will exist after approval, including explicit Kind
-or registered mapping and Maturity representation.
+The review layer and exact evidence layer must describe the same complete change
+set. A mutation, property, relation, content change, or deletion that appears in
+only one layer invalidates the draft.
 
-Write the draft to the OS temp directory, open it for the user, and report the
-absolute path in chat. If any blocking risk remains, label the draft blocked and
-ask only the question needed to resolve it. Otherwise ask exactly: "Should I apply
+Before opening the draft, validate its review structure from the installed Capture
+skill directory:
+
+```sh
+python3 scripts/validate-approval-draft.py <draft.html>
+```
+
+Revise the HTML until the validator returns `Pass`. Treat a missing validator, exit
+status `2`, or `Block` disposition as a blocking deterministic failure. Then write
+the draft to the OS temp directory, open it for the user, and report the absolute
+path in chat.
+
+If any semantic or deterministic blocker remains, label the draft blocked and ask
+only the question needed to resolve it. Otherwise ask exactly: "Should I apply
 these exact KB writes now?"
 
-Completion criterion: the user can evaluate the semantic decisions and approve or
-reject the exact KB mutations from the HTML file without hidden conversation
-context.
+Completion criterion: the approval-draft validator passes, and the user can list
+every proposed mutation and evaluate its semantic effect from the visible review
+layer without opening technical evidence or relying on hidden conversation context.
 
 ### 6. Ask For Fresh Approval
 

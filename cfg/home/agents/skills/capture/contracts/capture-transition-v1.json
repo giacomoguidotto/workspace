@@ -19,6 +19,7 @@
   "maturity": ["Raw", "Developing", "Stable"],
   "operations": ["create", "update", "replace-section", "delete"],
   "revision_relations": ["supersedes", "revises", "invalidates"],
+  "captured_at_derivations": ["provider-created-time"],
   "normative_forces": ["must", "should", "may"],
   "assertion_required_fields": {
     "state": ["observed_at"],

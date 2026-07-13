@@ -56,6 +56,17 @@ def is_datetime(value: Any) -> bool:
     return "T" in value and parsed.tzinfo is not None
 
 
+def is_captured_at(value: Any, contract: dict[str, Any]) -> bool:
+    if is_datetime(value):
+        return True
+    return (
+        isinstance(value, dict)
+        and value.get("derivation") in contract.get("captured_at_derivations", [])
+        and isinstance(value.get("field"), str)
+        and bool(value["field"].strip())
+    )
+
+
 def stable_json(value: Any) -> str:
     return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
 
@@ -309,8 +320,13 @@ def validate(
 
     revision = record.get("revision", {})
     bad_time: list[str] = []
-    if not isinstance(revision, dict) or not is_datetime(revision.get("captured_at")):
-        bad_time.append("revision.captured_at must be an absolute ISO date-time")
+    if not isinstance(revision, dict) or not is_captured_at(
+        revision.get("captured_at"), contract
+    ):
+        bad_time.append(
+            "revision.captured_at must be an absolute ISO date-time or a registered "
+            "provider apply-time derivation with a field"
+        )
     if kind == "state":
         for index, assertion in enumerate(assertions if isinstance(assertions, list) else []):
             if not isinstance(assertion, dict) or not is_date(assertion.get("observed_at")):

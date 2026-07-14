@@ -44,12 +44,13 @@ report before changing anything:
   [_preamble.md](../../docs/automations/_preamble.md), the endpoints, sinks, and
   sources plus their capabilities each **enabled** automation declares, the skills
   under `skills/`, the automations and provider-agnostic execution profiles under
-  `docs/automations/`, and one cadence plus one concrete local model/reasoning
-  selection per enabled automation.
+  `docs/automations/`, one harness-owned automation-local state file or equivalent
+  state handle, and one cadence plus one concrete local model/reasoning selection per
+  enabled automation.
 - Actual: `local/bindings.yml` (a key present with a blank or placeholder value is
   **not** a binding), `local/installed.yml`, the snapshotted prompts under
-  `local/automations/`, the live harness automation configuration, and the installed
-  skill copies.
+  `local/automations/`, each automation's resolved harness-owned state, the live
+  harness automation configuration, and the installed skill copies.
 - Drive the endpoint, sink, and source checks from the **desired** set — the
   endpoints, sinks, and sources each enabled automation declares — not from whatever
   keys happen to be in `bindings.yml`. For each declared endpoint, probe that it
@@ -74,6 +75,9 @@ report before changing anything:
     installed;
   - automations new to the spec, or whose fresh compose differs from the snapshot in
     `local/automations/`, or removed from the spec;
+  - an enabled automation whose harness-owned state location is missing or
+    unreachable, lacks `last_completed_at`, or contains a nonblank value that is not
+    an ISO 8601 timestamp;
   - cadences missing for an enabled automation, including a cadence that an
     automation declares as required prompt context;
   - a concrete model or reasoning effort missing for an enabled automation,
@@ -210,29 +214,41 @@ catalog, the provider block, undeclared cadence context, or blank overrides:
    sink resolves to a repo clone, name that clone as the working directory and state
    the spec is not checked out there; when the sink is a tool or the KB (no clone),
    state only that the spec is not checked out and everything needed is in the prompt.
-2. `## Operating rules` — the preamble's Operating Rules, verbatim.
-3. `## Context surfaces` — one line per endpoint the automation **declares**, joining
+2. `## Local state`: one resolved line naming this automation's harness-owned
+   automation-local state path or equivalent state handle. When the harness exposes a
+   file, inject its absolute path. State that `last_completed_at` follows the
+   Operating Rules below. Never inject another automation's state location.
+3. `## Operating rules`: the preamble's Operating Rules, verbatim.
+4. `## Context surfaces`: one line per endpoint the automation **declares**, joining
    its role description from the preamble vocabulary with its resolved hint from
    `local/bindings.yml`. Omit the section when the automation declares no endpoints.
-4. `## Sink` / `## Sources` — one resolved line per declared sink and source: the role
+5. `## Sink` / `## Sources`: one resolved line per declared sink and source: the role
    description plus the clone path and repo, or the tool handle. Omit when none.
-5. `## Sink capabilities` — one resolved line per capability the automation
+6. `## Sink capabilities`: one resolved line per capability the automation
    declares, joining its role description from the preamble with the concrete
    command or workflow instruction under the bound sink's `capabilities` map.
    Omit when none are declared. Never inject undeclared capabilities.
-6. `## Source capabilities` — one resolved line per read capability the automation
+7. `## Source capabilities`: one resolved line per read capability the automation
    declares under its owning source, joining its role description from the preamble
    with the concrete command or native workflow instruction under that bound
    source's `capabilities` map. Omit when none are declared. Never inject undeclared
    capabilities, and never turn a source capability into write authority.
-7. `## Coverage cadence` — only when the automation declares `Coverage cadence:
+8. `## Coverage cadence`: only when the automation declares `Coverage cadence:
    required`, emit its human-readable recurrence and timezone from the cadence
    binding, and state that the current run owns the window through the next scheduled
    run. Omit it otherwise; do not inject cadence merely because one exists.
-8. Any convention the automation declares (for example Knowledge Harvest's follow-up
+9. Any convention the automation declares (for example Knowledge Harvest's follow-up
    marker policy) inlined as its own section, resolved from
    `docs/knowledge-bank-conventions.md` — never left as a path for the run to open.
-9. The automation body from the source's `## Prompt` block, appended verbatim.
+10. The automation body from the source's `## Prompt` block, appended verbatim.
+
+Before composing, create a missing harness-owned state file from
+`local/automation-state.example.yml`, or initialize the equivalent property when the
+harness exposes structured state instead of a file. On every later reconcile,
+preserve its existing `last_completed_at` value. Never backfill a timestamp from an
+invocation, thread update, or run that lacks explicit completion evidence.
+Never point runtime state into the kb-infra checkout or a sink checkout; those are
+not runtime state providers.
 
 Confirm the cadence, model, and reasoning bindings. Model selection is harness
 metadata: never inject the execution profile, concrete model, or reasoning effort
@@ -248,7 +264,8 @@ and hash, so the next run can compute drift.
 
 Completion criterion: every enabled automation is created, updated, or handed over
 as a paste-ready prompt with its target, cadence, model, and reasoning effort, and
-`local/installed.yml` plus the `local/automations/` snapshots are current.
+its resolved state location, while `local/installed.yml` plus the `local/automations/`
+snapshots are current.
 
 ### 8. Report
 
@@ -271,11 +288,18 @@ reconcile changed, and the exact next manual action, if any.
   answered grill questions, or anything beyond replaceable materialization state.
 - Deleting the record must not make the next run less correct — only slower, by
   forcing a full re-materialize.
+- Record runtime completion separately in harness-owned automation-local state for
+  each enabled automation. Its only required property is `last_completed_at`. The
+  automation updates it only under the shared Operating Rules; setup validates and
+  preserves it but never infers completion.
 
 ## Rules
 
 - Write bindings only to gitignored `local/`. Never commit a personal value or a
   concrete sink- or source-capability command.
+- Keep runtime completion state in the harness's automation state namespace; do not
+  mix it into KB content, a sink work queue, or `local/installed.yml`. Never point
+  runtime state into the kb-infra checkout.
 - Never write a personal value into a committed spec file.
 - Never write a provider-specific model identifier into the committed spec; committed
   automations declare provider-agnostic execution profiles only.
@@ -298,7 +322,9 @@ reconcile changed, and the exact next manual action, if any.
 - Use [bindings.example.yml](../../local/bindings.example.yml) as the shape for
   `local/bindings.yml`, and
   [installed.example.yml](../../local/installed.example.yml) as the shape for
-  `local/installed.yml`.
+  `local/installed.yml`. Use
+  [automation-state.example.yml](../../local/automation-state.example.yml) as the
+  shape for each automation's runtime-state file.
 - The follow-up marker policy ships as a repo default; offer to override it into a
   binding, do not assume.
 - Treat `local/bindings.yml` as replaceable: re-running setup rebuilds it from the

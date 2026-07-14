@@ -121,6 +121,17 @@ Accept only an explicit instruction to apply the latest named draft. Clarificati
 placement discussion, or approval of an older draft is not write authority. If any
 write changes, regenerate the draft and ask again.
 
+When the user explicitly rejects the latest draft, it has no approval force. Retain
+its draft ID and the shortest factual reason supported by the user's feedback. If
+the reason is unstated, say only that it was rejected and what the replacement
+changes; do not infer dissatisfaction or intent.
+
+Every draft generated to replace that rejected draft must have a new draft ID and
+include the `Previous Draft Invalidated` section defined in
+[HTML-DRAFT.md](HTML-DRAFT.md). The replacement is the only approvable draft. The
+invalidation section records approval history; it is not a KB write, a skipped
+candidate, or Revision Evidence.
+
 ### 5. Re-read, Apply, And Verify
 
 Immediately before writing, re-read every target and relation that determined the

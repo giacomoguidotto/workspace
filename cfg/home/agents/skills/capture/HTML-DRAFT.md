@@ -16,18 +16,21 @@ and DOM order stable across drafts; vary only the content and number of operatio
 Use inline CSS, local fonts, and semantic HTML. Use no scripts, remote assets, emoji,
 decorative icons, inline `style` attributes, or target-specific CSS selectors.
 
-The page has four regions:
+The page has five regions:
 
 1. `masthead`: topic, status, draft ID, and write count;
-2. `summary`: outcome, scope, risk, and application sequence;
-3. `operations`: primary writes in exact DOM and application order;
-4. `closing`: skipped candidates, compact Revision Evidence, risks, read-back, and
+2. optional `invalidation`: the rejected draft ID and why this replacement exists;
+3. `summary`: outcome, scope, risk, and application sequence;
+4. `operations`: primary writes in exact DOM and application order;
+5. `closing`: skipped candidates, compact Revision Evidence, risks, read-back, and
    the approval question.
 
 Use these components consistently:
 
 - `.badge` for status or action; add only `ready`, `blocked`, `update`, `create`, or
   `delete` as a modifier;
+- `.invalidation` with `.invalidation-meta` for the approval-history notice shown
+  only when this draft replaces an explicitly rejected draft;
 - `.operation` with `.op-index`, `.op-meta`, and `.op-body` for every primary write;
 - `.change-table` inside `.table-wrap` for property or relation changes;
 - `.result` for the complete provider-visible result;
@@ -71,6 +74,11 @@ h2 { margin-bottom:8px; font:500 30px/1.1 var(--display); } h3 { margin:24px 0 8
 .badge.ready,.badge.create { color:var(--good); border-color:color-mix(in srgb,var(--good) 45%,var(--line)); }
 .badge.blocked,.badge.delete { color:var(--bad); border-color:color-mix(in srgb,var(--bad) 45%,var(--line)); }
 .badge.update { color:var(--warn); border-color:color-mix(in srgb,var(--warn) 45%,var(--line)); }
+.invalidation { display:grid; grid-template-columns:190px minmax(0,1fr); gap:32px; padding:22px 0 24px; border-bottom:1px solid var(--line); box-shadow:inset 3px 0 0 var(--warn); }
+.invalidation-meta { padding-left:20px; color:var(--muted); font:12px/1.7 var(--mono); }
+.invalidation>div { min-width:0; }
+.invalidation h2 { margin-bottom:6px; color:var(--warn); font-size:24px; }
+.invalidation p { max-width:780px; margin-bottom:0; overflow-wrap:anywhere; }
 .summary { display:grid; grid-template-columns:2fr repeat(3,1fr); border-bottom:1px solid var(--line); }
 .summary-item { min-height:116px; padding:24px 24px 22px 0; }
 .summary-item + .summary-item { padding-left:24px; border-left:1px solid var(--line); }
@@ -100,7 +108,7 @@ details.technical { margin-top:18px; padding:12px 0; border-top:1px solid var(--
 .approval { margin-top:42px; padding:28px; border:1px solid var(--accent); background:linear-gradient(135deg,rgba(255,104,70,.11),transparent 56%); }
 .approval strong { display:block; font:500 27px/1.2 var(--display); }
 ul { padding-left:20px; } li + li { margin-top:6px; }
-@media (max-width:820px) { .masthead{grid-template-columns:1fr}.folio{text-align:left}.summary{grid-template-columns:1fr 1fr}.summary-item:nth-child(3){border-left:0}.review-grid{grid-template-columns:1fr}.review-index{position:static;order:-1}.operation{grid-template-columns:44px minmax(0,1fr);gap:12px}.diff{grid-template-columns:1fr} }
+@media (max-width:820px) { .masthead{grid-template-columns:1fr}.folio{text-align:left}.invalidation{grid-template-columns:minmax(0,1fr);gap:12px;padding:18px 0 20px}.invalidation-meta,.invalidation>div:last-child{padding-left:20px;padding-right:12px}.invalidation h2{font-size:clamp(20px,7vw,24px)}.summary{grid-template-columns:1fr 1fr}.summary-item:nth-child(3){border-left:0}.review-grid{grid-template-columns:1fr}.review-index{position:static;order:-1}.operation{grid-template-columns:44px minmax(0,1fr);gap:12px}.diff{grid-template-columns:1fr} }
 @media (max-width:520px) { .shell{width:min(100% - 28px,1180px);padding-top:34px}.summary{grid-template-columns:1fr}.summary-item+.summary-item{padding-left:0;border-left:0;border-top:1px solid var(--line)}.operation{grid-template-columns:1fr}.op-index{font-size:24px} }
 @media (prefers-reduced-motion:reduce) { html{scroll-behavior:auto} }
 ```
@@ -114,6 +122,11 @@ omit empty optional sections rather than leaving placeholders.
     <div><p class="kicker">Knowledge Bank · approval draft</p><h1>{{topic}}</h1></div>
     <div class="folio"><span class="badge ready">{{status}}</span><br>{{draft_id}}<br>{{write_count}} writes</div>
   </header>
+  <!-- Include only when this draft replaces an explicitly rejected draft. -->
+  <section class="invalidation" aria-labelledby="previous-draft-invalidated">
+    <div class="invalidation-meta"><p class="eyebrow">Superseded approval</p>{{previous_draft_id}}</div>
+    <div><h2 id="previous-draft-invalidated">Previous Draft Invalidated</h2><p>{{why_this_replacement_exists}}</p></div>
+  </section>
   <section class="summary" aria-label="Draft summary">
     <div class="summary-item"><p class="eyebrow">Outcome</p>{{outcome}}</div>
     <!-- Primary, Evidence, and Risk summary items -->
@@ -142,6 +155,15 @@ omit empty optional sections rather than leaving placeholders.
 Start with the draft ID, status, and total write count. The summary states the final
 outcome, primary-write count, evidence-write count, and risk level. The sticky index
 lists every primary operation in application order.
+
+When, and only when, the current draft replaces an explicitly rejected draft, put a
+`Previous Draft Invalidated` section directly between the masthead and summary. Name
+the rejected draft ID and explain briefly why the replacement exists: state the
+factual rejection reason and the material response in the new draft. If the user did
+not give a reason, state that the prior draft was rejected and name only the material
+change. Do not reproduce the rejected proposal, invent a reason, or imply that it can
+still be approved. This approval-history section does not count as a write and does
+not appear in the application sequence or Revision Evidence.
 
 For each primary write show:
 

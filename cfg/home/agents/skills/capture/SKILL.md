@@ -25,7 +25,8 @@ Apply three rules to every draft:
 
 Keep these axes independent:
 
-- **Type**: what the page represents; provider- or domain-defined.
+- **Type**: what the page represents; provider-defined, otherwise `Area`, `Project`,
+  `Task`, or `Knowledge page`.
 - **Ownership**: `Canonical`, `Adapter`, or migration-only `Unresolved`.
 - **Maturity**: `Raw`, `Developing`, or `Stable`. New intake starts `Raw`; retained
   knowledge should normally become `Stable`.
@@ -37,11 +38,20 @@ Keep one subject per page, one dominant Kind per section, and no empty or decora
 sections. State the current or actionable meaning before history. Keep qualifiers,
 rationale, and evidence beside the claim they affect.
 
+Choose Type from the page's primary purpose, not body length or durable prose. An
+Area, Project, or Task may contain typed knowledge sections without becoming a
+Knowledge page. Do not infer Type from Ownership, Maturity, Status, Parent, or Kind.
+In a mixed provider container, keep operational views focused on Areas, Projects,
+Tasks, and migration-unclassified rows; expose Knowledge pages through intentional
+knowledge views. Do not duplicate pages for different views. When Parent/Subtasks
+contains both work and knowledge, require Type-aware views so knowledge does not
+appear as work.
+
 Treat structured-table rows as records when their schema and fields carry the full
 meaning. Preserve their cell-like shape: do not add page semantic metadata to Notes
 or a blank body, and do not treat a repeated title as duplicate meaning when the
-table and hierarchy already disambiguate it. Apply page semantics only when a row's
-body owns independent durable knowledge.
+table and hierarchy already disambiguate it. A rich body may require semantic
+sections without changing an operational page's Type.
 
 ## Loop
 

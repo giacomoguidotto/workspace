@@ -237,7 +237,7 @@ catalog, the provider block, undeclared cadence context, or blank overrides:
    required`, emit its human-readable recurrence and timezone from the cadence
    binding, and state that the current run owns the window through the next scheduled
    run. Omit it otherwise; do not inject cadence merely because one exists.
-9. Any convention the automation declares (for example Knowledge Harvest's follow-up
+9. Any convention the automation declares (for example KB Reconcile's follow-up
    marker policy) inlined as its own section, resolved from
    `docs/knowledge-bank-conventions.md` — never left as a path for the run to open.
 10. The automation body from the source's `## Prompt` block, appended verbatim.

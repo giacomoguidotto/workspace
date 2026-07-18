@@ -118,7 +118,9 @@ Surface `ORCH_BLOCKED`. For `ORCH_READY`, fetch the PR once and verify its head,
 base, closing-issue relationship, ticket and PR assignees, required checks,
 unresolved threads, and approval markers required by the selected actor
 contract. Verification is complete when live state matches the signal and that
-contract's readiness criterion. Reactivate the same actor with any mismatch.
+contract's readiness criterion. The actor contract's exhausted Codex budget is
+terminal: do not demand or trigger a fresh Codex pass after second-pass fixes.
+Reactivate the same actor with any other mismatch.
 
 ## Admit
 
@@ -155,8 +157,9 @@ If final and integration are the same branch, verify the spec acceptance
 criteria and close the spec. If they differ, open or refresh one ready PR from
 integration into final with `Closes #{{SPEC_ISSUE}}` in its body, assign it to
 `{{ASSIGNEE}}`, run repository validation, and wait for required CI and
-automated review. Apply the selected supervision gate, then merge. Preserve the
-integration branch unless the user explicitly declared it disposable.
+automated review. Apply the actor contract's bounded Codex review budget and the
+selected supervision gate, then merge. Preserve the integration branch unless
+the user explicitly declared it disposable.
 
 Close the spec only after its acceptance criteria are verified on the final
 branch. Finish with a table of ticket PRs, merge SHAs, cleanup results, final PR,

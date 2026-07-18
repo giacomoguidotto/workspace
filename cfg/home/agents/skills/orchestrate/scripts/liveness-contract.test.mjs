@@ -45,3 +45,24 @@ test('task titles use the strict spec and role format', async () => {
   );
   assert.doesNotMatch(runtime, /#<id> Implement · <short title>/);
 });
+
+test('Codex review is bounded and cannot become a fixed-point loop', async () => {
+  for (const name of ['DIRECT.md', 'PROMPTS.md']) {
+    const contract = await read(name);
+
+    assert.match(contract, /at most two Codex passes per PR/);
+    assert.match(contract, /Never request a third pass/);
+    assert.match(
+      contract,
+      /Never request the same SHA again after a\n   terminal result/,
+    );
+    assert.match(
+      contract,
+      /No fresh Codex review is required after second-pass fixes/,
+    );
+    assert.doesNotMatch(contract, /Fix every valid finding/);
+  }
+
+  const runtime = await read('RUNTIME.md');
+  assert.match(runtime, /exhausted Codex budget is\nterminal/);
+});

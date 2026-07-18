@@ -29,6 +29,19 @@ test('every implementer requires acknowledged signal delivery', async () => {
 test('launcher verifies conductor liveness before returning', async () => {
   const skill = await read('SKILL.md');
 
-  assert.match(skill, /confirm the conductor entered its mandatory\nwait/);
+  assert.match(skill, /confirm the conductor entered its\s+mandatory wait/);
   assert.match(skill, /active and not idle while work is\nunfinished/);
+});
+
+test('task titles use the strict spec and role format', async () => {
+  const skill = await read('SKILL.md');
+  const runtime = await read('RUNTIME.md');
+
+  assert.match(skill, /`#<spec-id> · Orchestrator` exactly/);
+  assert.doesNotMatch(skill, /<repo> Spec #<id> · Orchestrator/);
+  assert.match(
+    runtime,
+    /`#\{\{SPEC_ISSUE\}\} · Implementer of #<issue-id>` exactly/,
+  );
+  assert.doesNotMatch(runtime, /#<id> Implement · <short title>/);
 });

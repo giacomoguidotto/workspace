@@ -123,10 +123,11 @@ selected exactly one supported profile, thereby accepting all three.
 
 ## 4. Start or resume the conductor
 
-If the live conductor matches the selection, navigate to it and report that it
-was resumed. If it differs, prove that replacement cleanup discards no unmerged
-work, perform the exact cleanup, and create the selected conductor. An unsafe
-replacement is a surfaced blocker, not a second question.
+If the live conductor matches the selection, rename it to
+`#<spec-id> · Orchestrator`, navigate to it, and report that it was resumed. If
+it differs, prove that replacement cleanup discards no unmerged work, perform
+the exact cleanup, and create the selected conductor. An unsafe replacement is
+a surfaced blocker, not a second question.
 
 For a new conductor, read [`RUNTIME.md`](RUNTIME.md) fully. Select exactly one
 actor contract: [`DIRECT.md`](DIRECT.md) for direct effort or
@@ -134,10 +135,10 @@ actor contract: [`DIRECT.md`](DIRECT.md) for direct effort or
 with `model=gpt-5.6-terra` and `thinking=high`. Put the runtime's First objective
 before all launch context, then inject the selected actor contract path, accepted
 manifest, assignee, HITL pauses, and profile. Name it
-`<repo> Spec #<id> · Orchestrator`, leave it unpinned, wait for its first progress
-checkpoint, and confirm that it launched only the AFK frontier and surfaced the
-HITL frontier. Before returning, confirm the conductor entered its mandatory
-wait or reached a permitted human gate or concrete blocker.
+`#<spec-id> · Orchestrator` exactly, leave it unpinned, wait for its first
+progress checkpoint, and confirm that it launched only the AFK frontier and
+surfaced the HITL frontier. Before returning, confirm the conductor entered its
+mandatory wait or reached a permitted human gate or concrete blocker.
 
 The runtime and selected actor contract are the single sources of truth. Inject
 their absolute paths. Direct conductors load only `DIRECT.md` as their actor

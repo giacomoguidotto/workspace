@@ -69,8 +69,10 @@ must never become idle while this invariant requires dispatch or wait.
    mode, blocker, native sub-issue relationship, or branch is structural drift:
    report `ORCH_DRIFT reason=ONE_LINE_REASON` and yield for a new preflight
    acceptance.
-3. Read only the selected `{{ACTOR_CONTRACT_PATH}}`.
-4. Launch the `launchable` AFK frontier. Surface the `hitlFrontier`. Wait on all
+3. Rename every retained live actor to
+   `#{{SPEC_ISSUE}} · Implementer of #<issue-id>` exactly.
+4. Read only the selected `{{ACTOR_CONTRACT_PATH}}`.
+5. Launch the `launchable` AFK frontier. Surface the `hitlFrontier`. Wait on all
    active actors together.
 
 Startup is complete when every AFK frontier ticket has one actor or blocker and
@@ -92,7 +94,8 @@ ticket enters `launchable`.
 
 Instantiate the selected actor prompt. Create the actor in a project worktree
 from the latest `{{INTEGRATION_BRANCH}}` with the contract's exact model and
-effort. Title it `#<id> Implement · <short title>` and leave it unpinned.
+effort. Title it `#{{SPEC_ISSUE}} · Implementer of #<issue-id>` exactly and
+leave it unpinned.
 
 Launch is complete when task and host ids are recorded.
 

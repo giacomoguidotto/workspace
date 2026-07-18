@@ -9,6 +9,7 @@ const manifest = () => ({
     {
       id: '43',
       parent: '1234',
+      nativeSubIssue: true,
       title: 'Root',
       state: 'open',
       mode: 'afk',
@@ -17,6 +18,7 @@ const manifest = () => ({
     {
       id: '44',
       parent: '1234',
+      nativeSubIssue: true,
       title: 'Child A',
       state: 'open',
       mode: 'afk',
@@ -25,6 +27,7 @@ const manifest = () => ({
     {
       id: '46',
       parent: '1234',
+      nativeSubIssue: true,
       title: 'Child B',
       state: 'open',
       mode: 'afk',
@@ -51,6 +54,17 @@ test('requires tickets and binds each one to the spec', () => {
   const foreign = manifest();
   foreign.tickets[0].parent = '999';
   assert.throws(() => validateGraph(foreign), /expected 1234/);
+});
+
+test('requires every implementation ticket to be a native sub-issue', () => {
+  const input = manifest();
+  input.tickets[0].nativeSubIssue = false;
+  delete input.tickets[2].nativeSubIssue;
+
+  assert.throws(
+    () => validateGraph(input),
+    /tickets 43, 46 are not native sub-issues of spec 1234/,
+  );
 });
 
 test('reports HITL as a pause frontier instead of launchable work', () => {

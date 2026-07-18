@@ -22,6 +22,7 @@ Instantiate this contract before creating the conductor thread.
 - Project id: `{{PROJECT_ID}}`
 - Repository: `{{REPOSITORY}}`
 - Spec issue: `{{SPEC_ISSUE}}`
+- Assignee: `{{ASSIGNEE}}`
 - Final branch: `{{FINAL_BRANCH}}`
 - Integration branch: `{{INTEGRATION_BRANCH}}`
 - Effort: `{{EFFORT}}` (`direct` or `reviewed`)
@@ -48,10 +49,11 @@ their dependents remain locked while the ticket is open.
 ## Start
 
 1. Read repository instructions. Refresh ticket, blocker, branch, and PR state.
-2. Project live states onto the accepted manifest and run
-   `{{GRAPH_VALIDATOR_PATH}}`. A changed ticket set, parent, mode, blocker, or
-   branch is structural drift: report `ORCH_DRIFT reason=ONE_LINE_REASON` and
-   yield for a new preflight acceptance.
+2. Refresh native sub-issue membership, project live states onto the accepted
+   manifest, and run `{{GRAPH_VALIDATOR_PATH}}`. A changed ticket set, parent,
+   mode, blocker, native sub-issue relationship, or branch is structural drift:
+   report `ORCH_DRIFT reason=ONE_LINE_REASON` and yield for a new preflight
+   acceptance.
 3. Read only the selected `{{ACTOR_CONTRACT_PATH}}`.
 4. Launch the `launchable` AFK frontier. Surface the `hitlFrontier`. Wait on all
    active actors together.
@@ -75,7 +77,7 @@ ticket enters `launchable`.
 
 Instantiate the selected actor prompt. Create the actor in a project worktree
 from the latest `{{INTEGRATION_BRANCH}}` with the contract's exact model and
-effort. Title it `#<id> Implement · <short title>` and pin it.
+effort. Title it `#<id> Implement · <short title>` and leave it unpinned.
 
 Launch is complete when task and host ids are recorded.
 
@@ -93,10 +95,10 @@ Deduplicate repeated signals by `(issue, sha)`; push delivery and task completio
 may expose the same readiness twice.
 
 Surface `ORCH_BLOCKED`. For `ORCH_READY`, fetch the PR once and verify its head,
-base, required checks, unresolved threads, and approval markers required by the
-selected actor contract. Verification is complete when live state matches the
-signal and that contract's readiness criterion. Reactivate the same actor with
-any mismatch.
+base, closing-issue relationship, ticket and PR assignees, required checks,
+unresolved threads, and approval markers required by the selected actor
+contract. Verification is complete when live state matches the signal and that
+contract's readiness criterion. Reactivate the same actor with any mismatch.
 
 ## Admit
 
@@ -116,10 +118,10 @@ After merge into the integration branch:
 
 1. Verify the merge contains the ready head and close the ticket if needed.
 2. Resolve the exact task, worktree, local branch, and remote branch.
-3. Archive and unpin the task, remove the worktree, and delete the merged feature
-   refs.
-4. Verify the retained branches, refresh live states in the accepted manifest,
-   run the validator, and launch its AFK frontier or surface its HITL frontier.
+3. Archive the task, remove the worktree, and delete the merged feature refs.
+4. Verify the retained branches, refresh live states and native sub-issue
+   membership in the accepted manifest, run the validator, and launch its AFK
+   frontier or surface its HITL frontier.
 
 Cleanup is complete only when the worktree and both feature refs are absent and
 the protected branches remain.
@@ -131,15 +133,15 @@ validation on the integration branch.
 
 If final and integration are the same branch, verify the spec acceptance
 criteria and close the spec. If they differ, open or refresh one ready PR from
-integration into final, reference the spec, run repository validation and wait
-for required CI and automated review. Apply the selected supervision gate, then
-merge. Preserve the integration branch unless the user explicitly declared it
-disposable.
+integration into final with `Closes #{{SPEC_ISSUE}}` in its body, assign it to
+`{{ASSIGNEE}}`, run repository validation, and wait for required CI and
+automated review. Apply the selected supervision gate, then merge. Preserve the
+integration branch unless the user explicitly declared it disposable.
 
 Close the spec only after its acceptance criteria are verified on the final
 branch. Finish with a table of ticket PRs, merge SHAs, cleanup results, final PR,
-and spec state. Then unpin and archive this conductor. Verify that no ticket
-task, worktree, or feature branch remains and retained branches still exist.
+and spec state. Then archive this conductor. Verify that no ticket task,
+worktree, or feature branch remains and retained branches still exist.
 
 Final cleanup is complete only when the spec is closed, the conductor is
 archived, all exact transient resources are absent, and every retained branch is

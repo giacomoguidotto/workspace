@@ -12,9 +12,13 @@ Read the applicable repository instructions, spec, ticket, ticket comments, and
 current integration branch. Implement only the ticket. Use the repository's
 standard development loop and required validation.
 
+Assign {{TICKET}} to {{ASSIGNEE}} before editing. Keep that assignment through
+completion.
+
 Commit and push a Conventional Commit branch named
-<type>/{{TICKET_ID}}-<short-slug>. Open a ready PR into
-{{INTEGRATION_BRANCH}} referencing {{TICKET}}.
+<type>/{{TICKET_ID}}-<short-slug>. Open or reuse exactly one ready PR into
+{{INTEGRATION_BRANCH}}. Put the exact closing keyword `Closes #{{TICKET_ID}}` in
+the PR body and assign the PR to {{ASSIGNEE}}.
 
 Read {{REVIEWER_PROMPT_PATH}} fully. Spawn exactly two independent reviewers
 with `fork_turns="none"`, `model="gpt-5.6-terra"`, and
@@ -27,7 +31,9 @@ resolve its thread, push, rerun required validation, and wait again.
 
 Signal readiness only when this exact head passes repository validation and
 required CI, every review/check is settled, zero actionable thread remains, and
-both reviewer approval markers name this head:
+both reviewer approval markers name this head. GitHub must show the PR linked to
+{{TICKET}} as closing work, and both the ticket and PR must be assigned to
+{{ASSIGNEE}}:
 ORCH_READY issue={{TICKET_ID}} pr=URL sha=FULL_SHA
 
 If work cannot reach that state, return:

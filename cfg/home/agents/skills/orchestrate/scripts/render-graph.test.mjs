@@ -9,6 +9,7 @@ const manifest = () => ({
     {
       id: '43',
       parent: '1234',
+      nativeSubIssue: true,
       title: 'Root',
       state: 'open',
       mode: 'afk',
@@ -17,6 +18,7 @@ const manifest = () => ({
     {
       id: '44',
       parent: '1234',
+      nativeSubIssue: true,
       title: 'Child A',
       state: 'open',
       mode: 'afk',
@@ -25,6 +27,7 @@ const manifest = () => ({
     {
       id: '46',
       parent: '1234',
+      nativeSubIssue: true,
       title: 'Child B',
       state: 'open',
       mode: 'afk',

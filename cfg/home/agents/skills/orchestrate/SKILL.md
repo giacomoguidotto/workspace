@@ -29,37 +29,46 @@ The profile has two orthogonal axes:
   applicable current-head gate passes.
 
 Every profile retains worktree isolation, required validation, ticket and spec
-closure, and exact post-merge cleanup.
+closure, ticket and PR ownership, and exact post-merge cleanup.
 
 Keep preflight read-only. The graph and profile question form the only
 pre-launch blocking stage. The user's selection authorizes the selected actors,
-PR comments, ticket PRs, admitted merges, and cleanup. Autonomous supervision
-also authorizes merges without a per-PR user checkpoint. Human supervision
-retains its later SHA-bound merge approvals as part of the selected lifecycle.
+PR comments, ticket and PR assignments, ticket PRs, admitted merges, and
+cleanup. Autonomous supervision also authorizes merges without a per-PR user
+checkpoint. Human supervision retains its later SHA-bound merge approvals as
+part of the selected lifecycle.
 
 ## 1. Establish the score
 
 1. Read the target repository instructions and resolve its Codex project.
-2. Fetch the full spec body and comments.
-3. Discover every child ticket, preferring native sub-issue relationships and
-   then issues whose `Parent` section names the spec. Fetch every ticket body,
-   comments, state, and existing linked PRs.
-4. Classify every ticket as `AFK` or `HITL`. An explicit `HITL`, `HILT`, or
+2. Fetch the full spec body and comments. Resolve the assignee from an explicit
+   invocation override or the authenticated GitHub viewer.
+3. Build the complete expected implementation-ticket inventory from the spec,
+   its ticket-derivation links or comments, and every issue whose `Parent`
+   section names the spec. Fetch native sub-issues independently; never use that
+   shorter list as the inventory. Fetch every expected ticket's body, comments,
+   state, and existing linked PRs. Precursor or decision issues may remain
+   native sub-issues without entering the implementation manifest.
+4. Mark whether every expected implementation ticket is a native sub-issue of
+   the spec. A missing relationship is a hard preflight failure; report every
+   missing ticket and stop before rendering or asking for a profile.
+5. Classify every ticket as `AFK` or `HITL`. An explicit `HITL`, `HILT`, or
    human-in-the-loop marker in its labels, metadata, or body makes it `HITL`;
    otherwise it is `AFK`.
-5. Resolve each `Blocked by` edge, preferring native tracker relationships and
+6. Resolve each `Blocked by` edge, preferring native tracker relationships and
    then the ticket section. Record external blockers separately.
-6. Resolve branch topology in this order: explicit invocation target, explicit
+7. Resolve branch topology in this order: explicit invocation target, explicit
    spec text, unambiguous repository integration convention, repository default
    branch for both final and integration.
-7. Search Codex tasks and GitHub for an existing conductor or live work for the
+8. Search Codex tasks and GitHub for an existing conductor or live work for the
    same spec. Record its profile and live state without resuming it. Treat a
    legacy conductor with no recorded profile as `reviewed + human`.
 
-Completion criterion: the spec has at least one child ticket; every discovered
-ticket belongs to the spec, has a title, state, AFK/HITL mode, and resolved
-blockers; the exact repository and branches are known; every live actor that
-could be resumed or replaced is recorded.
+Completion criterion: the spec has at least one implementation ticket; every
+expected implementation ticket is a native sub-issue with a title, state,
+AFK/HITL mode, and resolved blockers; the assignee, exact repository, and
+branches are known; every live actor that could be resumed or replaced is
+recorded.
 
 ## 2. Prove the frontier
 
@@ -67,7 +76,7 @@ Build this manifest from live GitHub state. Give blockers outside the spec a
 repository-qualified id and their live state:
 
 ```json
-{"spec":"1234","tickets":[{"id":"10","parent":"1234","title":"...","state":"open","mode":"hitl","blockedBy":["other/repo#7"]}],"externalBlockers":[{"id":"other/repo#7","state":"closed"}]}
+{"spec":"1234","tickets":[{"id":"10","parent":"1234","nativeSubIssue":true,"title":"...","state":"open","mode":"hitl","blockedBy":["other/repo#7"]}],"externalBlockers":[{"id":"other/repo#7","state":"closed"}]}
 ```
 
 Resolve `scripts/validate-graph.mjs` beside this `SKILL.md` and run it with
@@ -79,10 +88,10 @@ Run `scripts/render-graph.mjs` with `node`, passing the same manifest on stdin.
 Keep its Mermaid stdout, `launchable` AFK frontier, and `hitlFrontier` pause
 points.
 
-Completion criterion: the validator proves unique tickets, known blockers, an
-acyclic graph, explicit ticket modes, and the complete frontier; the renderer
-produces one node per ticket and external blocker, visibly marks HITL tickets,
-and draws arrows from blocker to dependent.
+Completion criterion: the validator proves native sub-issue membership, unique
+tickets, known blockers, an acyclic graph, explicit ticket modes, and the
+complete frontier; the renderer produces one node per ticket and external
+blocker, visibly marks HITL tickets, and draws arrows from blocker to dependent.
 
 ## 3. Open the launch gate
 
@@ -124,8 +133,8 @@ actor contract: [`DIRECT.md`](DIRECT.md) for direct effort or
 [`PROMPTS.md`](PROMPTS.md) for reviewed effort. Create a local project thread
 with `model=gpt-5.6-terra` and `thinking=high`. Put the runtime's First objective
 before all launch context, then inject the selected actor contract path, accepted
-manifest, HITL pauses, and profile. Name it
-`<repo> Spec #<id> · Orchestrator`, pin it, wait for its first progress
+manifest, assignee, HITL pauses, and profile. Name it
+`<repo> Spec #<id> · Orchestrator`, leave it unpinned, wait for its first progress
 checkpoint, and confirm that it launched only the AFK frontier and surfaced the
 HITL frontier.
 
@@ -136,7 +145,7 @@ contract.
 After the launch gate, human interaction is limited to the accepted HITL pauses
 and, under human supervision, SHA-bound merge approvals.
 
-Completion criterion: exactly one pinned conductor is active; every initial AFK
+Completion criterion: exactly one conductor is active; every initial AFK
 frontier ticket has one implementer or a surfaced blocker; every initial HITL
 frontier ticket is a surfaced pause with no implementer.
 

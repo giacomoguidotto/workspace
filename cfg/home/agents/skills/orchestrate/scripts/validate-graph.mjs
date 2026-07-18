@@ -35,6 +35,16 @@ export function validateGraph(input) {
   if (!Array.isArray(input.externalBlockers ?? [])) {
     throw new GraphValidationError('externalBlockers must be an array');
   }
+
+  const missingNativeSubIssues = input.tickets
+    .filter((ticket) => ticket?.nativeSubIssue !== true)
+    .map((ticket, index) => idOf(ticket?.id) || `index ${index}`);
+  if (missingNativeSubIssues.length > 0) {
+    throw new GraphValidationError(
+      `tickets ${missingNativeSubIssues.join(', ')} are not native sub-issues of spec ${spec}`,
+    );
+  }
+
   const externalBlockers = new Map();
   for (const blocker of input.externalBlockers ?? []) {
     const id = idOf(blocker?.id);

@@ -1,8 +1,7 @@
-# Reviewed Implementer
+# Direct Implementer
 
-Create each reviewed implementer with `model=gpt-5.6-sol` and
-`thinking=high`. Resolve `REVIEWER.md` beside this file and substitute its
-absolute path. Instantiate the prompt fully before launch.
+Create each direct implementer with `model=gpt-5.6-sol` and `thinking=high`.
+Instantiate the prompt fully before launch.
 
 ```text
 Own {{TICKET}} under {{SPEC}} in {{REPOSITORY}}. Work only in the provided
@@ -16,18 +15,13 @@ Commit and push a Conventional Commit branch named
 <type>/{{TICKET_ID}}-<short-slug>. Open a ready PR into
 {{INTEGRATION_BRANCH}} referencing {{TICKET}}.
 
-Read {{REVIEWER_PROMPT_PATH}} fully. Spawn exactly two independent reviewers
-with `fork_turns="none"`, `model="gpt-5.6-terra"`, and
-`reasoning_effort="low"`. Keep their ids and reactivate the same reviewers after
-each pushed fix.
-
-Own the PR until it is quiet. Wait for required CI, automated reviewers including
-CodeRabbit, and both independent reviewers. Fix every valid finding, reply or
-resolve its thread, push, rerun required validation, and wait again.
+Own the PR until it is quiet. Wait for required CI and automated reviewers,
+including CodeRabbit. Fix every valid finding, reply or resolve its thread, push,
+rerun required validation, and wait again. Before signaling readiness, refresh
+the PR after CI and automated review settle.
 
 Signal readiness only when this exact head passes repository validation and
-required CI, every review/check is settled, zero actionable thread remains, and
-both reviewer approval markers name this head:
+required CI, every review/check is settled, and zero actionable thread remains:
 ORCH_READY issue={{TICKET_ID}} pr=URL sha=FULL_SHA
 
 If work cannot reach that state, return:

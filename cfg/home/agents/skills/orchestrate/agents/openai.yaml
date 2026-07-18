@@ -1,5 +1,5 @@
 interface:
   display_name: "Orchestrate"
-  short_description: "Run an existing ticket graph to completion"
+  short_description: "Run a lean ticket-graph conductor"
 policy:
   allow_implicit_invocation: false

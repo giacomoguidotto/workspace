@@ -16,6 +16,11 @@ function byId(a, b) {
   return a.localeCompare(b);
 }
 
+export function normalizeTicketMode(value) {
+  const mode = String(value ?? '').trim().toLowerCase();
+  return mode === 'hilt' ? 'hitl' : mode;
+}
+
 export function validateGraph(input) {
   if (!input || typeof input !== 'object') {
     throw new GraphValidationError('manifest must be an object');
@@ -46,13 +51,23 @@ export function validateGraph(input) {
 
   const tickets = input.tickets.map((ticket, index) => {
     const id = idOf(ticket?.id);
+    const parent = idOf(ticket?.parent);
     const title = String(ticket?.title ?? '').trim();
     const state = String(ticket?.state ?? '').trim().toLowerCase();
+    const mode = normalizeTicketMode(ticket?.mode);
 
     if (!id) throw new GraphValidationError(`ticket ${index} has no id`);
+    if (parent !== spec) {
+      throw new GraphValidationError(
+        `ticket ${id} has parent ${parent || '<empty>'}; expected ${spec}`,
+      );
+    }
     if (!title) throw new GraphValidationError(`ticket ${id} has no title`);
     if (!['open', 'closed'].includes(state)) {
       throw new GraphValidationError(`ticket ${id} has invalid state ${state || '<empty>'}`);
+    }
+    if (!['afk', 'hitl'].includes(mode)) {
+      throw new GraphValidationError(`ticket ${id} has invalid mode ${mode || '<empty>'}`);
     }
     if (!Array.isArray(ticket?.blockedBy ?? [])) {
       throw new GraphValidationError(`ticket ${id} blockedBy must be an array`);
@@ -64,7 +79,7 @@ export function validateGraph(input) {
     if (blockedBy.includes(id)) {
       throw new GraphValidationError(`ticket ${id} blocks itself`);
     }
-    return { id, title, state, blockedBy };
+    return { id, parent, title, state, mode, blockedBy };
   });
 
   const ids = new Set();
@@ -102,8 +117,18 @@ export function validateGraph(input) {
   for (const ticket of tickets) visit(ticket.id);
 
   const satisfied = (id) => externalBlockers.get(id) === 'closed' || byTicket.get(id)?.state === 'closed';
-  const frontier = tickets
-    .filter((ticket) => ticket.state === 'open' && ticket.blockedBy.every(satisfied))
+  const frontierTickets = tickets.filter(
+    (ticket) => ticket.state === 'open' && ticket.blockedBy.every(satisfied),
+  );
+  const frontier = frontierTickets
+    .map((ticket) => ticket.id)
+    .sort(byId);
+  const launchable = frontierTickets
+    .filter((ticket) => ticket.mode === 'afk')
+    .map((ticket) => ticket.id)
+    .sort(byId);
+  const hitlFrontier = frontierTickets
+    .filter((ticket) => ticket.mode === 'hitl')
     .map((ticket) => ticket.id)
     .sort(byId);
   const blocked = tickets
@@ -116,6 +141,8 @@ export function validateGraph(input) {
     spec,
     ticketCount: tickets.length,
     frontier,
+    launchable,
+    hitlFrontier,
     blocked,
     externalOpen: [...externalBlockers]
       .filter(([, state]) => state === 'open')

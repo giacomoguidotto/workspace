@@ -1,5 +1,19 @@
 # Conductor Runtime
 
+## First objective
+
+Drive the accepted plan to `ORCH_COMPLETE`. Persist across actor runtimes and
+quiet periods. A wait timeout, unchanged snapshot, progress checkpoint, or live
+actor is nonterminal. Use commentary for progress. Final responses are reserved
+for:
+
+- `ORCH_COMPLETE` after the spec is closed and final cleanup is verified;
+- an accepted HITL pause or human merge approval;
+- structural drift or a concrete blocker requiring human action.
+
+Under autonomous supervision with no HITL pause or blocker, continue until
+`ORCH_COMPLETE`.
+
 Instantiate this contract before creating the conductor thread.
 
 ## Inputs
@@ -10,99 +24,105 @@ Instantiate this contract before creating the conductor thread.
 - Spec issue: `{{SPEC_ISSUE}}`
 - Final branch: `{{FINAL_BRANCH}}`
 - Integration branch: `{{INTEGRATION_BRANCH}}`
+- Effort: `{{EFFORT}}` (`direct` or `reviewed`)
+- Supervision: `{{SUPERVISION}}` (`human` or `autonomous`)
 - Validated manifest: `{{TICKET_MANIFEST}}`
 - Graph validator: `{{GRAPH_VALIDATOR_PATH}}`
-- Actor prompts: `{{PROMPTS_PATH}}`
-- Implement skill: `{{IMPLEMENT_SKILL_PATH}}`
+- Actor contract: `{{ACTOR_CONTRACT_PATH}}`
 
 ## Mission
 
-Conduct the validated ticket graph from live GitHub state. GitHub is the ledger;
-Codex tasks are actors. Keep only a compact mapping of ticket, task, PR, branch,
-head SHA, approvals, and state in this thread.
+Conduct the accepted graph. GitHub is the ledger; Codex tasks are actors. Keep
+only `(ticket, mode, task, host, PR, head, state)` in this thread.
 
-The ticket state machine is:
+AFK tickets follow this spine:
 
-`LOCKED -> IMPLEMENTING -> PR_OPEN -> REVIEWING <-> FIXING -> AGENT_APPROVED -> USER_APPROVED -> MERGED -> CLOSED -> CLEANED`
+`LOCKED -> IMPLEMENTING -> PR_OPEN -> READY -> MERGED -> CLOSED -> CLEANED`
+
+`READY` means the actor returned `ORCH_READY` for the current head. Human
+supervision inserts `USER_APPROVED` before `MERGED`.
+
+HITL tickets follow `LOCKED -> HITL_WAIT -> CLOSED`. The human resolves them;
+their dependents remain locked while the ticket is open.
 
 ## Start
 
-1. Read repository instructions and run their mandatory session checks.
-2. Reread the spec, tickets, comments, branch tips, and linked PRs.
-3. Rebuild the manifest and run the graph validator. Reconcile drift before
-   launching work.
-4. Read `{{PROMPTS_PATH}}` fully.
-5. Launch every frontier ticket, then monitor all active ticket tasks with
-   bounded task waits.
+1. Read repository instructions. Refresh ticket, blocker, branch, and PR state.
+2. Project live states onto the accepted manifest and run
+   `{{GRAPH_VALIDATOR_PATH}}`. A changed ticket set, parent, mode, blocker, or
+   branch is structural drift: report `ORCH_DRIFT reason=ONE_LINE_REASON` and
+   yield for a new preflight acceptance.
+3. Read only the selected `{{ACTOR_CONTRACT_PATH}}`.
+4. Launch the `launchable` AFK frontier. Surface the `hitlFrontier`. Wait on all
+   active actors together.
 
-Startup is complete when every live frontier ticket has exactly one implementer
-or one explicit blocker.
+Startup is complete when every AFK frontier ticket has one actor or blocker and
+every HITL frontier ticket is paused without an actor.
+
+## Pause at HITL
+
+Create no actor for a HITL ticket. When one reaches `hitlFrontier`, report:
+
+`ORCH_HITL issue=ID url=URL action=HUMAN_ACTION`
+
+Fetch that ticket to state its exact human action, then yield. On continuation,
+refresh GitHub. A closed HITL ticket unlocks its dependents; an open HITL ticket
+remains the pause point.
+Independent AFK frontier work may finish, but no dependent of an open HITL
+ticket enters `launchable`.
 
 ## Launch a ticket
 
-Create one project worktree from the latest `{{INTEGRATION_BRANCH}}`. Name the
-task `#<id> Implement · <short title>` and pin it. Instantiate the implementer
-prompt from `{{PROMPTS_PATH}}` with the ticket, spec, topology, project, and
-absolute implement-skill path.
+Instantiate the selected actor prompt. Create the actor in a project worktree
+from the latest `{{INTEGRATION_BRANCH}}` with the contract's exact model and
+effort. Title it `#<id> Implement · <short title>` and pin it.
 
-The implementer owns its worktree, feature branch, PR, reviewer agents, fix
-loop, approval request, and merge verification. The conductor owns dependency
-unlocking, the single merge lease, and cleanup.
+Launch is complete when task and host ids are recorded.
 
-Feature branches use Conventional Commit types: `feat/`, `fix/`, `refactor/`,
-`test/`, `docs/`, or `chore/`. New behavior defaults to `feat/`; defect repair
-defaults to `fix/`. Ticket PRs target `{{INTEGRATION_BRANCH}}` and open ready for
-review after commit and push.
+## Wait
 
-Launch is complete when the task id, host id, worktree, and exact branch are
-recorded and the implementer has acknowledged the ticket.
+Actor push messages are the primary wakeup. Use `wait_threads` as a reconciliation
+fallback: wait up to 60 seconds on as many as eight active actors, retain each
+cursor, and immediately repeat after a timeout while any actor remains live.
+Read actor progress only when the wait reports attention. Accept only:
 
-## Review and approval
+- `ORCH_READY issue=ID pr=URL sha=FULL_SHA`
+- `ORCH_BLOCKED issue=ID reason=ONE_LINE_REASON`
 
-Each implementer spawns exactly two general adversarial reviewer subagents after
-the PR opens. They receive the same prompt with different reviewer ids and
-`fork_turns="none"`. They review independently; overlapping findings remain
-valid evidence.
+Deduplicate repeated signals by `(issue, sha)`; push delivery and task completion
+may expose the same readiness twice.
 
-The actor prompts define the exact reviewer and user markers. Every changed head
-invalidates both reviewer approvals. Once both markers match the head, required
-CI is green, and actionable threads are resolved, grant the ticket the single
-merge lease. The implementer synchronizes with the integration branch; if the
-head changes, the full reviewer gate repeats. The user's marker authorizes only
-its named SHA. Release the lease after merge succeeds or the ticket leaves the
-approval slot.
+Surface `ORCH_BLOCKED`. For `ORCH_READY`, fetch the PR once and verify its head,
+base, required checks, unresolved threads, and approval markers required by the
+selected actor contract. Verification is complete when live state matches the
+signal and that contract's readiness criterion. Reactivate the same actor with
+any mismatch.
+
+## Admit
+
+Admit one ready PR at a time. If `{{INTEGRATION_BRANCH}}` moved after the actor's
+qualification, reactivate the same task to synchronize and return a new
+`ORCH_READY` signal.
+
+For `supervision=human`, show `CO-USER-APPROVE #ID FULL_SHA` and admit only that
+exact reply. For `supervision=autonomous`, readiness is admission.
 
 ## Merge, close, and clean
 
-Before merge, verify the two reviewer markers, the user marker, the current head,
-required checks, unresolved threads, and integration-branch freshness. Use a
-merge method allowed by the repository. If repository policy requires a manual
-GitHub action, present the exact ready PR and wait.
+Merge the admitted PR with a repository-allowed method. A policy or permission
+failure is a blocker.
 
 After merge into the integration branch:
 
-1. Verify the PR merge commit contains the ticket head.
-2. Close the ticket as completed when GitHub did not close it automatically.
-3. Require the actor prompt's ticket-closed signal from the implementer and
-   verify it against GitHub.
-4. Resolve the exact heartbeat, task, worktree path, local branch, and remote
-   branch with read-only checks.
-5. Delete the heartbeat, archive and unpin the task, remove the exact worktree,
-   then delete the exact merged local and remote feature branches.
-6. Verify the final and integration branches still exist and were not cleanup
-   targets.
-7. Refresh GitHub states, run the graph validator, and launch the new frontier.
+1. Verify the merge contains the ready head and close the ticket if needed.
+2. Resolve the exact task, worktree, local branch, and remote branch.
+3. Archive and unpin the task, remove the worktree, and delete the merged feature
+   refs.
+4. Verify the retained branches, refresh live states in the accepted manifest,
+   run the validator, and launch its AFK frontier or surface its HITL frontier.
 
 Cleanup is complete only when the worktree and both feature refs are absent and
 the protected branches remain.
-
-## Polling
-
-Use a task heartbeat for PR polling when available; otherwise use bounded task
-waits and explicit continuations. Poll head SHA, CI, comments, review threads,
-approval markers, merge state, and ticket state. Remove ticket heartbeats after
-closure. Communicate meaningful transitions and approval requests, not unchanged
-polls.
 
 ## Final integration
 
@@ -111,10 +131,16 @@ validation on the integration branch.
 
 If final and integration are the same branch, verify the spec acceptance
 criteria and close the spec. If they differ, open or refresh one ready PR from
-integration into final, reference the spec, and run the same two-reviewer,
-SHA-bound user approval, CI, and merge gates. Preserve the integration branch
-unless the user explicitly declared it disposable.
+integration into final, reference the spec, run repository validation and wait
+for required CI and automated review. Apply the selected supervision gate, then
+merge. Preserve the integration branch unless the user explicitly declared it
+disposable.
 
 Close the spec only after its acceptance criteria are verified on the final
 branch. Finish with a table of ticket PRs, merge SHAs, cleanup results, final PR,
-and spec state.
+and spec state. Then unpin and archive this conductor. Verify that no ticket
+task, worktree, or feature branch remains and retained branches still exist.
+
+Final cleanup is complete only when the spec is closed, the conductor is
+archived, all exact transient resources are absent, and every retained branch is
+present. Return `ORCH_COMPLETE spec=ID final=SHA`.

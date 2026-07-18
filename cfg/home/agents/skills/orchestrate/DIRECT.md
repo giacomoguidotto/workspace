@@ -34,9 +34,13 @@ If work cannot reach that state, return:
 ORCH_BLOCKED issue={{TICKET_ID}} reason=ONE_LINE_REASON
 
 Before the final response, send the exact signal line to the delegation
-envelope's `source_thread_id` with `send_message_to_thread`; retry once if
-delivery fails. Use terse commentary. Make the final response exactly the same
-signal line, then end. Merge and cleanup belong to the conductor.
+envelope's `source_thread_id` with `send_message_to_thread`. Delivery is complete
+only when the tool reports success. Retry twice; after three failed attempts,
+replace the signal with
+`ORCH_BLOCKED issue={{TICKET_ID}} reason=signal-delivery-failed`. Use terse
+commentary. Make the final response exactly the delivered or replacement signal
+line, then end. The conductor's mandatory wait reconciles task completion if
+push delivery is unavailable. Merge and cleanup belong to the conductor.
 ```
 
 Instantiation is complete when no `{{TOKEN}}` remains.

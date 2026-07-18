@@ -46,6 +46,21 @@ supervision inserts `USER_APPROVED` before `MERGED`.
 HITL tickets follow `LOCKED -> HITL_WAIT -> CLOSED`. The human resolves them;
 their dependents remain locked while the ticket is open.
 
+## Liveness invariant
+
+Before the turn can end, compute `unfinished`: any accepted ticket is not
+`CLEANED`, or final integration is incomplete. When `unfinished` is true and no
+permitted human gate or concrete blocker is active:
+
+1. Launch or reactivate every launchable ticket.
+2. Call `wait_threads` on every active actor before yielding control.
+3. Repeat the wait in this turn after every timeout or unchanged snapshot.
+4. If no actor is active, refresh GitHub and either recover existing work or
+   dispatch the frontier. If neither is possible, surface the exact blocker.
+
+A progress checkpoint is commentary, not a stopping condition. The conductor
+must never become idle while this invariant requires dispatch or wait.
+
 ## Start
 
 1. Read repository instructions. Refresh ticket, blocker, branch, and PR state.
@@ -83,10 +98,12 @@ Launch is complete when task and host ids are recorded.
 
 ## Wait
 
-Actor push messages are the primary wakeup. Use `wait_threads` as a reconciliation
-fallback: wait up to 60 seconds on as many as eight active actors, retain each
+Actor push messages provide low-latency wakeups. `wait_threads` is the mandatory
+watchdog: wait up to 60 seconds on as many as eight active actors, retain each
 cursor, and immediately repeat after a timeout while any actor remains live.
-Read actor progress only when the wait reports attention. Accept only:
+After dispatch, requalification, merge, or progress commentary, the next action
+must advance a ready transition or enter this wait. Read actor progress only
+when the wait reports attention. Accept only:
 
 - `ORCH_READY issue=ID pr=URL sha=FULL_SHA`
 - `ORCH_BLOCKED issue=ID reason=ONE_LINE_REASON`

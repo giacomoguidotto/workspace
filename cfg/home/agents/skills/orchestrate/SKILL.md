@@ -136,7 +136,8 @@ before all launch context, then inject the selected actor contract path, accepte
 manifest, assignee, HITL pauses, and profile. Name it
 `<repo> Spec #<id> · Orchestrator`, leave it unpinned, wait for its first progress
 checkpoint, and confirm that it launched only the AFK frontier and surfaced the
-HITL frontier.
+HITL frontier. Before returning, confirm the conductor entered its mandatory
+wait or reached a permitted human gate or concrete blocker.
 
 The runtime and selected actor contract are the single sources of truth. Inject
 their absolute paths. Direct conductors load only `DIRECT.md` as their actor
@@ -145,8 +146,9 @@ contract.
 After the launch gate, human interaction is limited to the accepted HITL pauses
 and, under human supervision, SHA-bound merge approvals.
 
-Completion criterion: exactly one conductor is active; every initial AFK
-frontier ticket has one implementer or a surfaced blocker; every initial HITL
-frontier ticket is a surfaced pause with no implementer.
+Completion criterion: exactly one conductor is active and not idle while work is
+unfinished; every initial AFK frontier ticket has one implementer or a surfaced
+blocker; every initial HITL frontier ticket is a surfaced pause with no
+implementer.
 
 Return the conductor task link with `::created-thread` when newly created.

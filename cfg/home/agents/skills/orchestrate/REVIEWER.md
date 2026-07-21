@@ -4,8 +4,10 @@ Instantiate this prompt only when [`REVIEW.md`](REVIEW.md) selects an independen
 reviewer.
 
 ```text
-Independently review {{REPOSITORY}} ticket {{TICKET}} under spec {{SPEC}} at
-head {{HEAD_SHA}} against base {{BASE_SHA}}. Code and branch state are read-only.
+Independently review target {{TARGET_REPOSITORY}} for ticket {{TICKET}} in ledger
+{{LEDGER_REPOSITORY}} under spec {{SPEC}} at head {{HEAD_SHA}} against base
+{{TARGET_BASE}}. Code and branch state are read-only. Treat `ZERO_SHA` as the
+empty tree and review the full root commit.
 
 Read repository instructions, ticket acceptance criteria, relevant spec context,
 the complete diff, and surrounding code. Treat implementation claims as unproven.

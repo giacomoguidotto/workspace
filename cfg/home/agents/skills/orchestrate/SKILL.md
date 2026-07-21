@@ -37,7 +37,8 @@ admitted integration, issue closure, and exact cleanup.
 
 ## 1. Establish the score
 
-1. Read the target repository instructions and resolve its local checkout.
+1. Treat the issue repository as the ledger repository. Read its instructions
+   and resolve its local checkout and Codex project.
 2. Fetch the full spec body and comments. Resolve the assignee from an explicit
    invocation override or the authenticated GitHub viewer.
 3. Build the complete implementation-ticket inventory from derivation links,
@@ -51,10 +52,15 @@ admitted integration, issue closure, and exact cleanup.
    `HITL`, `HILT`, or human-in-the-loop; otherwise classify it as `AFK`.
 6. Resolve `Blocked by` edges from native relationships, then ticket text.
    Record repository-qualified external blockers separately.
-7. Resolve branches from invocation, spec text, an unambiguous repository
-   convention, then the default branch for both final and integration.
-8. Resolve the repository's complete validation command and whether branch
-   rules, repository instructions, or PR-only checks require PR delivery.
+7. For each ticket, distinguish its ledger repository from its implementation
+   target. Resolve an explicitly named target repository from ticket metadata,
+   body, or accepted spec evidence; otherwise use the ledger repository. Record
+   its target branch, whether it has any refs, local checkout and Codex project
+   when available, and target-specific validation command. Never infer that a
+   native sub-issue implements in its ledger repository.
+8. Resolve final and integration branches per implementation target from ticket
+   evidence, invocation, an unambiguous target convention, then its default
+   branch. Resolve whether target rules or PR-only checks require PR delivery.
 9. Prove the current trusted runtime can create writable isolated worktrees and
    perform required git and GitHub operations without operational approval.
    A runtime that would prompt during implementation is not launchable.
@@ -63,16 +69,16 @@ admitted integration, issue closure, and exact cleanup.
    conductor without a profile is `deep + supervised`.
 
 Completion criterion: at least one implementation ticket exists; each has a
-title, state, mode, native parent, and resolved blockers; the repository,
-assignee, branches, validation command, PR requirements, and every live actor
-are known.
+title, state, mode, native parent, resolved blockers, and implementation target;
+the ledger repository, assignee, target branches, validation commands, PR
+requirements, and every live actor are known.
 
 ## 2. Prove the frontier
 
 Build the manifest from live GitHub state:
 
 ```json
-{"spec":"1234","tickets":[{"id":"10","parent":"1234","nativeSubIssue":true,"title":"...","state":"open","mode":"hitl","blockedBy":["other/repo#7"]}],"externalBlockers":[{"id":"other/repo#7","state":"closed"}]}
+{"spec":"1234","ledgerRepository":"owner/ledger","tickets":[{"id":"10","parent":"1234","nativeSubIssue":true,"title":"...","state":"open","mode":"hitl","blockedBy":["other/repo#7"],"targetRepository":"owner/code"}],"externalBlockers":[{"id":"other/repo#7","state":"closed"}]}
 ```
 
 Resolve `scripts/validate-graph.mjs` beside this file and run it with `node`,
@@ -112,19 +118,29 @@ HITL pauses in the same answer.
 
 ## 4. Publish the accepted graph
 
-Refresh the spec, tickets, blockers, branches, and repository rules. Rebuild,
-validate, and render the manifest. Structural or delivery-evidence drift returns
-to the launch gate with the new graph; it does not publish stale acceptance.
+Refresh the spec, tickets, blockers, implementation targets, branches, and
+repository rules. Rebuild, validate, and render the manifest. Structural or
+delivery-evidence drift returns to the launch gate with the new graph; it does
+not publish stale acceptance.
 
-Immediately before mutation, refetch the spec and require its body and
-`updatedAt` to match the refreshed source. Any mismatch returns to the launch
-gate. GitHub issue updates do not support conditional `PATCH`, so keep the
-verified read and write adjacent.
+Acquire the exclusive per-spec mutation lease before the final refresh and hold
+it through verification, publication, and post-write reconciliation. Immediately
+before mutation, rebuild and hash the complete graph-input snapshot: spec body
+and comments, ticket bodies and states, blockers, implementation targets, target
+bindings, branches, rules, and PR state. Require it to match the accepted refresh.
+Then refetch the spec and require its body and `updatedAt` to match too. Any
+mismatch releases the lease and returns to the launch gate. GitHub issue updates
+do not support conditional `PATCH`, so no other spec writer may enter between
+these verified reads and the write.
 
 Resolve `scripts/upsert-graph.mjs` beside this file. Pass that latest issue body,
 Mermaid output, selected profile, and HITL pause strings as JSON on stdin. Update
 the spec body with its stdout, then refetch and verify the exact managed section
-and unchanged outside bytes. Preserve every byte outside these markers:
+and unchanged outside bytes. Also rebuild the complete graph-input snapshot after
+the write and reconcile it to the published graph. On any mismatch or failed
+reconciliation, release the lease and return to the launch gate. Release the
+lease only after successful reconciliation. Preserve every byte outside these
+markers:
 
 ```text
 <!-- orchestrate:graph:start -->
@@ -142,8 +158,8 @@ replacement and clean it exactly; unsafe replacement is a blocker.
 
 Read [`RUNTIME.md`](RUNTIME.md) and [`IMPLEMENTER.md`](IMPLEMENTER.md) fully.
 Inject their absolute paths plus [`REVIEW.md`](REVIEW.md) and
-[`REVIEWER.md`](REVIEWER.md), the accepted manifest, assignee, branches,
-validation command, HITL pauses, profile, and delivery evidence.
+[`REVIEWER.md`](REVIEWER.md), the accepted manifest, assignee, target bindings,
+branches, validation commands, HITL pauses, profile, and delivery evidence.
 
 The new-task runtime must resolve to `sandbox_mode=danger-full-access` and
 `approval_policy=never`; network access must be enabled. A mismatch is a launch
@@ -156,16 +172,16 @@ the fully instantiated runtime with the First objective first. Set its title to
 `#<spec-id> · Orchestrator`. The fresh task receives only the accepted graph and
 runtime inputs, not this preflight transcript.
 
-Wait for its first checkpoint with `wait_threads`. Verify every AFK frontier
-ticket has a separate fresh implementer Codex task or blocker, every HITL
-frontier ticket is paused without an actor, and the conductor entered mandatory
-wait. This topology is unchanged for one ticket: the conductor still creates
-one implementer task, while the exclusive lane may use direct delivery.
+After `create_thread` returns, set the title and verify only that the conductor
+task exists with the accepted startup payload. Do not wait for a topology
+checkpoint or lifecycle signal. Emit exactly:
 
-Completion criterion: exactly one conductor task owns the accepted graph; no
-unfinished run is idle outside a supervised gate, HITL pause, or blocker.
+`ORCH_LAUNCHED spec=ID conductor=THREAD_ID host=HOST_ID`
 
-Return the conductor's final signal for completion, approval, HITL pause,
-structural drift, or a concrete blocker. After `ORCH_COMPLETE`, verify every
-implementer is terminal, archive the conductor task, and verify no matching
-actor remains live.
+This is a terminal handoff. The launcher must exit immediately and must not
+watch implementers, relay `ORCH_*` signals, repair conductor failures, integrate
+work, or own post-launch cleanup. The separate conductor is the only lifecycle
+owner, including for a one-ticket graph.
+
+Completion criterion: one conductor task accepted ownership and the launcher
+terminated with its exact task and host identifiers.

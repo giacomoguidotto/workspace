@@ -11,6 +11,10 @@ Run `coderabbit doctor` once in the worktree. When ready:
 - `lean`: `coderabbit review --agent --light --type committed --base <exact-base-ref>`
 - `deep`: `coderabbit review --agent --type committed --base <exact-base-ref>`
 
+For `ZERO_SHA`, compute the repository's empty-tree object and use it as the
+exact base so review covers the full root commit. Do not substitute a ledger
+repository SHA.
+
 For `deep`, also instantiate [`REVIEWER.md`](REVIEWER.md) as one independent
 reviewer with `model=gpt-5.6-terra`, `reasoning_effort=high`, and
 `fork_turns="none"`. Run it concurrently with CodeRabbit.

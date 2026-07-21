@@ -8,7 +8,7 @@ approval, an accepted HITL pause, structural drift, or a concrete blocker.
 
 ## Inputs
 
-- Project path and id: `{{PROJECT_PATH}}`, `{{PROJECT_ID}}`
+- Project path: `{{PROJECT_PATH}}`
 - Repository and spec: `{{REPOSITORY}}`, `{{SPEC_ISSUE}}`
 - Assignee: `{{ASSIGNEE}}`
 - Final and integration branches: `{{FINAL_BRANCH}}`, `{{INTEGRATION_BRANCH}}`
@@ -22,7 +22,8 @@ approval, an accepted HITL pause, structural drift, or a concrete blocker.
   `{{REVIEW_PATH}}`, `{{REVIEWER_PATH}}`
 
 GitHub is the ledger. Keep only
-`(ticket, mode, task, host, delivery, base, artifact, head, state)` here.
+`(ticket, mode, agent, worktree, delivery, base, target, feature, pr, head, state)`
+here.
 
 AFK tickets follow:
 
@@ -38,13 +39,33 @@ or final integration is incomplete. While unfinished and outside a permitted
 human gate or concrete blocker:
 
 1. Launch or reactivate every launchable ticket.
-2. Call `wait_threads` on every active actor.
+2. Call `wait_agent` on every active actor.
 3. Repeat after timeouts and unchanged snapshots.
 4. With no active actor, refresh GitHub and dispatch the frontier or report the
    exact blocker.
 
 A checkpoint is commentary. The conductor must never become idle while this
 invariant requires dispatch or wait.
+
+## Execution permission invariant
+
+Supervision controls SHA admission only. Every lifecycle actor must run with
+`approval_policy=never`, write access to its isolated worktree, and any network
+or GitHub access required by its contract. Never ask the user to approve file
+edits, shell commands, assignments, pushes, PR operations, or issue mutations.
+
+Lifecycle actors belong to the current trusted internal-agent tree. The
+conductor must not use app `create_thread` worktree tasks because their execution
+permission is not selectable and they may start read-only. Provision each
+worktree first, then use `spawn_agent`; internal agents inherit the trusted
+runtime while keeping their context isolated.
+
+Before launch, prove the runtime satisfies this invariant. Before its first
+mutation, each actor verifies its active permission instructions. A mismatch
+returns `ORCH_BLOCKED issue=ID reason=worker-permission-mismatch` without
+requesting approval. Use a non-prompting CLI or an already non-interactive
+connector for authorized GitHub mutations. An approval-gated mutation surface
+is a runtime mismatch, not a HITL pause.
 
 ## Start
 
@@ -87,36 +108,50 @@ target's remote base SHA before launch.
 
 Instantiate the implementer prompt with `LIFECYCLE=worker`, its ticket, exact
 base, delivery, profile, validation command, review path, and reviewer path.
-Create a fresh worktree actor with `model=gpt-5.6-sol` and `thinking=medium`.
-Title it `#{{SPEC_ISSUE}} · Implementer of #<issue-id>` and leave it unpinned.
+Create a fresh isolated worktree at the exact base before delegation. Then use
+`spawn_agent` with `model=gpt-5.6-sol`, `reasoning_effort=medium`, task name
+`spec_{{SPEC_ISSUE}}_issue_<issue-id>`, and context forking disabled
+(`fork_turns=none` or the runtime equivalent). Give it the fully instantiated
+contract and absolute worktree path.
 
-Launch is complete when task id, host id, delivery, and base SHA are recorded.
+Launch is complete when agent id, worktree, delivery, and base SHA are recorded
+and the actor has not reported a permission mismatch.
 
 ## Wait and qualify
 
-`wait_threads` is the mandatory watchdog. Wait up to 60 seconds on as many as
-eight actors, retain cursors, and repeat while any actor remains live. Accept:
+`wait_agent` is the mandatory watchdog. Wait up to 60 seconds on all active
+actors and repeat while any actor remains live. Accept only the actor's final
+lifecycle signal:
 
 - `ORCH_READY issue=ID delivery=direct base=FULL_SHA sha=FULL_SHA`
 - `ORCH_READY issue=ID delivery=pr pr=URL sha=FULL_SHA`
 - `ORCH_ESCALATE issue=ID reason=ONE_LINE_REASON`
 - `ORCH_BLOCKED issue=ID reason=ONE_LINE_REASON`
 
-On the first valid escalation request, reactivate the same implementer with
-`model=gpt-5.6-sol` and `thinking=high`. A second request is blocked. Surface
+On the first valid escalation request, spawn one replacement with
+`model=gpt-5.6-sol` and `reasoning_effort=high` on the same worktree, base lease,
+and remaining review budget. A second request is blocked. Surface
 `ORCH_BLOCKED`.
 
 For direct readiness, verify the target still equals `base`, the commit belongs
 to the actor worktree, and the signal matches its contract. A moved target
-invalidates readiness. Replace the conductor's recorded base and the actor's
-base lease with the new exact target, then reactivate the same implementer to
-synchronize its worktree, validate, and review a new SHA. Consume only remaining
-review passes; an exhausted budget blocks instead of resetting.
+invalidates readiness. Keep the recorded lease unchanged while `followup_task`
+sends the new target to the implementer. Require a synchronized SHA plus repeated
+validation and review against that target; only then atomically replace the base
+lease and ready artifact. Consume only remaining review passes; an exhausted
+budget blocks instead of resetting.
 
-For PR readiness, verify live head, base, closing relationship, assignments,
-required checks, and zero unresolved required critical or major finding.
-Apply the same base-lease replacement on target movement. Reactivate the same
-implementer on other mismatches. The two-pass review ceiling is terminal.
+For PR readiness, verify live head, base, closing relationship, required checks,
+and zero unresolved required critical or major finding. On target movement, keep
+the old lease until the updated PR head passes validation, review, and required
+checks against the new target, then atomically replace it. Use `followup_task` on
+other mismatches. The two-pass review ceiling is terminal.
+
+On `ORCH_BLOCKED`, interrupt the actor and release its lease. If its worktree is
+clean and contains no ticket commit, remove the worktree and local feature
+branch. If it contains mutations, preserve the exact worktree, branch, and head
+as the blocker artifact; remove only resources proved unrelated or safe. Report
+the retained artifact so a later actor can recover it.
 
 ## Admit
 
@@ -134,8 +169,9 @@ same actor. For `pr`, merge with a repository-allowed method.
 After integration:
 
 1. Verify the target contains the ready head and close the ticket if needed.
-2. Resolve the exact task, worktree, local branch, and remote feature branch.
-3. Archive the task, remove the worktree, and delete merged feature refs.
+2. Resolve the exact actor, worktree, local branch, and remote feature branch.
+3. Interrupt a still-live actor, remove the worktree, and delete merged feature
+   refs.
 4. Verify protected branches remain, refresh the manifest, validate it, then
    dispatch or pause the new frontier.
 
@@ -151,7 +187,11 @@ final with `Closes #{{SPEC_ISSUE}}`, apply the same review and supervision
 contracts, then merge. Preserve integration unless declared disposable.
 
 Close the spec only after its criteria hold on final. Report ticket artifacts,
-integration SHAs, cleanup, final PR, and spec state. Archive this conductor after
-verifying all transient resources are absent. Return:
+integration SHAs, cleanup, final PR, and spec state. Verify every implementer is
+terminal and all transient resources are absent, then return:
 
 `ORCH_COMPLETE spec=ID final=SHA`
+
+Returning the signal terminates this internal conductor. The launcher waits for
+that terminal status and verifies no matching conductor remains live before it
+reports completion.

@@ -28,7 +28,8 @@ The launch profile has two orthogonal axes:
 
 Repository-required checks are always additive. Delivery is automatic: an
 exclusive writable lane may integrate without a PR; parallel work or repository
-policy uses PRs.
+policy uses PRs. Worker execution permission is not a supervision axis: every
+profile requires writable actor worktrees and non-interactive execution.
 
 Keep preflight read-only. The accepted launch gate authorizes publication of the
 managed graph section, lifecycle actors, assignments, branches, PRs, comments,
@@ -36,7 +37,7 @@ admitted integration, issue closure, and exact cleanup.
 
 ## 1. Establish the score
 
-1. Read the target repository instructions and resolve its Codex project.
+1. Read the target repository instructions and resolve its local checkout.
 2. Fetch the full spec body and comments. Resolve the assignee from an explicit
    invocation override or the authenticated GitHub viewer.
 3. Build the complete implementation-ticket inventory from derivation links,
@@ -54,7 +55,10 @@ admitted integration, issue closure, and exact cleanup.
    convention, then the default branch for both final and integration.
 8. Resolve the repository's complete validation command and whether branch
    rules, repository instructions, or PR-only checks require PR delivery.
-9. Find existing conductors and live work for this spec. Record their profile,
+9. Prove the current trusted runtime can create writable isolated worktrees and
+   perform required git and GitHub operations without operational approval.
+   A runtime that would prompt during implementation is not launchable.
+10. Find existing conductors and live work for this spec. Record their profile,
    target branch, ticket, PR, head, and state without resuming them. A legacy
    conductor without a profile is `deep + supervised`.
 
@@ -132,30 +136,36 @@ section matching the revalidated graph, profile, and HITL pauses.
 
 ## 5. Launch
 
-If a matching conductor exists, rename it `#<spec-id> · Orchestrator`, send the
-refreshed accepted manifest and current contract paths, navigate to it, and
-resume it. If it differs, prove safe replacement and clean it exactly; unsafe
-replacement is a blocker.
+If a matching internal conductor exists, send it the refreshed accepted
+manifest and current contract paths, then resume it. If it differs, prove safe
+replacement and clean it exactly; unsafe replacement is a blocker.
 
 Read [`RUNTIME.md`](RUNTIME.md) and [`IMPLEMENTER.md`](IMPLEMENTER.md) fully.
 Inject their absolute paths plus [`REVIEW.md`](REVIEW.md) and
 [`REVIEWER.md`](REVIEWER.md), the accepted manifest, assignee, branches,
 validation command, HITL pauses, profile, and delivery evidence.
 
-When exactly one unfinished ticket exists and it is launchable AFK, create one
-lifecycle actor with `model=gpt-5.6-sol` and `thinking=medium`; set `SOLO=true`.
-Otherwise create the conductor with `model=gpt-5.6-luna` and `thinking=low`; set
-`SOLO=false`. Name either `#<spec-id> · Orchestrator`, leave it unpinned, and put
-the runtime's First objective before all launch context.
+Launch lifecycle actors as internal subagents of this trusted task. Do not use
+app-created worktree tasks: their permission policy is not selectable and may be
+read-only. When exactly one unfinished ticket exists and it is launchable AFK,
+spawn one actor with `model=gpt-5.6-sol` and `reasoning_effort=medium`; set
+`SOLO=true`.
+Otherwise spawn the conductor with the fastest available low-effort conductor
+model, preferring `model=gpt-5.6-luna` with `reasoning_effort=low` when exposed
+and `gpt-5.6-terra` otherwise; set `SOLO=false`. Use task name
+`spec_<spec-id>_conductor`, disable context forking, and put the runtime's First
+objective before all launch context.
 
 For a multi-ticket run, wait for its first checkpoint and verify every AFK
 frontier ticket has a fresh implementer or blocker, every HITL frontier ticket
 is paused without an actor, and the conductor entered mandatory wait. For a solo
 run, remain its watchdog: wait through completion, apply at most one requested
-Sol-high escalation to the same actor, and return only at completion, an accepted
-human gate, or a concrete blocker.
+Sol-high replacement on the same worktree, and return only at completion, an
+accepted human gate, or a concrete blocker.
 
 Completion criterion: exactly one lifecycle actor owns the accepted graph; no
 unfinished run is idle outside a supervised gate, HITL pause, or blocker.
 
-Return its task link with `::created-thread` when newly created.
+Return the lifecycle actor's final signal when it completes or blocks. After
+`ORCH_COMPLETE`, verify the conductor is terminal and no matching actor remains
+live.

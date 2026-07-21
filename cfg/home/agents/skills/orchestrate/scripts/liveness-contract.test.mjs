@@ -12,7 +12,7 @@ test('conductor cannot idle with unfinished work', async () => {
   const runtime = await read('RUNTIME.md');
 
   assert.match(runtime, /## Liveness invariant/);
-  assert.match(runtime, /`wait_threads` is the mandatory watchdog/);
+  assert.match(runtime, /`wait_agent` is the mandatory watchdog/);
   assert.match(runtime, /must never become idle/);
 });
 
@@ -43,9 +43,9 @@ test('multi-ticket runs use fresh workers and solo runs use one lifecycle actor'
   const implementer = await read('IMPLEMENTER.md');
 
   assert.match(skill, /exactly one unfinished ticket exists and it is launchable AFK/);
-  assert.match(skill, /model=gpt-5\.6-sol` and `thinking=medium/);
-  assert.match(skill, /model=gpt-5\.6-luna` and `thinking=low/);
-  assert.match(runtime, /Create a fresh worktree actor/);
+  assert.match(skill, /model=gpt-5\.6-sol` and `reasoning_effort=medium/);
+  assert.match(skill, /model=gpt-5\.6-luna` with `reasoning_effort=low/);
+  assert.match(runtime, /Create a fresh isolated worktree/);
   assert.match(runtime, /LIFECYCLE=solo/);
   assert.match(implementer, /After qualification in `solo`, send no readiness signal/);
 });
@@ -54,24 +54,52 @@ test('implementers signal reliably and only the conductor integrates', async () 
   const contract = await read('IMPLEMENTER.md');
   const runtime = await read('RUNTIME.md');
 
-  assert.match(contract, /send_message_to_thread/);
-  assert.match(contract, /Delivery is complete only when\nthe tool reports/);
-  assert.match(contract, /reason=signal-delivery-failed/);
-  assert.match(contract, /watchdog recovers it from task completion/);
+  assert.match(contract, /final response is exactly one lifecycle\nsignal/);
+  assert.match(runtime, /Accept only the actor's final\nlifecycle signal/);
   assert.match(contract, /keep `direct` local/);
   assert.match(contract, /After local review qualifies/);
   assert.match(runtime, /normal non-forced\npush/);
+});
+
+test('recovery state survives target movement and terminal blockers', async () => {
+  const runtime = await read('RUNTIME.md');
+
+  assert.match(runtime, /base, target, feature, pr, head/);
+  assert.match(runtime, /Keep the recorded lease unchanged/);
+  assert.match(runtime, /only then atomically replace the base\nlease and ready artifact/);
+  assert.match(runtime, /On `ORCH_BLOCKED`/);
+  assert.match(runtime, /preserve the exact worktree, branch, and head/);
+});
+
+test('worker execution never asks the user for operational approval', async () => {
+  const skill = await read('SKILL.md');
+  const runtime = await read('RUNTIME.md');
+  const implementer = await read('IMPLEMENTER.md');
+
+  assert.match(skill, /Worker execution permission is not a supervision axis/);
+  assert.match(runtime, /## Execution permission invariant/);
+  assert.match(runtime, /`approval_policy=never`/);
+  assert.match(runtime, /must not use app `create_thread` worktree tasks/);
+  assert.match(runtime, /`spawn_agent`/);
+  assert.match(implementer, /Never request user approval/);
+  assert.match(implementer, /reason=worker-permission-mismatch/);
+  assert.doesNotMatch(implementer, /Assign the ticket/);
+  assert.doesNotMatch(implementer, /send_message_to_thread/);
 });
 
 test('reasoning starts lean and escalates once on evidence', async () => {
   const contract = await read('IMPLEMENTER.md');
   const runtime = await read('RUNTIME.md');
 
-  assert.match(runtime, /thinking=medium/);
   assert.match(contract, /ORCH_ESCALATE/);
-  assert.match(runtime, /thinking=high/);
+  const medium = runtime.indexOf('reasoning_effort=medium');
+  const request = runtime.indexOf('ORCH_ESCALATE');
+  const high = runtime.indexOf('reasoning_effort=high');
+
+  assert.ok(medium >= 0 && medium < request && request < high);
+  assert.equal(runtime.match(/reasoning_effort=high/g)?.length, 1);
   assert.match(runtime, /A second request is blocked/);
-  assert.match(runtime, /Consume only remaining\nreview passes/);
+  assert.match(runtime, /Consume only\s+remaining review passes/);
 });
 
 test('one review contract owns the bounded local review gate', async () => {
@@ -85,10 +113,12 @@ test('one review contract owns the bounded local review gate', async () => {
   assert.match(implementer, /Read \{\{REVIEW_PATH\}\} fully/);
 });
 
-test('task titles retain the strict spec and role format', async () => {
+test('actor names retain stable spec and role identity', async () => {
   const skill = await read('SKILL.md');
   const runtime = await read('RUNTIME.md');
 
-  assert.match(skill, /`#<spec-id> · Orchestrator`/);
-  assert.match(runtime, /`#\{\{SPEC_ISSUE\}\} · Implementer of #<issue-id>`/);
+  assert.match(skill, /`spec_<spec-id>_conductor`/);
+  assert.match(runtime, /`spec_\{\{SPEC_ISSUE\}\}_issue_<issue-id>`/);
+  assert.match(runtime, /Returning the signal terminates this internal conductor/);
+  assert.match(skill, /no matching actor remains\nlive/);
 });

@@ -136,7 +136,7 @@ section matching the revalidated graph, profile, and HITL pauses.
 
 ## 5. Launch
 
-If a matching internal conductor exists, send it the refreshed accepted
+If a matching conductor Codex task exists, send it the refreshed accepted
 manifest and current contract paths, then resume it. If it differs, prove safe
 replacement and clean it exactly; unsafe replacement is a blocker.
 
@@ -145,27 +145,27 @@ Inject their absolute paths plus [`REVIEW.md`](REVIEW.md) and
 [`REVIEWER.md`](REVIEWER.md), the accepted manifest, assignee, branches,
 validation command, HITL pauses, profile, and delivery evidence.
 
-Launch lifecycle actors as internal subagents of this trusted task. Do not use
-app-created worktree tasks: their permission policy is not selectable and may be
-read-only. When exactly one unfinished ticket exists and it is launchable AFK,
-spawn one actor with `model=gpt-5.6-sol` and `reasoning_effort=medium`; set
-`SOLO=true`.
-Otherwise spawn the conductor with the fastest available low-effort conductor
-model, preferring `model=gpt-5.6-luna` with `reasoning_effort=low` when exposed
-and `gpt-5.6-terra` otherwise; set `SOLO=false`. Use task name
-`spec_<spec-id>_conductor`, disable context forking, and put the runtime's First
-objective before all launch context.
+The new-task runtime must resolve to `sandbox_mode=danger-full-access` and
+`approval_policy=never`; network access must be enabled. A mismatch is a launch
+blocker, never a reason to ask the user for an operational approval.
 
-For a multi-ticket run, wait for its first checkpoint and verify every AFK
-frontier ticket has a fresh implementer or blocker, every HITL frontier ticket
-is paused without an actor, and the conductor entered mandatory wait. For a solo
-run, remain its watchdog: wait through completion, apply at most one requested
-Sol-high replacement on the same worktree, and return only at completion, an
-accepted human gate, or a concrete blocker.
+Use `create_thread`, never a fork or subagent, to launch one separate fresh Codex
+task in the target project's local environment. Prefer `model=gpt-5.6-luna`
+with `thinking=low`; fall back to the fastest available low-effort model. Give it
+the fully instantiated runtime with the First objective first. Set its title to
+`#<spec-id> · Orchestrator`. The fresh task receives only the accepted graph and
+runtime inputs, not this preflight transcript.
 
-Completion criterion: exactly one lifecycle actor owns the accepted graph; no
+Wait for its first checkpoint with `wait_threads`. Verify every AFK frontier
+ticket has a separate fresh implementer Codex task or blocker, every HITL
+frontier ticket is paused without an actor, and the conductor entered mandatory
+wait. This topology is unchanged for one ticket: the conductor still creates
+one implementer task, while the exclusive lane may use direct delivery.
+
+Completion criterion: exactly one conductor task owns the accepted graph; no
 unfinished run is idle outside a supervised gate, HITL pause, or blocker.
 
-Return the lifecycle actor's final signal when it completes or blocks. After
-`ORCH_COMPLETE`, verify the conductor is terminal and no matching actor remains
-live.
+Return the conductor's final signal for completion, approval, HITL pause,
+structural drift, or a concrete blocker. After `ORCH_COMPLETE`, verify every
+implementer is terminal, archive the conductor task, and verify no matching
+actor remains live.

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "knowledge-system-interface/v1/capture-request.schema.json",
+  "title": "Semantic Capture Request",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["interface", "caller", "capability", "mandate", "target_role", "meaning", "visibility", "evidence", "rationale"],
+  "properties": {
+    "interface": { "const": "knowledge-system-interface/v1" },
+    "caller": { "type": "string", "minLength": 1 },
+    "capability": { "type": "string", "minLength": 1 },
+    "mandate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["purpose", "read_roles", "capture_roles", "public_facing_roles", "clarification_on_unresolved"],
+      "properties": {
+        "purpose": { "type": "string", "minLength": 1 },
+        "read_roles": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "capture_roles": { "type": "array", "items": { "type": "string" }, "minItems": 1, "uniqueItems": true },
+        "public_facing_roles": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "clarification_on_unresolved": { "type": "boolean" }
+      }
+    },
+    "target_role": { "type": "string", "minLength": 1 },
+    "meaning": {},
+    "visibility": { "enum": ["private", "public-facing", "restricted"] },
+    "evidence": { "type": "array", "items": { "type": "string", "minLength": 1 }, "minItems": 1 },
+    "source_snapshot_token": { "type": "string", "minLength": 16 },
+    "rationale": { "type": "string", "minLength": 1 }
+  }
+}

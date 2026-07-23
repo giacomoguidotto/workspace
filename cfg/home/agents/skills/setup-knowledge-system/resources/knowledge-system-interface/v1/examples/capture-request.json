@@ -1,0 +1,18 @@
+{
+  "interface": "knowledge-system-interface/v1",
+  "caller": "agentic-os",
+  "capability": "agentic-os.scout",
+  "mandate": {
+    "purpose": "Retain an explicitly stated career preference surfaced during scouting.",
+    "read_roles": ["job-search-strategy"],
+    "capture_roles": ["job-search-strategy"],
+    "public_facing_roles": [],
+    "clarification_on_unresolved": false
+  },
+  "target_role": "job-search-strategy",
+  "meaning": "Example durable preference",
+  "visibility": "private",
+  "evidence": ["Explicitly stated by the user during the current invocation."],
+  "source_snapshot_token": "opaque-example-token-9f4c",
+  "rationale": "The preference changes future opportunity evaluation."
+}

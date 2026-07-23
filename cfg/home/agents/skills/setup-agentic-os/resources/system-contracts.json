@@ -1,0 +1,78 @@
+{
+  "schema": "agentic-os.system-contracts/v1",
+  "systems": [
+    {
+      "registry_key": "knowledge-system",
+      "system": "Knowledge System",
+      "implementation": "Knowledge System",
+      "repository": "giacomoguidotto/knowledge-system",
+      "required_branch": "main",
+      "setup_interface": {
+        "skill": "setup-knowledge-system",
+        "command": "/setup-knowledge-system",
+        "modes": ["check", "reconcile"],
+        "default_mode": "reconcile"
+      },
+      "owner": "Knowledge System",
+      "required_paths": [
+        "skills/public/setup-knowledge-system/SKILL.md",
+        "skills/public/setup-knowledge-system/resources/knowledge-system-interface/v1"
+      ],
+      "capabilities": [
+        "knowledge.setup",
+        "knowledge-system-interface/v1",
+        "snapshot-token-validation",
+        "knowledge-project-snapshot"
+      ]
+    },
+    {
+      "registry_key": "mastery-system",
+      "system": "Mastery System",
+      "implementation": "Mastery System",
+      "repository": "giacomoguidotto/mastery-system",
+      "required_branch": "main",
+      "setup_interface": {
+        "skill": "setup-mastery-system",
+        "command": "/setup-mastery-system",
+        "modes": ["check", "reconcile"],
+        "default_mode": "reconcile"
+      },
+      "owner": "Mastery System",
+      "required_paths": [
+        "skills/public/setup-mastery-system/SKILL.md",
+        "skills/public/setup-mastery-system/resources/setup.mjs"
+      ],
+      "capabilities": [
+        "mastery.setup",
+        "mastery.capabilities.snapshot/v1",
+        "mastery.cycles.snapshot/v1",
+        "mastery.cycles.reconcile/v1"
+      ]
+    },
+    {
+      "registry_key": "career-ops",
+      "system": "Career System",
+      "implementation": "Career Ops",
+      "repository": "giacomoguidotto/career-system",
+      "required_branch": "fork/main",
+      "setup_interface": {
+        "skill": "setup-career-system",
+        "command": "/setup-career-system",
+        "modes": ["check", "reconcile"],
+        "default_mode": "reconcile"
+      },
+      "owner": "Career System",
+      "required_paths": [
+        "main.mjs",
+        "skills/public/setup-career-system/SKILL.md",
+        "skills/public/setup-career-system/scripts/setup-career-system.mjs"
+      ],
+      "capabilities": [
+        "career-system.capabilities/v1",
+        "career-system.check/v1",
+        "career.profile.check/v1",
+        "career.profile.reconcile/v1"
+      ]
+    }
+  ]
+}

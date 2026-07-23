@@ -1,0 +1,146 @@
+{
+  "interface": "knowledge-system-interface/v1",
+  "revision": "2",
+  "roles": {
+    "selected-projects": {
+      "meaning": "Active or selected projects relevant to the stated objective.",
+      "result_shape": "claims",
+      "visibility": "Use each claim's canonical visibility.",
+      "intended_use": "Bounded project selection, never a frozen project inventory.",
+      "traversal": ["canonical-owner", "direct-evidence"],
+      "provenance": ["owner", "source", "observed_at", "revision"],
+      "stopping_conditions": ["objective-satisfied", "owner-exhausted", "access-blocked", "revision-drift"],
+      "compatibility": "active"
+    },
+    "upskill-mappings": {
+      "meaning": "Knowledge-owned mappings from a project Requisite to a Mastery Capability.",
+      "result_shape": "knowledge.project.snapshot/v1",
+      "visibility": "Preserve the canonical visibility of project, rationale, and evidence.",
+      "intended_use": "Capability-scoped upskill reconciliation through stable mapping identities.",
+      "traversal": ["canonical-owner", "project-owner", "direct-evidence"],
+      "provenance": ["owner", "source", "observed_at", "revision"],
+      "stopping_conditions": ["objective-satisfied", "owner-exhausted", "identity-ambiguous", "evidence-insufficient", "access-blocked", "revision-drift"],
+      "compatibility": "active"
+    },
+    "public-safe-claim-source": {
+      "meaning": "Public-facing claims and the boundary that excludes private claims.",
+      "result_shape": "claims",
+      "visibility": "Return only claims established as public-safe, while reporting excluded meaning as gaps without disclosure.",
+      "intended_use": "Public and recruiter-facing artifacts.",
+      "traversal": ["canonical-owner", "claim-evidence"],
+      "provenance": ["owner", "source", "observed_at", "revision"],
+      "stopping_conditions": ["objective-satisfied", "owner-exhausted", "evidence-insufficient", "access-blocked", "revision-drift"],
+      "compatibility": "active"
+    },
+    "proof-points": {
+      "meaning": "Reusable evidence and metrics supporting generated artifacts.",
+      "result_shape": "claims",
+      "visibility": "Preserve the visibility of each proof and its supporting source.",
+      "intended_use": "Evidence-backed artifacts within the request boundary.",
+      "traversal": ["canonical-owner", "claim-evidence"],
+      "provenance": ["owner", "source", "observed_at", "revision"],
+      "stopping_conditions": ["objective-satisfied", "owner-exhausted", "evidence-insufficient", "access-blocked", "revision-drift"],
+      "compatibility": "active"
+    },
+    "network": {
+      "meaning": "Contacts and relationships relevant to the stated objective.",
+      "result_shape": "claims",
+      "visibility": "Private unless the canonical owner establishes a narrower visibility.",
+      "intended_use": "Bounded relationship context, never broad contact export.",
+      "traversal": ["canonical-owner", "direct-relations"],
+      "provenance": ["owner", "source", "observed_at", "revision"],
+      "stopping_conditions": ["objective-satisfied", "owner-exhausted", "access-blocked", "revision-drift"],
+      "compatibility": "active"
+    },
+    "identity": {
+      "meaning": "Canonical identity framing, archetypes, and narrative.",
+      "result_shape": "claims",
+      "visibility": "Preserve claim-level visibility; do not infer public safety from identity ownership.",
+      "intended_use": "Identity-aware work within the request boundary.",
+      "traversal": ["canonical-owner", "claim-evidence"],
+      "provenance": ["owner", "source", "observed_at", "revision"],
+      "stopping_conditions": ["objective-satisfied", "owner-exhausted", "evidence-insufficient", "access-blocked", "revision-drift"],
+      "compatibility": "active"
+    },
+    "point-of-view": {
+      "meaning": "Recorded public stances, opinions, and recurring themes.",
+      "result_shape": "claims",
+      "visibility": "Only explicitly recorded public-facing meaning may be returned as public-facing.",
+      "intended_use": "Public authoring without fabricating a stance.",
+      "traversal": ["canonical-owner", "claim-evidence"],
+      "provenance": ["owner", "source", "observed_at", "revision"],
+      "stopping_conditions": ["objective-satisfied", "owner-exhausted", "evidence-insufficient", "access-blocked", "revision-drift"],
+      "compatibility": "active"
+    },
+    "published-social-context": {
+      "meaning": "Per-platform semantic audience and argument context with links to canonical owners.",
+      "result_shape": "claims",
+      "visibility": "Public-facing semantic context only; operational queue and metrics remain outside this role.",
+      "intended_use": "Social continuity without copying post history or queue state.",
+      "traversal": ["canonical-owner", "linked-owner", "direct-evidence"],
+      "provenance": ["owner", "source", "observed_at", "revision"],
+      "stopping_conditions": ["objective-satisfied", "owner-exhausted", "evidence-insufficient", "access-blocked", "revision-drift"],
+      "compatibility": "active"
+    },
+    "portfolio-change-rules": {
+      "meaning": "Portfolio model and structural change constraints.",
+      "result_shape": "claims",
+      "visibility": "Return rules at their canonical visibility and keep private rationale private.",
+      "intended_use": "Portfolio change proposals.",
+      "traversal": ["canonical-owner", "direct-evidence"],
+      "provenance": ["owner", "source", "observed_at", "revision"],
+      "stopping_conditions": ["objective-satisfied", "owner-exhausted", "access-blocked", "revision-drift"],
+      "compatibility": "active"
+    },
+    "social-rules-of-engagement": {
+      "meaning": "Per-platform drafting, scheduling, eligibility, and recovery rules.",
+      "result_shape": "claims",
+      "visibility": "Private operating rules may guide public work but must not appear in public output.",
+      "intended_use": "Provider-neutral social drafting and scheduling decisions.",
+      "traversal": ["canonical-owner", "direct-evidence"],
+      "provenance": ["owner", "source", "observed_at", "revision"],
+      "stopping_conditions": ["objective-satisfied", "owner-exhausted", "access-blocked", "revision-drift"],
+      "compatibility": "active"
+    },
+    "job-search-strategy": {
+      "meaning": "Target roles, compensation baseline, and opportunity scoring preferences.",
+      "result_shape": "claims",
+      "visibility": "Private unless individual claims are explicitly established as public-safe.",
+      "intended_use": "Career opportunity selection and evaluation.",
+      "traversal": ["canonical-owner", "claim-evidence"],
+      "provenance": ["owner", "source", "observed_at", "revision"],
+      "stopping_conditions": ["objective-satisfied", "owner-exhausted", "evidence-insufficient", "access-blocked", "revision-drift"],
+      "compatibility": "active"
+    },
+    "communication-strategy": {
+      "meaning": "Cross-surface voice, tone, persuasion, channel, and evidence-sufficiency rules.",
+      "result_shape": "claims",
+      "visibility": "Private guidance may shape output but must not be disclosed unless explicitly public-facing.",
+      "intended_use": "Optional personalization; consumers retain complete generic defaults when absent.",
+      "traversal": ["canonical-owner", "direct-evidence"],
+      "provenance": ["owner", "source", "observed_at", "revision"],
+      "stopping_conditions": ["objective-satisfied", "owner-exhausted", "access-blocked", "revision-drift"],
+      "compatibility": "active"
+    },
+    "personal-constraints": {
+      "meaning": "Relocation, compensation, work authorization, references, availability, and side-project constraints.",
+      "result_shape": "claims",
+      "visibility": "Private unless each returned claim is explicitly established as public-safe.",
+      "intended_use": "Capability decisions that depend on current personal constraints.",
+      "traversal": ["canonical-owner", "claim-evidence"],
+      "provenance": ["owner", "source", "observed_at", "revision"],
+      "stopping_conditions": ["objective-satisfied", "owner-exhausted", "evidence-insufficient", "access-blocked", "revision-drift"],
+      "compatibility": "active"
+    },
+    "signal-preferences": {
+      "meaning": "Criteria for ranking what is worth retaining as durable knowledge.",
+      "result_shape": "claims",
+      "visibility": "Private rubric unless the canonical owner explicitly establishes otherwise.",
+      "intended_use": "Ranking capture candidates without widening the retrieval objective.",
+      "traversal": ["canonical-owner", "direct-evidence"],
+      "provenance": ["owner", "source", "observed_at", "revision"],
+      "stopping_conditions": ["objective-satisfied", "owner-exhausted", "access-blocked", "revision-drift"],
+      "compatibility": "active"
+    }
+  }
+}

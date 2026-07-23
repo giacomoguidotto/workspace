@@ -1,0 +1,29 @@
+{
+  "interface": "knowledge-system-interface/v1",
+  "caller": "agentic-os",
+  "capability": "agentic-os.scout",
+  "objective": "Build current public-safe career profile context for opportunity evaluation.",
+  "roles": {
+    "required": ["public-safe-claim-source", "personal-constraints"],
+    "optional": ["communication-strategy"]
+  },
+  "intended_use": {
+    "mode": "named-sink",
+    "purpose": "Evaluate opportunities through a Career System gateway.",
+    "boundary": "Do not submit, contact, publish, or persist a profile cache.",
+    "target": "career-system"
+  },
+  "requirements": {
+    "evidence": "required",
+    "claim_provenance": true,
+    "freshness": "current for this invocation"
+  },
+  "mandate": {
+    "purpose": "Supply only profile context needed by the scout capability.",
+    "read_roles": ["public-safe-claim-source", "personal-constraints", "communication-strategy"],
+    "capture_roles": [],
+    "public_facing_roles": [],
+    "clarification_on_unresolved": false
+  },
+  "clarification_allowed": false
+}

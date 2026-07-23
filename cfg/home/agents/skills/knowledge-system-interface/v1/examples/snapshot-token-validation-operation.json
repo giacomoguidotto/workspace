@@ -1,0 +1,14 @@
+{
+  "request": {
+    "interface": "knowledge-system-interface/v1",
+    "caller": "agentic-os",
+    "capability": "agentic-os.scout",
+    "snapshot_token": "opaque-example-token-9f4c"
+  },
+  "observations": [
+    {
+      "state": "resolved",
+      "snapshot_token": "opaque-example-token-9f4c"
+    }
+  ]
+}

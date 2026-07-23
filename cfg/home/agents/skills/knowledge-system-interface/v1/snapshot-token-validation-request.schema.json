@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "knowledge-system-interface/v1/snapshot-token-validation-request.schema.json",
+  "title": "Snapshot Token Validation Request",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["interface", "caller", "capability", "snapshot_token"],
+  "properties": {
+    "interface": { "type": "string", "minLength": 1 },
+    "caller": { "type": "string", "minLength": 1 },
+    "capability": { "type": "string", "minLength": 1 },
+    "snapshot_token": { "type": "string", "minLength": 16 }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "schema": "agentic-os.automation-migration/v1",
+  "automations": [
+    {
+      "name": "repo-pr-ci-repair-sweep",
+      "stable_identity": "renovate-pr-ci-fixer",
+      "source": "automations/repo-pr-ci-repair-sweep",
+      "dependencies": []
+    },
+    {
+      "name": "social-compose",
+      "stable_identity": "social-draft-pulse",
+      "source": "automations/social-compose",
+      "dependencies": ["knowledge-system"]
+    },
+    {
+      "name": "portfolio-refresh",
+      "stable_identity": "portfolio-surface-sweep",
+      "source": "automations/portfolio-refresh",
+      "dependencies": ["knowledge-system"]
+    },
+    {
+      "name": "job-scout",
+      "stable_identity": "career-ops-scan-and-evaluate",
+      "source": "automations/job-scout",
+      "dependencies": ["knowledge-system", "career-ops"]
+    },
+    {
+      "name": "job-pursue",
+      "stable_identity": "job-hunt-advancement-pulse",
+      "source": "automations/job-pursue",
+      "dependencies": ["knowledge-system", "career-ops"]
+    }
+  ],
+  "preserve": [
+    "stable identity",
+    "schedule",
+    "timezone",
+    "working directory",
+    "project",
+    "enabled status",
+    "provider bindings",
+    "runtime state handle",
+    "run history",
+    "last_completed_at"
+  ]
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Tweet"
+  short_description: "Draft concise tweets without publishing"
+  default_prompt: "Use $tweet to turn this idea into a concise tweet."

@@ -1,0 +1,39 @@
+# Canonical behavior source. Schedule, timezone, working directory, project,
+# status, and runtime history remain installation-local materialization state.
+schema_version = 1
+# Preserve this legacy identity when updating an existing materialization.
+id = "portfolio-surface-sweep"
+kind = "cron"
+name = "Portfolio Refresh"
+
+execution_profile = "balanced/medium"
+prompt_file = "prompt.md"
+knowledge_request_file = "knowledge-request.json"
+
+[sources.portfolio-source]
+required = true
+capabilities = ["repository-instructions", "current-state"]
+
+[sinks.portfolio]
+required = true
+capabilities = [
+  "create-branch",
+  "edit-files",
+  "run-validation",
+  "open-draft-pr",
+]
+authority = "approval-gated"
+
+[validation]
+profile = "proposal-only"
+source_capabilities = ["repository-instructions", "current-state"]
+sink_capabilities = []
+prohibited_actions = [
+  "create-branch",
+  "edit-files",
+  "open-draft-pr",
+  "merge",
+  "deploy",
+  "publish",
+  "knowledge-capture",
+]

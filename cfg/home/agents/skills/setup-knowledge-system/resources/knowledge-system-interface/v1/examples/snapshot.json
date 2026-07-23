@@ -1,0 +1,86 @@
+{
+  "interface": "knowledge-system-interface/v1",
+  "registry_revision": "1",
+  "caller": "agentic-os",
+  "capability": "agentic-os.scout",
+  "capability_status": {
+    "state": "blocked",
+    "depends_on_roles": ["public-safe-claim-source", "personal-constraints"],
+    "blocking_roles": ["personal-constraints"]
+  },
+  "results": {
+    "public-safe-claim-source": {
+      "state": "value",
+      "visibility": "public-facing",
+      "claims": [
+        {
+          "claim": "Example public-safe claim",
+          "visibility": "public-facing",
+          "restrictions": ["Use only for the named capability and intended-use boundary."],
+          "evidence": [
+            {
+              "source": "canonical evidence item",
+              "supports": "Example public-safe claim",
+              "observed_at": "2026-07-21T08:00:00Z"
+            }
+          ],
+          "provenance": [
+            {
+              "source_id": "opaque-source-a",
+              "label": "Canonical claim owner",
+              "role": "canonical-owner",
+              "observed_revision": "source-revision-a",
+              "retrieved_at": "2026-07-21T08:00:00Z",
+              "support": "supported"
+            }
+          ]
+        }
+      ]
+    },
+    "communication-strategy": {
+      "state": "absent",
+      "visibility": "private",
+      "restrictions": ["Do not infer a default from absence."],
+      "evidence": [
+        {
+          "source": "canonical communication owner",
+          "supports": "No applicable personalization exists.",
+          "observed_at": "2026-07-21T08:00:00Z"
+        }
+      ],
+      "provenance": [
+        {
+          "source_id": "opaque-source-b",
+          "label": "Canonical communication owner",
+          "role": "canonical-owner",
+          "observed_revision": "source-revision-b",
+          "retrieved_at": "2026-07-21T08:00:00Z",
+          "support": "supported"
+        }
+      ]
+    },
+    "personal-constraints": {
+      "state": "unresolved",
+      "visibility": "private",
+      "reason": "persistent_drift",
+      "attempted_provenance": [
+        {
+          "source_id": "opaque-source-c",
+          "label": "Canonical constraints owner",
+          "role": "canonical-owner",
+          "observed_revision": "source-revision-c",
+          "retrieved_at": "2026-07-21T08:00:00Z",
+          "support": "partial"
+        }
+      ]
+    }
+  },
+  "gaps": [
+    {
+      "role": "personal-constraints",
+      "reason": "The source changed during the initial traversal and one full rebuild.",
+      "blocks_capability": true
+    }
+  ],
+  "snapshot_token": "opaque-example-token-9f4c"
+}

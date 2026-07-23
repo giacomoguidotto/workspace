@@ -17,7 +17,7 @@ alias bunr="bun run"
 alias c="code"
 alias cc="claude"
 cod() {
-  local career_ops="$HOME/dev/life/career-ops"
+  local career_ops="$HOME/dev/life/career-system"
   local dashboard="$career_ops/dashboard/career-dashboard"
 
   if [[ ! -x "$dashboard" ]]; then

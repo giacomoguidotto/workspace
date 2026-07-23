@@ -1,0 +1,242 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "knowledge-system-interface/v1/project-snapshot.schema.json",
+  "title": "Knowledge Project Snapshot",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["interface", "snapshot", "registry_revision", "caller", "capability", "observed_at", "revision_token", "capability_status", "projects", "gaps"],
+  "properties": {
+    "interface": { "const": "knowledge-system-interface/v1" },
+    "snapshot": { "const": "knowledge.project.snapshot/v1" },
+    "registry_revision": { "type": "string", "minLength": 1 },
+    "caller": { "type": "string", "minLength": 1 },
+    "capability": { "type": "string", "minLength": 1 },
+    "observed_at": { "type": "string", "format": "date-time" },
+    "revision_token": { "type": "string", "minLength": 16 },
+    "capability_status": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "blocking_references"],
+      "properties": {
+        "state": { "enum": ["ready", "blocked"] },
+        "blocking_references": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "state": { "const": "ready" } }, "required": ["state"] },
+          "then": { "properties": { "blocking_references": { "maxItems": 0 } } }
+        },
+        {
+          "if": { "properties": { "state": { "const": "blocked" } }, "required": ["state"] },
+          "then": { "properties": { "blocking_references": { "minItems": 1 } } }
+        }
+      ]
+    },
+    "projects": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/project_result" },
+      "minItems": 1
+    },
+    "gaps": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/gap" }
+    }
+  },
+  "$defs": {
+    "reason": {
+      "enum": [
+        "owner_unknown",
+        "identity_ambiguous",
+        "evidence_insufficient",
+        "stale",
+        "access_blocked",
+        "revision_uncertain",
+        "persistent_drift",
+        "prerequisite_unresolved"
+      ]
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_ref", "supports", "observed_at"],
+      "properties": {
+        "source_ref": { "type": "string", "minLength": 1 },
+        "supports": { "type": "string", "minLength": 1 },
+        "observed_at": { "type": "string", "format": "date-time" }
+      }
+    },
+    "mastery_enabled": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["state", "value", "evidence"],
+          "properties": {
+            "state": { "const": "value" },
+            "value": { "type": "boolean" },
+            "evidence": {
+              "description": "Canonical Knowledge ownership evidence establishing the Mastery enablement value.",
+              "type": "array",
+              "items": { "$ref": "#/$defs/evidence" },
+              "minItems": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["state", "evidence"],
+          "properties": {
+            "state": { "const": "absent" },
+            "evidence": { "type": "array", "items": { "$ref": "#/$defs/evidence" }, "minItems": 1 }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["state", "reason", "attempted_evidence"],
+          "properties": {
+            "state": { "const": "unresolved" },
+            "reason": { "$ref": "#/$defs/reason" },
+            "attempted_evidence": { "type": "array", "items": { "$ref": "#/$defs/evidence" } }
+          }
+        }
+      ]
+    },
+    "mapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mapping_key", "status", "requisite", "capability", "project_key", "rationale", "evidence"],
+      "properties": {
+        "mapping_key": { "type": "string", "minLength": 1 },
+        "status": { "enum": ["enabled", "disabled"] },
+        "requisite": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["key", "label"],
+          "properties": {
+            "key": { "type": "string", "minLength": 1 },
+            "label": { "type": "string", "minLength": 1 }
+          }
+        },
+        "capability": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["key", "label"],
+          "properties": {
+            "key": { "type": "string", "minLength": 1 },
+            "label": { "type": "string", "minLength": 1 }
+          }
+        },
+        "project_key": { "type": "string", "minLength": 1 },
+        "rationale": { "type": "string", "minLength": 1 },
+        "evidence": {
+          "description": "Canonical Knowledge ownership evidence establishing mapping identity and meaning.",
+          "type": "array",
+          "items": { "$ref": "#/$defs/evidence" },
+          "minItems": 1
+        },
+        "prerequisite_mapping_keys": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        }
+      }
+    },
+    "mappings": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["state", "items"],
+          "properties": {
+            "state": { "const": "value" },
+            "items": { "type": "array", "items": { "$ref": "#/$defs/mapping" }, "minItems": 1 }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["state", "evidence"],
+          "properties": {
+            "state": { "const": "absent" },
+            "evidence": {
+              "description": "Canonical Knowledge ownership evidence establishing project identity.",
+              "type": "array",
+              "items": { "$ref": "#/$defs/evidence" },
+              "minItems": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["state", "reason", "attempted_evidence"],
+          "properties": {
+            "state": { "const": "unresolved" },
+            "reason": { "$ref": "#/$defs/reason" },
+            "attempted_evidence": { "type": "array", "items": { "$ref": "#/$defs/evidence" } }
+          }
+        }
+      ]
+    },
+    "project_result": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["state", "project_key", "name", "references", "mastery_enabled", "upskill_mappings", "evidence"],
+          "properties": {
+            "state": { "const": "value" },
+            "project_key": { "type": "string", "minLength": 1 },
+            "name": { "type": "string", "minLength": 1 },
+            "references": {
+              "type": "array",
+              "items": { "type": "string", "minLength": 1 },
+              "minItems": 1,
+              "uniqueItems": true
+            },
+            "mastery_enabled": { "$ref": "#/$defs/mastery_enabled" },
+            "upskill_mappings": { "$ref": "#/$defs/mappings" },
+            "evidence": { "type": "array", "items": { "$ref": "#/$defs/evidence" }, "minItems": 1 }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["state", "requested_reference", "evidence"],
+          "properties": {
+            "state": { "const": "absent" },
+            "requested_reference": { "type": "string", "minLength": 1 },
+            "evidence": { "type": "array", "items": { "$ref": "#/$defs/evidence" }, "minItems": 1 }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["state", "requested_reference", "reason", "attempted_evidence"],
+          "properties": {
+            "state": { "const": "unresolved" },
+            "requested_reference": { "type": "string", "minLength": 1 },
+            "reason": { "$ref": "#/$defs/reason" },
+            "attempted_evidence": { "type": "array", "items": { "$ref": "#/$defs/evidence" } }
+          }
+        }
+      ]
+    },
+    "gap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reference", "reason", "blocks_capability"],
+      "properties": {
+        "reference": { "type": "string", "minLength": 1 },
+        "reason": { "$ref": "#/$defs/reason" },
+        "blocks_capability": { "type": "boolean" }
+      }
+    }
+  }
+}

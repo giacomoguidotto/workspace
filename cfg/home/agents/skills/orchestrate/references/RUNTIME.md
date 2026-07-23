@@ -4,7 +4,8 @@
 
 Drive the accepted graph to `ORCH_COMPLETE`. Persist through task runtimes and
 quiet periods. Final responses are reserved for completion, a supervised
-approval, an accepted HITL pause, structural drift, or a concrete blocker.
+approval, an accepted HITL pause, structural acceptance drift, or a proven
+external blocker after recovery.
 You are the sole post-handoff owner of dispatch, recovery, integration, lifecycle
 signals, and cleanup. No launcher remains as a watchdog.
 
@@ -20,13 +21,16 @@ signals, and cleanup. No launcher remains as a watchdog.
 - Ledger validation command: `{{VALIDATION_COMMAND}}`
 - Initial delivery evidence: `{{DELIVERY_EVIDENCE}}`
 - Graph validator: `{{GRAPH_VALIDATOR_PATH}}`
+- Conductor state oracle: `{{CONDUCTOR_STATE_PATH}}`
 - Implementer, review, and reviewer contracts: `{{IMPLEMENTER_PATH}}`,
   `{{REVIEW_PATH}}`, `{{REVIEWER_PATH}}`
+- Blocker recovery contract: `{{RECOVERY_PATH}}`
 
 GitHub is the ledger. Keep only
-`(ticket, mode, targetRepository, targetProject, targetPath, targetBranch,
-targetValidation, task, host, worktree, delivery, base, target, feature, pr,
-head, state)` here.
+`(ticket, mode, role, targetRepository, targetProject, targetPath, targetBranch,
+targetValidation, task, host, workingDirectory, title, delivery, base, target,
+feature, pr, head, signal, state, cleanup)` plus active blocker-recovery evidence
+here.
 
 AFK tickets follow:
 
@@ -37,18 +41,45 @@ follow `LOCKED -> HITL_WAIT -> CLOSED`.
 
 ## Liveness invariant
 
-Before ending a turn, compute `unfinished`: any accepted ticket is not `CLEANED`
-or final integration is incomplete. While unfinished and outside a permitted
-human gate or concrete blocker:
+The deterministic scoreboard owns action order. Before each lifecycle action and
+before ending a turn:
 
-1. Launch or reactivate every launchable ticket.
-2. Call `wait_threads` on every active implementer task, up to eight at once.
-3. Repeat after timeouts and unchanged snapshots.
-4. With no active task, refresh GitHub and dispatch the frontier or report the
-   exact blocker.
+1. Refresh the complete manifest, live spec body, actor records, cleanup state,
+   and final-integration state.
+2. Run `node {{CONDUCTOR_STATE_PATH}}` with that state on stdin.
+3. Execute its `requiredAction`.
+4. Refresh and rerun after every state-changing tool call.
 
-A checkpoint is commentary. The conductor must never become idle while this
-invariant requires dispatch or wait.
+`publish_graph`, `repair_actor_records`, `set_actor_titles`,
+`recover_blockers`, `apply_recovery`, `integrate_ready`, `launch_tickets`,
+`clean_actors`, `final_integration`, and `recover_graph` are mandatory next
+actions. A checkpoint is commentary. `wait` means call `wait_threads` on every
+active actor, up to eight at once, then rerun after the result or timeout. Only
+`supervised_approval`, `hitl_pause`, `external_blocker`, or `complete` permits a
+turn to end.
+
+The oracle input is complete when it includes:
+
+```json
+{"manifest":{},"profile":"lean + unsupervised","hitlPauses":[],"specBody":"...","actors":[{"ticket":"10","role":"implementer","threadId":"...","hostId":"...","workingDirectory":"...","title":"#1234 · Implementer of #10","status":"active","cleanup":"pending"}],"finalIntegration":"pending","blocker":null}
+```
+
+Populate `specBody` and every actor title from fresh live reads, not retained
+expectations.
+
+The conductor must never become idle while the oracle requires action.
+
+## Scoreboard invariant
+
+The managed spec graph is the live scoreboard. Every ticket state change,
+corrective ticket, blocker edge, or external-blocker change makes it stale.
+`publish_graph` has priority over dispatch, waiting, integration, and completion.
+
+For `publish_graph`, acquire the per-spec mutation lease, refetch the spec,
+render the fresh manifest, run `upsert-graph.mjs`, update the body, and verify the
+exact managed section with unchanged outside bytes. Release the lease only after
+the oracle accepts the refetched body. This completes before any new frontier
+actor launches.
 
 ## Execution permission invariant
 
@@ -76,18 +107,21 @@ mutation surface is a runtime mismatch, not a HITL pause.
    source conductor task for implementer signals.
 2. Read ledger instructions. Refresh ticket, blocker, implementation target,
    branch, rule, and PR state. Project live state onto the manifest and run the
-   graph validator.
+   graph validator and state oracle.
 3. Compare ticket set, parent, mode, blocker, native relationship, branch, rule,
    PR state, `targetRepository`, `targetProject`, `targetPath`,
-   `targetValidation`, and target delivery rules with acceptance. Any mismatch
-   returns `ORCH_DRIFT reason=...` and blocks launch.
+   `targetValidation`, and target delivery rules with acceptance. Target, rule,
+   and PR drift enters `recover_graph`. A ticket-set, parent, mode, blocker, or
+   native-relationship change that alters accepted scope returns
+   `ORCH_DRIFT reason=...` as structural acceptance drift.
 4. Read the implementer and review contracts. Read the reviewer contract only
    when deep review or CodeRabbit fallback fires.
 5. Launch the AFK frontier, surface the HITL frontier, and wait on all active
    implementer tasks together.
 
-Startup is complete when every AFK frontier ticket has a fresh task or blocker
-and every HITL frontier ticket is paused without a task.
+Startup is complete when the scoreboard is synchronized, every AFK frontier
+ticket has a fresh titled task or a recovery action, and every HITL frontier
+ticket is paused without a task.
 
 ## HITL pause
 
@@ -178,9 +212,11 @@ and retry after proving no task exists. It does not consume ticket retry or
 escalation budget. Never return `ORCH_BLOCKED` for an API-shape error before a
 task exists.
 
-Launch is complete only when task id, host, working directory, target binding,
-delivery, and base are recorded and the task has not reported a permission or
-base mismatch, including `worker-target-mismatch`.
+Run the state oracle immediately after creation. Launch is complete only when
+task id, host, working directory, exact canonical title, target binding,
+delivery, and base are recorded, and the oracle no longer returns
+`repair_actor_records` or `set_actor_titles`. A permission or base mismatch,
+including `worker-target-mismatch`, enters recovery.
 
 ## Wait and qualify
 
@@ -198,8 +234,7 @@ notification only; the final task response is authoritative.
 
 On the first valid `ORCH_ESCALATE`, reactivate the same task and worktree with
 `send_message_to_thread`, `model=gpt-5.6-sol`, and `thinking=high`, preserving
-the base lease and remaining review budget. A second request is blocked. Surface
-`ORCH_BLOCKED`.
+the base lease and remaining review budget.
 
 For direct readiness with a normal base, verify the target still equals `base`,
 the commit belongs to the task checkout, and the signal matches its target
@@ -219,14 +254,10 @@ checks against the new target, then atomically replace it. Use
 `send_message_to_thread` on other mismatches. The two-pass review ceiling is
 terminal.
 
-On `ORCH_BLOCKED`, release the lease after the task is terminal. If its checkout
-is clean and contains no ticket commit, archive the implementer task and verify
-removal of its Codex-managed worktree or projectless directory and local feature
-branch. Apply pre-lease branch ownership before deletion: delete only when this
-task created the ref; otherwise restore or preserve the pre-existing ref. If the
-checkout contains mutations, preserve the exact task, checkout, branch, and head
-as the blocker artifact; remove only resources proved unrelated or safe. Report
-the retained artifact so a later task can recover it.
+`ORCH_BLOCKED` is a diagnostic signal, not a terminal conductor result. Run the
+state oracle, then read [`RECOVERY.md`](RECOVERY.md) fully when it returns
+`recover_blockers`. Recovery owns escalation, graph repair, artifact
+preservation, and the narrow conditions for an external blocker.
 
 ## Admit
 
@@ -254,11 +285,12 @@ After integration:
 3. Archive the terminal implementer task and remove its worktree or projectless
    directory. Delete merged feature refs only when recorded pre-lease branch
    ownership proves the task created the ref; preserve every pre-existing ref.
-4. Verify protected branches remain, refresh the manifest, validate it, then
-   dispatch or pause the new frontier.
+4. Verify protected branches remain, refresh the manifest, then run the state
+   oracle. Synchronize the scoreboard before dispatching or pausing the new
+   frontier.
 
-Cleanup is complete when every transient resource is absent and retained
-branches remain.
+Cleanup is complete when every transient resource is absent, retained branches
+remain, and the oracle no longer returns `clean_actors`.
 
 ## Final integration
 
@@ -270,10 +302,11 @@ the ledger repository for a cross-repository graph.
 
 Close the ledger spec only after its acceptance criteria hold across all target
 repositories. Report ticket artifacts, per-target integration SHAs, cleanup,
-final PRs, and spec state. Before the terminal response, verify every implementer
-is terminal and archived or retained as an explicit blocker artifact, and that
-all transient resources are absent. After all other cleanup succeeds, archive
-this conductor task with `set_thread_archived` as its last tool action, then
-return:
+final PRs, and spec state. Before closing it, refresh the all-closed manifest and
+spec body until the oracle returns `complete`; this proves the scoreboard,
+titles, actor records, cleanup, and final integration are complete. Then close
+the spec and verify its terminal state. After all other cleanup succeeds,
+archive this conductor task with `set_thread_archived` as its last tool action,
+then return:
 
 `ORCH_COMPLETE spec=ID final=SHA`

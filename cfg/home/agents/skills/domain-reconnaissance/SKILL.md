@@ -23,10 +23,10 @@ Routine, reversible work stays in the caller's normal flow.
 
 State:
 
-- **Decision** — one question this run will inform.
-- **Product intent** — the user-facing outcome and constraints the design must preserve.
-- **Trigger** — the signal that justified reconnaissance.
-- **Assumptions** — the load-bearing beliefs already guiding the proposed direction.
+- **Decision**: one question this run will inform.
+- **Product intent**: the user-facing outcome and constraints the design must preserve.
+- **Trigger**: the signal that justified reconnaissance.
+- **Assumptions**: the load-bearing beliefs already guiding the proposed direction.
 
 When reopening shaping, name the settled decision and downstream work now in doubt.
 

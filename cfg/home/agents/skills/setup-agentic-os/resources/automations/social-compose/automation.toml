@@ -1,0 +1,46 @@
+# Canonical behavior source. Schedule, timezone, working directory, project,
+# status, and runtime history remain installation-local materialization state.
+schema_version = 1
+# Preserve this legacy identity when updating an existing materialization.
+id = "social-draft-pulse"
+kind = "cron"
+name = "Social Compose"
+
+execution_profile = "frontier/medium"
+prompt_file = "prompt.md"
+knowledge_request_file = "knowledge-request.json"
+
+[sources.social-publishing-source]
+required = true
+capabilities = [
+  "publication-history",
+  "post-analytics",
+  "queue-timeline",
+  "queue-schedule",
+]
+
+[sources.availability-calendar-source]
+required = false
+capabilities = ["upcoming-availability"]
+
+[sources.external-signal-source]
+required = false
+capabilities = ["current-public-signals"]
+
+[sinks.social-draft-queue]
+required = false
+capabilities = ["create-draft", "schedule-draft"]
+authority = "approval-gated"
+
+[validation]
+profile = "non-publishing"
+source_capabilities = [
+  "publication-history",
+  "post-analytics",
+  "queue-timeline",
+  "queue-schedule",
+  "upcoming-availability",
+  "current-public-signals",
+]
+sink_capabilities = []
+prohibited_actions = ["create-draft", "schedule-draft", "publish"]

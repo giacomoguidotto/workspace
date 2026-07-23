@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "knowledge-system-interface/v1/request.schema.json",
+  "title": "Knowledge Request",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["interface", "caller", "capability", "objective", "roles", "intended_use", "requirements", "mandate", "clarification_allowed"],
+  "properties": {
+    "interface": { "const": "knowledge-system-interface/v1" },
+    "caller": { "type": "string", "minLength": 1 },
+    "capability": { "type": "string", "minLength": 1 },
+    "objective": { "type": "string", "minLength": 1 },
+    "roles": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required", "optional"],
+      "properties": {
+        "required": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+        "optional": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true }
+      }
+    },
+    "intended_use": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "purpose", "boundary"],
+      "properties": {
+        "mode": { "enum": ["private-context", "named-sink", "public-draft"] },
+        "purpose": { "type": "string", "minLength": 1 },
+        "boundary": { "type": "string", "minLength": 1 },
+        "target": { "type": "string", "minLength": 1 }
+      }
+    },
+    "requirements": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evidence", "claim_provenance"],
+      "properties": {
+        "evidence": { "enum": ["required", "when-available"] },
+        "claim_provenance": { "const": true },
+        "freshness": { "type": "string", "minLength": 1 }
+      }
+    },
+    "mandate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["purpose", "read_roles", "capture_roles", "public_facing_roles", "clarification_on_unresolved"],
+      "properties": {
+        "purpose": { "type": "string", "minLength": 1 },
+        "read_roles": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+        "capture_roles": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+        "public_facing_roles": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+        "clarification_on_unresolved": { "type": "boolean" }
+      }
+    },
+    "clarification_allowed": { "type": "boolean" }
+  }
+}

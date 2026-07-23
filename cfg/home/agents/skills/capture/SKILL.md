@@ -13,6 +13,27 @@ user explicitly approves from the latest draft.
 The KB is canonical. Use its live provider connector and schema; keep personal and
 provider-specific bindings out of this skill.
 
+## Semantic Interface Requests
+
+Automation callers use the shared package at
+`<harness-skill-root>/knowledge-system-interface/v1/`. Resolve it relative to this
+skill's harness root; a missing or incompatible package blocks only the dependent
+capability and must never trigger a hidden fetch.
+
+Validate `capture-request.schema.json` and its declarative mandate before the normal
+loop. Accept only a registered target role within that mandate and semantic meaning,
+visibility, evidence, optional Snapshot Token, and rationale. Never accept a
+provider write or concrete target location.
+
+Resolve ownership live, deduplicate, and return `blocked` when mandate, ownership,
+evidence, freshness, access, or revision prevents a safe proposal. Otherwise return
+`drafted` with the same exact ordered operations shown in the HTML approval draft
+and validated by `capture-draft.schema.json`.
+
+`drafted` is not authority to write. `applied` requires explicit approval of the
+latest exact `/capture` draft and a fresh reread with no drift. Automation and setup
+calls never bypass this gate.
+
 ## Authoring Rules
 
 Apply three rules to every draft:
@@ -107,6 +128,13 @@ mutations. For each primary write show:
 
 Keep raw provider IDs and request payloads collapsed unless the user needs them to
 decide. Treat the HTML draft as the complete approval record.
+
+Render every provider-derived or user-derived value as text, never raw markup.
+Contextually HTML-escape element text and attribute values, including content inside
+`pre` and `code`. Do not emit active markup, event-handler attributes, executable
+styles, or scriptable URL schemes such as `javascript:` or active `data:` content.
+Use text nodes when the renderer supports them. These rules also apply to collapsed
+technical payloads and identifiers.
 
 If a blocker remains, label the draft blocked and ask only for the missing decision
 or evidence. Otherwise open the file, report its absolute path, and ask exactly:

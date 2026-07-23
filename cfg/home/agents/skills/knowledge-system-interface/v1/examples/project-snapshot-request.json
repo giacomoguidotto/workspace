@@ -1,0 +1,8 @@
+{
+  "interface": "knowledge-system-interface/v1",
+  "snapshot": "knowledge.project.snapshot/v1",
+  "caller": "agentic-os",
+  "capability": "agentic-os.upskill",
+  "objective": "Resolve the canonical project and its Knowledge-owned Upskill Mappings.",
+  "project_references": ["knowledge-project:example"]
+}

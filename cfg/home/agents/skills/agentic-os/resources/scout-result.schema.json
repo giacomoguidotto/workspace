@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "agentic-os.scout.result/v1",
+  "title": "Agentic OS Scout Result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "capability",
+    "status",
+    "readiness",
+    "requested",
+    "successful",
+    "replacements",
+    "failures",
+    "artifacts",
+    "verification",
+    "reconciliation",
+    "proposed_captures",
+    "blocked_actions"
+  ],
+  "properties": {
+    "schema": { "const": "agentic-os.scout.result/v1" },
+    "capability": { "const": "agentic-os.scout" },
+    "status": { "enum": ["completed", "blocked", "incomplete", "failed"] },
+    "readiness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["knowledge", "career"],
+      "properties": {
+        "knowledge": { "$ref": "#/$defs/readiness" },
+        "career": { "$ref": "#/$defs/readiness" }
+      }
+    },
+    "requested": { "type": "integer", "minimum": 1 },
+    "successful": { "type": "integer", "minimum": 0 },
+    "replacements": { "type": "integer", "minimum": 0 },
+    "failures": { "type": "array", "items": { "$ref": "#/$defs/summary" } },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reports", "trackers", "continuations"],
+      "properties": {
+        "reports": { "$ref": "#/$defs/references" },
+        "trackers": { "$ref": "#/$defs/references" },
+        "continuations": { "$ref": "#/$defs/references" }
+      }
+    },
+    "verification": { "$ref": "#/$defs/summary" },
+    "reconciliation": { "$ref": "#/$defs/summary" },
+    "proposed_captures": { "type": "array", "items": { "$ref": "#/$defs/summary" } },
+    "blocked_actions": { "type": "array", "items": { "$ref": "#/$defs/summary" } }
+  },
+  "$defs": {
+    "readiness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "observed_at", "capabilities", "reasons"],
+      "properties": {
+        "status": { "enum": ["ready", "blocked", "failed"] },
+        "observed_at": { "type": "string", "format": "date-time" },
+        "capabilities": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        },
+        "reasons": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "message"],
+      "properties": {
+        "code": { "type": "string", "minLength": 1 },
+        "message": { "type": "string", "minLength": 1 },
+        "reference": { "type": "string", "minLength": 1 }
+      }
+    },
+    "references": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    }
+  }
+}

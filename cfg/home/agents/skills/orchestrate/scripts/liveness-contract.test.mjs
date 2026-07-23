@@ -5,15 +5,27 @@ import test from 'node:test';
 const root = new URL('../', import.meta.url);
 
 async function read(name) {
-  return readFile(new URL(name, root), 'utf8');
+  const path = name === 'SKILL.md' ? name : `references/${name}`;
+  return readFile(new URL(path, root), 'utf8');
 }
 
 test('conductor cannot idle with unfinished work', async () => {
   const runtime = await read('RUNTIME.md');
 
   assert.match(runtime, /## Liveness invariant/);
-  assert.match(runtime, /`wait_threads` is the mandatory watchdog/);
+  assert.match(runtime, /deterministic scoreboard owns action order/);
+  assert.match(runtime, /state oracle/);
+  assert.match(runtime, /Only\s+`supervised_approval`, `hitl_pause`, `external_blocker`, or `complete`/);
   assert.match(runtime, /must never become idle/);
+});
+
+test('the scoreboard is reconciled before the next lifecycle action', async () => {
+  const runtime = await read('RUNTIME.md');
+
+  assert.match(runtime, /## Scoreboard invariant/);
+  assert.match(runtime, /Every ticket state change/);
+  assert.match(runtime, /`publish_graph` has priority/);
+  assert.match(runtime, /oracle accepts the refetched body/);
 });
 
 test('launcher publishes only a freshly revalidated accepted graph', async () => {
@@ -48,7 +60,7 @@ test('conductor and implementers use separate fresh Codex tasks', async () => {
 
   assert.match(skill, /separate fresh Codex\s+task/);
   assert.match(skill, /`create_thread`/);
-  assert.match(skill, /model=gpt-5\.6-luna`\s+with `thinking=low/);
+  assert.match(skill, /model=gpt-5\.6-sol`\s+with `thinking=medium/);
   assert.doesNotMatch(skill, /spawn_agent/);
   assert.match(runtime, /type: 'worktree'/);
   assert.match(runtime, /model: 'gpt-5\.6-sol'/);
@@ -117,18 +129,19 @@ test('implementers signal reliably and only the conductor integrates', async () 
 
 test('recovery state survives target movement and terminal blockers', async () => {
   const runtime = await read('RUNTIME.md');
+  const recovery = await read('RECOVERY.md');
 
-  assert.match(runtime, /base, target, feature, pr,\s+head/);
+  assert.match(runtime, /base, target,\s+feature, pr, head/);
   assert.match(runtime, /Keep the\s+recorded lease unchanged/);
   assert.match(runtime, /only\s+then atomically replace the base\s+lease and ready artifact/);
-  assert.match(runtime, /On `ORCH_BLOCKED`/);
-  assert.match(runtime, /preserve the exact task, checkout, branch, and\s+head/);
+  assert.match(runtime, /`ORCH_BLOCKED` is a diagnostic signal/);
+  assert.match(recovery, /Preserve the actor record, lease, checkout, branch, head/);
   assert.match(runtime, /clientThreadId/);
   assert.match(runtime, /restore the prior assignment and pre-lease state/);
   assert.match(runtime, /Never retry while an orphaned lease may exist/);
   assert.match(runtime, /invalidate (?:the )?READY/);
   assert.match(runtime, /worker-target-mismatch/);
-  assert.match(runtime, /pre-lease branch ownership/);
+  assert.match(runtime, /pre-lease branch\s+ownership/);
   assert.match(runtime, /task created the ref/);
   assert.match(runtime, /remote target has no refs/);
   assert.match(runtime, /local\s+checkout has exactly one root commit/);
@@ -148,7 +161,8 @@ test('startup drift covers every target binding', async () => {
   ]) {
     assert.match(runtime, new RegExp(field));
   }
-  assert.match(runtime, /Any mismatch\s+returns `ORCH_DRIFT/);
+  assert.match(runtime, /Target, rule,\s+and PR drift enters `recover_graph`/);
+  assert.match(runtime, /returns\s+`ORCH_DRIFT reason=\.\.\.` as structural acceptance drift/);
 });
 
 test('worker execution never asks the user for operational approval', async () => {
@@ -178,7 +192,6 @@ test('reasoning starts lean and escalates once on evidence', async () => {
 
   assert.ok(medium >= 0 && medium < request && request < high);
   assert.equal(runtime.match(/thinking=high/g)?.length, 1);
-  assert.match(runtime, /A second request is blocked/);
   assert.match(runtime, /Consume only\s+remaining review passes/);
 });
 
@@ -199,7 +212,21 @@ test('actor names retain stable spec and role identity', async () => {
 
   assert.match(skill, /`#<spec-id> · Orchestrator`/);
   assert.match(runtime, /`#\{\{SPEC_ISSUE\}\} · Implementer of #<issue-id>`/);
-  assert.match(runtime, /archive the implementer task/);
+  assert.match(runtime, /Archive the terminal implementer task/);
   assert.match(runtime, /archive\s+this\s+conductor\s+task/);
   assert.doesNotMatch(skill, /archive the conductor\s+task/);
+});
+
+test('blockers enter a disclosed recovery branch', async () => {
+  const skill = await read('SKILL.md');
+  const runtime = await read('RUNTIME.md');
+  const recovery = await read('RECOVERY.md');
+
+  assert.match(skill, /corrective implementation tickets, blocker edges, and PATCH/);
+  assert.match(runtime, /`ORCH_BLOCKED` is a diagnostic signal/);
+  assert.match(runtime, /\[`RECOVERY\.md`\]\(RECOVERY\.md\)/);
+  assert.match(recovery, /## Recovery ladder/);
+  assert.match(recovery, /thinking=high/);
+  assert.match(recovery, /does not end an\s+unsupervised run/);
+  assert.match(recovery, /## External blocker/);
 });

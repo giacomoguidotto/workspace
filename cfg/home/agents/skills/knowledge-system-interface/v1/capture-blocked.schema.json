@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "knowledge-system-interface/v1/capture-blocked.schema.json",
+  "title": "Blocked Semantic Capture Result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["interface", "status", "target_role", "reasons"],
+  "properties": {
+    "interface": { "const": "knowledge-system-interface/v1" },
+    "status": { "const": "blocked" },
+    "target_role": { "type": "string", "minLength": 1 },
+    "reasons": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "detail"],
+        "properties": {
+          "code": { "enum": ["mandate_invalid", "owner_unresolved", "evidence_insufficient", "stale", "access_blocked", "revision_uncertain", "persistent_drift"] },
+          "detail": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}

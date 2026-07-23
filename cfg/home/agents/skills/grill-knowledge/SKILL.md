@@ -37,15 +37,14 @@ Interview Giacomo one question at a time, clarify the story or decision, then dr
    - Open questions, if any.
 
 5. Ask for confirmation:
-   - Write only after Giacomo explicitly approves the latest exact draft.
-   - Approval must come after all discussion, corrections, and follow-up changes. If the chat continues after a draft, treat prior approval as stale and ask again.
-   - Use a direct approval question such as "Should I apply these exact Notion writes now?"
-   - If approval is not given, leave the draft in the chat only.
+   - Ask whether Giacomo wants to hand the latest exact proposal to `/capture`.
+   - If the proposal changes, ask again before the handoff.
+   - This confirmation authorizes only the handoff, never a provider write.
 
-6. Write and verify when approved:
-   - Apply only the approved latest draft.
-   - Read back the Notion item.
-   - Summarize what changed.
+6. Hand off when confirmed:
+   - Pass the exact proposal to `/capture`.
+   - `/capture` performs its live reread, HTML approval gate, mutation, and read-back.
+   - Never write to Notion or another provider directly from this skill.
 
 ## Question Style
 
@@ -73,16 +72,16 @@ Not capturing:
 - <item and reason>
 
 Confirmation:
-Should I apply these exact Notion writes now?
+Should I hand this exact proposal to /capture now?
 ```
 
 ## Rules
 
 - Notion is the source of truth.
 - No Notion writes while grilling.
-- NEVER write, edit, append, relate, archive, move, rename, or delete anything in Notion before explicit approval of the latest exact draft.
-- Treat Notion writes as highly destructive and hard to version. "Looks good", clarifying answers, or pointing out where something belongs are not approval unless Giacomo explicitly says to apply/write/create/update the exact draft.
-- If Giacomo replies after a draft with any correction, new fact, target change, or question, update the draft and ask for approval again before writing.
+- NEVER write, edit, append, relate, archive, move, rename, or delete anything in Notion from this skill.
+- Treat the handoff confirmation as permission to invoke `/capture`, not as approval of a provider write. Only `/capture` may ask for and act on the exact HTML approval gate.
+- If Giacomo replies after a proposal with any correction, new fact, target change, or question, update it and ask for handoff confirmation again.
 - Do not hallucinate missing facts.
 - Follow the structure, length, heading style, and density already established in the target Notion page and nearby sibling pages. When live examples are shorter than your draft, trim to match them.
 - If Notion access is unavailable, produce only a draft and say it was not verified against live Notion.

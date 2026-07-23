@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "knowledge-system-interface/v1/snapshot-token-validation-operation.schema.json",
+  "title": "Snapshot Token Validation Operation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["request", "observations"],
+  "properties": {
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["interface", "caller", "capability", "snapshot_token"],
+      "properties": {
+        "interface": { "type": "string", "minLength": 1 },
+        "caller": { "type": "string", "minLength": 1 },
+        "capability": { "type": "string", "minLength": 1 },
+        "snapshot_token": { "type": "string", "minLength": 16 }
+      }
+    },
+    "observations": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 2,
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["state", "snapshot_token"],
+            "properties": {
+              "state": { "const": "resolved" },
+              "snapshot_token": { "type": "string", "minLength": 16 }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["state", "reason"],
+            "properties": {
+              "state": { "const": "unresolved" },
+              "reason": {
+                "enum": [
+                  "owner_unknown",
+                  "evidence_insufficient",
+                  "stale",
+                  "access_blocked",
+                  "revision_uncertain"
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

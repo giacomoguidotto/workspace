@@ -1,0 +1,88 @@
+{
+  "interface": "knowledge-system-interface/v1",
+  "snapshot": "knowledge.project.snapshot/v1",
+  "registry_revision": "2",
+  "caller": "agentic-os",
+  "capability": "agentic-os.upskill",
+  "observed_at": "2026-07-23T08:00:00Z",
+  "revision_token": "opaque-project-revision-1234",
+  "capability_status": {
+    "state": "ready",
+    "blocking_references": []
+  },
+  "projects": [
+    {
+      "state": "value",
+      "project_key": "project-example",
+      "name": "Example Project",
+      "references": ["knowledge-project:example"],
+      "mastery_enabled": {
+        "state": "value",
+        "value": true,
+        "evidence": [
+          {
+            "source_ref": "knowledge-evidence:project-example",
+            "supports": "The canonical project owner explicitly enables Mastery.",
+            "observed_at": "2026-07-23T08:00:00Z"
+          }
+        ]
+      },
+      "upskill_mappings": {
+        "state": "value",
+        "items": [
+          {
+            "mapping_key": "mapping-foundation",
+            "status": "enabled",
+            "requisite": {
+              "key": "requisite-foundation",
+              "label": "Foundation gap"
+            },
+            "capability": {
+              "key": "capability-foundation",
+              "label": "Foundation capability"
+            },
+            "project_key": "project-example",
+            "rationale": "Close the foundational gap before advanced work.",
+            "evidence": [
+              {
+                "source_ref": "knowledge-evidence:mapping-foundation",
+                "supports": "The canonical mapping owner establishes this relationship.",
+                "observed_at": "2026-07-23T08:00:00Z"
+              }
+            ]
+          },
+          {
+            "mapping_key": "mapping-advanced",
+            "status": "disabled",
+            "requisite": {
+              "key": "requisite-advanced",
+              "label": "Advanced gap"
+            },
+            "capability": {
+              "key": "capability-advanced",
+              "label": "Advanced capability"
+            },
+            "project_key": "project-example",
+            "rationale": "Retain the disabled mapping as resolvable Knowledge context.",
+            "evidence": [
+              {
+                "source_ref": "knowledge-evidence:mapping-advanced",
+                "supports": "The canonical mapping owner preserves the disabled mapping.",
+                "observed_at": "2026-07-23T08:00:00Z"
+              }
+            ],
+            "prerequisite_mapping_keys": ["mapping-foundation"]
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "source_ref": "knowledge-owner:project-example",
+          "supports": "The canonical Knowledge owner establishes project identity.",
+          "observed_at": "2026-07-23T08:00:00Z"
+        }
+      ]
+    }
+  ],
+  "gaps": []
+}

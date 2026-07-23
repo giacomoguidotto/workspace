@@ -1,0 +1,33 @@
+{
+  "interface": "knowledge-system-interface/v1",
+  "status": "drafted",
+  "draft_id": "example-draft-1",
+  "registry_revision": "1",
+  "source_snapshot_token": "opaque-example-token-9f4c",
+  "mandate": {
+    "purpose": "Retain an explicitly stated career preference surfaced during scouting.",
+    "target_role": "job-search-strategy"
+  },
+  "operations": [
+    {
+      "action": "update",
+      "target": "Canonical job search strategy owner",
+      "placement": "Preferences section",
+      "before": {
+        "heading": "Preferences",
+        "items": ["Prefer example role family"]
+      },
+      "after": {
+        "heading": "Preferences",
+        "items": ["Prefer example role family", "Example durable preference"]
+      },
+      "removed": null,
+      "deletion_consequences": "",
+      "reason": "The user explicitly stated a durable preference that changes future evaluation.",
+      "sources": ["Current invocation", "Live canonical owner reread"],
+      "uncertainty": [],
+      "read_back": ["Target identity", "Complete preferences section", "Revision evidence"]
+    }
+  ],
+  "approval_prompt": "Should I apply these exact KB writes now?"
+}

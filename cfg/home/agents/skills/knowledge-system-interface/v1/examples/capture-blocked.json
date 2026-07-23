@@ -1,0 +1,11 @@
+{
+  "interface": "knowledge-system-interface/v1",
+  "status": "blocked",
+  "target_role": "job-search-strategy",
+  "reasons": [
+    {
+      "code": "persistent_drift",
+      "detail": "The canonical owner changed during the initial traversal and one full rebuild."
+    }
+  ]
+}

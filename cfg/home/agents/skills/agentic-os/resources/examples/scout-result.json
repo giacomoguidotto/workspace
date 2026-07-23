@@ -1,0 +1,47 @@
+{
+  "schema": "agentic-os.scout.result/v1",
+  "capability": "agentic-os.scout",
+  "status": "blocked",
+  "readiness": {
+    "knowledge": {
+      "status": "ready",
+      "observed_at": "2026-07-21T20:00:00Z",
+      "capabilities": ["knowledge-system-interface/v1", "snapshot-token-validation"],
+      "reasons": []
+    },
+    "career": {
+      "status": "blocked",
+      "observed_at": "2026-07-21T20:00:01Z",
+      "capabilities": [
+        "career.profile.check/v1",
+        "career.profile.reconcile/v1",
+        "career.opportunity.discover/v1"
+      ],
+      "reasons": ["career.opportunity.discover/v1:unsupported-capability"]
+    }
+  },
+  "requested": 30,
+  "successful": 0,
+  "replacements": 0,
+  "failures": [],
+  "artifacts": {
+    "reports": [],
+    "trackers": [],
+    "continuations": []
+  },
+  "verification": {
+    "code": "not-run",
+    "message": "Native verification did not run because Career readiness was blocked."
+  },
+  "reconciliation": {
+    "code": "not-run",
+    "message": "Profile reconciliation did not run because Career readiness was blocked."
+  },
+  "proposed_captures": [],
+  "blocked_actions": [
+    {
+      "code": "career-capability-unavailable",
+      "message": "Scouting is blocked only until the versioned native discovery capability is ready."
+    }
+  ]
+}

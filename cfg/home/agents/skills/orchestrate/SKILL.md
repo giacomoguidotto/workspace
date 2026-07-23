@@ -1,8 +1,6 @@
 ---
 name: orchestrate
 description: Conduct an existing GitHub spec through an accepted ticket graph, implementation, integration, and cleanup.
-disable-model-invocation: true
-argument-hint: "spec #1234 [owner/repo:final:integration]"
 ---
 
 # Orchestrate
@@ -33,7 +31,11 @@ profile requires writable actor worktrees and non-interactive execution.
 
 Keep preflight read-only. The accepted launch gate authorizes publication of the
 managed graph section, lifecycle actors, assignments, branches, PRs, comments,
-admitted integration, issue closure, and exact cleanup.
+admitted integration, issue closure, and exact cleanup. Unsupervised acceptance
+also authorizes corrective implementation tickets, blocker edges, and PATCH
+releases required to satisfy the accepted spec. It does not authorize changed
+acceptance criteria, a MINOR or MAJOR release, new external side effects, or an
+irreversible destructive choice.
 
 ## 1. Establish the score
 
@@ -102,7 +104,7 @@ List every open HITL ticket, or `HITL pauses: none`. Show current delivery
 eligibility and any existing conductor beside the graph.
 
 Ask exactly: "Which orchestration profile should I launch? Choosing one accepts
-this graph and its listed HITL pauses."
+this graph, its listed HITL pauses, and the repair authority described above."
 
 1. `lean + supervised`
 2. `lean + unsupervised`
@@ -156,21 +158,25 @@ If a matching conductor Codex task exists, send it the refreshed accepted
 manifest and current contract paths, then resume it. If it differs, prove safe
 replacement and clean it exactly; unsafe replacement is a blocker.
 
-Read [`RUNTIME.md`](RUNTIME.md) and [`IMPLEMENTER.md`](IMPLEMENTER.md) fully.
-Inject their absolute paths plus [`REVIEW.md`](REVIEW.md) and
-[`REVIEWER.md`](REVIEWER.md), the accepted manifest, assignee, target bindings,
-branches, validation commands, HITL pauses, profile, and delivery evidence.
+Read [`RUNTIME.md`](references/RUNTIME.md) and
+[`IMPLEMENTER.md`](references/IMPLEMENTER.md) fully. Inject their absolute paths
+plus [`REVIEW.md`](references/REVIEW.md) and
+[`REVIEWER.md`](references/REVIEWER.md), the blocker-only
+[`RECOVERY.md`](references/RECOVERY.md), the absolute
+`scripts/conductor-state.mjs` path, the accepted manifest, assignee, target
+bindings, branches, validation commands, HITL pauses, profile, and delivery
+evidence.
 
 The new-task runtime must resolve to `sandbox_mode=danger-full-access` and
 `approval_policy=never`; network access must be enabled. A mismatch is a launch
 blocker, never a reason to ask the user for an operational approval.
 
 Use `create_thread`, never a fork or subagent, to launch one separate fresh Codex
-task in the target project's local environment. Prefer `model=gpt-5.6-luna`
-with `thinking=low`; fall back to the fastest available low-effort model. Give it
-the fully instantiated runtime with the First objective first. Set its title to
-`#<spec-id> · Orchestrator`. The fresh task receives only the accepted graph and
-runtime inputs, not this preflight transcript.
+task in the target project's local environment. Prefer `model=gpt-5.6-sol`
+with `thinking=medium`; fall back to the strongest available model at medium
+effort. Give it the fully instantiated runtime with the First objective first.
+Set its title to `#<spec-id> · Orchestrator`. The fresh task receives only the
+accepted graph and runtime inputs, not this preflight transcript.
 
 After `create_thread` returns, set the title and verify only that the conductor
 task exists with the accepted startup payload. Do not wait for a topology

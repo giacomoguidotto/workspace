@@ -1,0 +1,42 @@
+{
+  "interface": "knowledge-system-interface/v1",
+  "caller": "agentic-os",
+  "capability": "agentic-os.scout",
+  "objective": "Build the complete current Career profile needed to discover and evaluate opportunities.",
+  "roles": {
+    "required": [
+      "identity",
+      "job-search-strategy",
+      "personal-constraints",
+      "public-safe-claim-source",
+      "proof-points"
+    ],
+    "optional": ["communication-strategy"]
+  },
+  "intended_use": {
+    "mode": "named-sink",
+    "purpose": "Reconcile a fresh Career profile and evaluate opportunities through the Career System gateway.",
+    "boundary": "Do not submit applications, contact people, publish, or persist an Agentic OS profile cache.",
+    "target": "career-system"
+  },
+  "requirements": {
+    "evidence": "required",
+    "claim_provenance": true,
+    "freshness": "current for this invocation"
+  },
+  "mandate": {
+    "purpose": "Supply only current profile context required by agentic-os.scout.",
+    "read_roles": [
+      "identity",
+      "job-search-strategy",
+      "personal-constraints",
+      "public-safe-claim-source",
+      "proof-points",
+      "communication-strategy"
+    ],
+    "capture_roles": [],
+    "public_facing_roles": [],
+    "clarification_on_unresolved": false
+  },
+  "clarification_allowed": false
+}

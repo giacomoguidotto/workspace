@@ -116,6 +116,13 @@ ul { padding-left:20px; } li + li { margin-top:6px; }
 Keep this structural nesting. Repeat `.operation` and `.summary-item` as needed;
 omit empty optional sections rather than leaving placeholders.
 
+Every `{{placeholder}}` below is text-only. HTML-escape it for its exact element or
+attribute context before insertion, including topic, status, draft metadata,
+outcomes, operation fields, diffs, technical payloads, and values inside `pre` or
+`code`. Prefer DOM text nodes when available. No interpolated value may render as
+raw markup, an event handler, an executable style, or a scriptable URL. Allow links
+only after validating an explicit safe scheme such as `https`.
+
 ```html
 <body><div class="shell">
   <header class="masthead">

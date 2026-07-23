@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "knowledge-system-interface/v1/capture-draft.schema.json",
+  "title": "Exact Capture Draft",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["interface", "status", "draft_id", "registry_revision", "mandate", "operations", "approval_prompt"],
+  "properties": {
+    "interface": { "const": "knowledge-system-interface/v1" },
+    "status": { "const": "drafted" },
+    "draft_id": { "type": "string", "minLength": 1 },
+    "registry_revision": { "type": "string", "minLength": 1 },
+    "source_snapshot_token": { "type": "string", "minLength": 16 },
+    "mandate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["purpose", "target_role"],
+      "properties": {
+        "purpose": { "type": "string", "minLength": 1 },
+        "target_role": { "type": "string", "minLength": 1 }
+      }
+    },
+    "operations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["action", "target", "placement", "before", "after", "removed", "deletion_consequences", "reason", "sources", "uncertainty", "read_back"],
+        "properties": {
+          "action": { "enum": ["create", "update", "move", "archive", "delete"] },
+          "target": { "type": "string", "minLength": 1 },
+          "placement": { "type": "string", "minLength": 1 },
+          "before": {},
+          "after": {},
+          "removed": {},
+          "deletion_consequences": { "type": "string" },
+          "reason": { "type": "string", "minLength": 1 },
+          "sources": { "type": "array", "items": { "type": "string", "minLength": 1 }, "minItems": 1 },
+          "uncertainty": { "type": "array", "items": { "type": "string" } },
+          "read_back": { "type": "array", "items": { "type": "string", "minLength": 1 }, "minItems": 1 }
+        }
+      }
+    },
+    "approval_prompt": { "const": "Should I apply these exact KB writes now?" }
+  }
+}

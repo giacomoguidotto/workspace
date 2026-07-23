@@ -8,6 +8,33 @@ description: Look up scoped live Knowledge Bank context without writing. Use whe
 Lookup is live, narrow, and read-only. The caller supplies the objective; the KB
 supplies the knowledge.
 
+## Interface Modes
+
+Interactive calls accept an ad hoc objective and return the concise Markdown shape
+below. Automation calls use the shared package at
+`<harness-skill-root>/knowledge-system-interface/v1/` and return a Knowledge
+Context Snapshot matching its `snapshot.schema.json`.
+
+For an automation request:
+
+1. Resolve the shared package relative to this skill's harness root. A missing or
+   incompatible package blocks only the dependent capability; never fetch another
+   version implicitly.
+2. Reject fields outside `request.schema.json` and roles absent or inactive in the
+   installed Endpoint Registry.
+3. Resolve roles by registry meaning. Never accept or expose provider names, page
+   locations, traversal instructions, cached facts, or project inventories.
+4. Follow only the registry's owner and evidence traversal. Return `value` only from
+   a current canonical owner, `absent` only when that owner establishes no
+   applicable value, and `unresolved` for uncertainty. A search miss is never
+   absence.
+5. Attach evidence and provenance to every claim or established absence and cover
+   the exact source revisions with an opaque Snapshot Token.
+
+If covered state drifts, discard the partial result and rebuild once. Persistent
+drift makes only affected roles `unresolved` and blocks only the dependent
+capability.
+
 ## 1. Set Scope
 
 Identify the caller's objective, named context surfaces, and branch:
@@ -32,7 +59,8 @@ every source is relevant to the caller.
 
 ## 3. Return Context
 
-For the `context` branch, return only what changes the caller's next step:
+For an interactive `context` branch, return only what changes the caller's next
+step:
 
 ```md
 Sources:

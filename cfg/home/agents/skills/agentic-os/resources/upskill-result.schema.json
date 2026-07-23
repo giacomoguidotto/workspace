@@ -1,0 +1,206 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "agentic-os.upskill.result/v1",
+  "title": "Agentic OS Upskill Result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "capability",
+    "status",
+    "readiness",
+    "snapshot_acquisition",
+    "snapshots",
+    "ranking",
+    "mappings",
+    "writes",
+    "verification",
+    "blocked_actions"
+  ],
+  "properties": {
+    "schema": { "const": "agentic-os.upskill.result/v1" },
+    "capability": { "const": "agentic-os.upskill" },
+    "status": { "enum": ["completed", "blocked", "incomplete", "failed"] },
+    "readiness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["career", "knowledge", "mastery"],
+      "properties": {
+        "career": { "$ref": "#/$defs/readiness" },
+        "knowledge": { "$ref": "#/$defs/readiness" },
+        "mastery": { "$ref": "#/$defs/readiness" }
+      }
+    },
+    "snapshot_acquisition": {
+      "enum": ["not_started", "partial", "completed"]
+    },
+    "snapshots": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "career": {
+          "allOf": [
+            { "$ref": "#/$defs/snapshot" },
+            {
+              "properties": {
+                "schema": { "const": "career.requisite.snapshot/v1" }
+              }
+            }
+          ]
+        },
+        "knowledge": {
+          "allOf": [
+            { "$ref": "#/$defs/snapshot" },
+            {
+              "properties": {
+                "schema": { "const": "knowledge.project.snapshot/v1" }
+              }
+            }
+          ]
+        },
+        "mastery": {
+          "allOf": [
+            { "$ref": "#/$defs/snapshot" },
+            {
+              "properties": {
+                "schema": { "const": "mastery.cycles.snapshot/v1" }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "ranking": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["rank", "mapping_key"],
+        "properties": {
+          "rank": { "type": "integer", "minimum": 1 },
+          "mapping_key": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "mappings": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/mapping_result" }
+    },
+    "writes": { "type": "integer", "minimum": 0 },
+    "verification": { "$ref": "#/$defs/summary" },
+    "blocked_actions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/summary" }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "snapshot_acquisition": { "const": "not_started" }
+        },
+        "required": ["snapshot_acquisition"]
+      },
+      "then": {
+        "properties": {
+          "snapshots": {
+            "maxProperties": 0
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "snapshot_acquisition": { "const": "partial" }
+        },
+        "required": ["snapshot_acquisition"]
+      },
+      "then": {
+        "properties": {
+          "snapshots": {
+            "minProperties": 1,
+            "maxProperties": 2
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "snapshot_acquisition": { "const": "completed" }
+        },
+        "required": ["snapshot_acquisition"]
+      },
+      "then": {
+        "properties": {
+          "snapshots": {
+            "required": ["career", "knowledge", "mastery"]
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "readiness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "observed_at", "capabilities", "reasons"],
+      "properties": {
+        "status": { "enum": ["ready", "blocked", "failed"] },
+        "observed_at": { "type": "string", "format": "date-time" },
+        "capabilities": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        },
+        "reasons": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema", "observed_at", "revision_checked"],
+      "properties": {
+        "schema": { "type": "string", "minLength": 1 },
+        "observed_at": { "type": "string", "format": "date-time" },
+        "revision_checked": { "const": true }
+      }
+    },
+    "mapping_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mapping_key", "status", "rank", "cycle_ref", "reason"],
+      "properties": {
+        "mapping_key": { "type": "string", "minLength": 1 },
+        "status": {
+          "enum": [
+            "created",
+            "updated",
+            "unchanged",
+            "withdrawn",
+            "preserved",
+            "blocked",
+            "failed"
+          ]
+        },
+        "rank": { "type": ["integer", "null"], "minimum": 1 },
+        "cycle_ref": { "type": ["string", "null"], "minLength": 1 },
+        "reason": { "type": "string", "minLength": 1 }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "message"],
+      "properties": {
+        "code": { "type": "string", "minLength": 1 },
+        "message": { "type": "string", "minLength": 1 },
+        "reference": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

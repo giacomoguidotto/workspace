@@ -12,9 +12,6 @@
       "type": "registry",
     },
     "github-copilot-cli": {
-      "favorite_config_option_values": {
-        "model": ["claude-opus-4.8", "gpt-5.5"],
-      },
       "default_config_options": {
         "reasoning_effort": "xhigh",
         "allow_all": "on",

@@ -1,6 +1,0 @@
-{
-  "interface": "knowledge-system-interface/v1",
-  "status": "unchanged",
-  "caller": "agentic-os",
-  "capability": "agentic-os.scout"
-}

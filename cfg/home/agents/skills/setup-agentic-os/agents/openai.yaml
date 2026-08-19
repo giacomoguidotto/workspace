@@ -1,4 +1,0 @@
-interface:
-  display_name: "Setup Agentic OS"
-  short_description: "Check or reconcile the fixed Agentic Constellation"
-  default_prompt: "Use $setup-agentic-os reconcile to converge every safe independent branch."

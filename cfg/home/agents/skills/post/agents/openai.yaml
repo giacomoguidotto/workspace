@@ -1,4 +1,0 @@
-interface:
-  display_name: "Post"
-  short_description: "Draft useful social posts without publishing"
-  default_prompt: "Use $post to draft a social post from this idea."

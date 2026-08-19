@@ -1,4 +1,0 @@
-interface:
-  display_name: "Agentic OS"
-  short_description: "Coordinate fresh cross-System capabilities"
-  default_prompt: "Use $agentic-os upskill with a Knowledge project reference to reconcile current Cycle Proposals."

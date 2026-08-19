@@ -1,7 +1,0 @@
-interface:
-  display_name: "Setup Project"
-  short_description: "Reconcile a project with live KB conventions"
-  default_prompt: "Use $setup-project to reconcile this repository with my live Knowledge Bank project conventions."
-
-policy:
-  allow_implicit_invocation: false
